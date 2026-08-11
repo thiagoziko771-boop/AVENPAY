@@ -241,13 +241,13 @@
     const body = document.getElementById('comp-body');
     if (!data.length) { body.innerHTML = ''; document.getElementById('comp-empty').style.display = 'block'; return; }
     document.getElementById('comp-empty').style.display = 'none';
-    body.innerHTML = data.map(c => `
+    body.innerHTML = data.map((c, idx) => `
       <tr>
         <td>${fmtDate(c.created_at)}</td>
         <td>${c.nome || '-'}</td>
         <td>${fmtCpf(c.cpf)}</td>
         <td style="font-size:11px;color:#64748b;">${(c.transaction_id || '-').slice(0, 20)}</td>
-        <td>${c.arquivo ? `<button class="img-btn" onclick="openImg('${c.id}')">Ver imagem</button>` : '-'}</td>
+        <td>${c.arquivo ? `<button class="img-btn" onclick="openImg(${idx})">Ver imagem</button>` : '-'}</td>
       </tr>
     `).join('');
   }
@@ -284,10 +284,14 @@
     }
   }
 
-  function openImg(id) {
-    const comp = allComp.find(c => c.id === id);
-    if (!comp || !comp.arquivo) return;
-    document.getElementById('modal-img').src = comp.arquivo;
+  function openImg(idx) {
+    const comp = allComp[idx];
+    if (!comp || !comp.arquivo) { alert('Imagem não disponível'); return; }
+    const src = comp.arquivo;
+    const img = document.getElementById('modal-img');
+    // suporte a base64 e URL externa
+    img.src = src.startsWith('data:') || src.startsWith('http') ? src : 'data:image/png;base64,' + src;
+    img.onerror = () => { img.alt = 'Erro ao carregar imagem'; };
     document.getElementById('img-modal').classList.add('open');
   }
 
