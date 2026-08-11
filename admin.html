@@ -8,24 +8,13 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700;800&family=Orbitron:wght@400;700;900&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#00ff88;
-  --green2:#00cc66;
-  --red:#ff4444;
-  --orange:#ff9900;
-  --cyan:#00e5ff;
-  --purple:#c084fc;
-  --yellow:#ffd600;
-  --pink:#ff6eb4;
-  --dim:#336633;
-  --bg:#020a04;
-  --bg2:#050f07;
-  --border:#0a3a1a;
-  --dark:#1a4a2a;
+  --green:#00ff88;--green2:#00cc66;--red:#ff4444;--orange:#ff9900;
+  --cyan:#00e5ff;--purple:#c084fc;--yellow:#ffd600;--pink:#ff6eb4;
+  --dim:#336633;--bg:#020a04;--bg2:#050f07;--border:#0a3a1a;--dark:#1a4a2a;
 }
 body{font-family:'JetBrains Mono',monospace;background:var(--bg);color:var(--green);min-height:100vh;overflow-x:hidden;font-size:13px}
 body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,136,.012) 2px,rgba(0,255,136,.012) 4px);pointer-events:none;z-index:9999}
 </style>
-
 <style>
 /* LOGIN */
 .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#000;position:relative;overflow:hidden}
@@ -37,9 +26,7 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 .term-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 1.2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .term-body{background:#000;padding:14px;font-size:11px;line-height:1.8;min-height:200px}
-.term-line{color:var(--dark)}
-.term-line.g{color:var(--green2)}
-.term-line.r{color:var(--red)}
+.term-line{color:var(--dark)}.term-line.g{color:var(--green2)}.term-line.r{color:var(--red)}
 .term-line .tag{font-weight:700;color:var(--green)}
 .term-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border-top:1px solid var(--green2)}
 .term-stat{background:#000;padding:10px;text-align:center}
@@ -57,7 +44,6 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 .btn-login:hover{background:rgba(0,255,136,.1);box-shadow:0 0 15px rgba(0,255,136,.25)}
 #login-err{color:var(--red);font-size:11px;margin-top:8px;text-align:center;min-height:16px}
 </style>
-
 <style>
 /* TOPBAR */
 .topbar{background:#000;border-bottom:1px solid var(--border);padding:0 16px;height:38px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:200;font-size:11px}
@@ -100,13 +86,12 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 .stat-card.c-yellow .s-val{color:var(--yellow);text-shadow:0 0 8px var(--yellow)}
 .s-sub{font-size:11px;color:var(--dim);margin-top:5px}
 </style>
-
 <style>
 /* PANELS */
 .panel{background:#000;border:1px solid var(--border);margin-bottom:14px}
 .panel-header{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;background:#020a04}
 .panel-title{font-size:12px;font-weight:700;color:var(--green);letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
-.panel-title::before{content:'ÔûÂ';font-size:9px;color:var(--green2)}
+.panel-title::before{content:'>';font-size:9px;color:var(--green2)}
 .toolbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .search-inp{padding:6px 10px;background:#000;border:1px solid var(--green2);border-radius:2px;color:var(--green);font-size:11px;width:220px;font-family:'JetBrains Mono',monospace}
 .search-inp:focus{outline:none;border-color:var(--green);box-shadow:0 0 8px rgba(0,255,136,.2)}
@@ -132,9 +117,6 @@ tbody tr:last-child td{border-bottom:none}
 .img-btn{padding:4px 10px;background:transparent;color:var(--green2);border:1px solid var(--green2);border-radius:2px;cursor:pointer;font-size:10px;font-family:'JetBrains Mono',monospace;transition:all .2s}
 .img-btn:hover{background:rgba(0,255,136,.1);color:var(--green)}
 .empty-state{text-align:center;padding:40px;color:var(--dark);font-size:12px}
-</style>
-
-<style>
 /* MODAL */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;align-items:center;justify-content:center}
 .modal.open{display:flex}
@@ -142,6 +124,8 @@ tbody tr:last-child td{border-bottom:none}
 .modal-close{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;font-family:'JetBrains Mono',monospace}
 .modal-close:hover{color:var(--red)}
 .modal img{max-width:100%;max-height:60vh;display:block;margin:8px auto}
+</style>
+<style>
 /* FUNNEL */
 .funnel-row{display:flex;align-items:center;gap:12px;padding:11px 14px;background:#020a04;margin-bottom:2px;border-left:2px solid var(--green2)}
 .funnel-icon{font-size:16px;width:24px}
@@ -162,11 +146,12 @@ tbody tr:last-child td{border-bottom:none}
 .log-stream{background:#000;border:none;padding:0;max-height:220px;overflow-y:auto;font-size:11px;line-height:1.9}
 .log-line{padding:3px 14px;border-bottom:1px solid #050f07;display:flex;align-items:center;gap:10px}
 .log-time{color:var(--dark);white-space:nowrap;min-width:58px}
-.log-tag{font-weight:700;min-width:68px;font-size:10px;text-align:center;padding:1px 6px;border-radius:2px;border:1px solid transparent}
+.log-tag{font-weight:700;min-width:72px;font-size:10px;text-align:center;padding:1px 6px;border-radius:2px;border:1px solid transparent}
 .log-tag.REAL{color:var(--cyan);border-color:var(--cyan);background:rgba(0,229,255,.08)}
 .log-tag.BOT{color:var(--red);border-color:var(--red);background:rgba(255,68,68,.08)}
 .log-tag.BLOCKED{color:var(--orange);border-color:var(--orange);background:rgba(255,153,0,.08)}
 .log-tag.ACCESS{color:var(--purple);border-color:var(--purple);background:rgba(192,132,252,.08)}
+.log-tag.LEAD{color:var(--yellow);border-color:var(--yellow);background:rgba(255,214,0,.08)}
 .log-tag.UNKNOWN{color:var(--dim);border-color:var(--dark)}
 .log-msg{color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
 /* STATUS PANEL */
@@ -193,18 +178,18 @@ tbody tr:last-child td{border-bottom:none}
   <div class="login-bg"></div>
   <div class="login-terminal">
     <div class="term-box">
-      <div class="term-header"><span class="term-dot"></span> SYS-BOOT ┬À CLOAK-FMRT4F <span style="margin-left:auto" id="term-clock"></span></div>
+      <div class="term-header"><span class="term-dot"></span> SYS-BOOT · CLOAK-FMRT4F <span style="margin-left:auto" id="term-clock"></span></div>
       <div class="term-body" id="term-log">
-        <div class="term-line g"><span class="tag">[ROOT]</span> CLOAK-CORE V7.4 ┬À OK</div>
-        <div class="term-line g"><span class="tag">[SSL]</span> OPENSSL TLS 1.3 ┬À OK</div>
-        <div class="term-line g"><span class="tag">[FW]</span> FIREWALL RULES LOADED ┬À OK</div>
-        <div class="term-line g"><span class="tag">[GEO]</span> GEOIP DB LOADED ┬À 195 PA├ìSES</div>
-        <div class="term-line g"><span class="tag">[AUTH]</span> HANDSHAKE READY ┬À <span style="color:var(--green)">Ôûá</span></div>
+        <div class="term-line g"><span class="tag">[ROOT]</span> CLOAK-CORE V7.4 · OK</div>
+        <div class="term-line g"><span class="tag">[SSL]</span> OPENSSL TLS 1.3 · OK</div>
+        <div class="term-line g"><span class="tag">[FW]</span> FIREWALL RULES LOADED · OK</div>
+        <div class="term-line g"><span class="tag">[GEO]</span> GEOIP DB LOADED · 195 PAISES</div>
+        <div class="term-line g"><span class="tag">[AUTH]</span> HANDSHAKE READY · OK</div>
       </div>
       <div class="term-stats">
         <div class="term-stat"><div class="term-stat-val">99.9%</div><div class="term-stat-label">UPTIME</div></div>
-        <div class="term-stat"><div class="term-stat-val" id="t-lat">12ms</div><div class="term-stat-label">LAT├èNCIA</div></div>
-        <div class="term-stat"><div class="term-stat-val">BR</div><div class="term-stat-label">REGI├âO</div></div>
+        <div class="term-stat"><div class="term-stat-val" id="t-lat">12ms</div><div class="term-stat-label">LATENCIA</div></div>
+        <div class="term-stat"><div class="term-stat-val">BR</div><div class="term-stat-label">REGIAO</div></div>
       </div>
     </div>
   </div>
@@ -212,11 +197,11 @@ tbody tr:last-child td{border-bottom:none}
     <div class="login-logo">
       <svg viewBox="0 0 44 44" fill="none"><polygon points="22,2 42,12 42,32 22,42 2,32 2,12" stroke="#00ff88" stroke-width="1.5" fill="none"/><polygon points="22,8 36,16 36,30 22,38 8,30 8,16" stroke="#00cc66" stroke-width="1" fill="none" opacity=".5"/><text x="22" y="27" text-anchor="middle" font-size="12" fill="#00ff88" font-family="monospace" font-weight="bold">TH</text></svg>
       <h1>CLOAKER TH 07</h1>
-      <p>Ôùê ACESSO AO CONSOLE Ôùê</p>
+      <p>// ACESSO AO CONSOLE //</p>
     </div>
-    <div class="field-label">Ôû© SENHA</div>
-    <input class="inp" type="password" id="admin-pass" placeholder="ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó" autocomplete="off"/>
-    <button class="btn-login" onclick="doLogin()">ÔûÂ ENTRAR NO CONSOLE</button>
+    <div class="field-label">SENHA</div>
+    <input class="inp" type="password" id="admin-pass" placeholder="••••••••••" autocomplete="off"/>
+    <button class="btn-login" onclick="doLogin()">ENTRAR NO CONSOLE</button>
     <p id="login-err"></p>
   </div>
 </div>
@@ -225,7 +210,7 @@ tbody tr:last-child td{border-bottom:none}
 <div id="main-screen" style="display:none">
   <div class="topbar">
     <div class="topbar-left">
-      <span class="topbar-brand">Ôùê CLOAKER TH 07</span>
+      <span class="topbar-brand">CLOAKER TH 07</span>
       <div class="online-pill"><span class="pulse"></span><strong id="online-count">0</strong>&nbsp;ONLINE</div>
       <div class="sys-stats">
         <span>PERM: <strong id="top-real">0</strong></span>
@@ -235,29 +220,26 @@ tbody tr:last-child td{border-bottom:none}
       </div>
     </div>
     <div class="topbar-right">
-      <span id="last-upd">ÔÇö</span>
-      <button class="btn-sm" onclick="loadAll()">Ôå╗ SYNC</button>
+      <span id="last-upd">--</span>
+      <button class="btn-sm" onclick="loadAll()">SYNC</button>
     </div>
   </div>
 
   <div class="sidebar">
     <div class="nav-section">// SISTEMA</div>
-    <div class="nav-item active" onclick="showPage('dashboard',this)">Ô¼í Dashboard</div>
-    <div class="nav-item" onclick="showPage('funil',this)">Ô¼í Funil</div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)">Dashboard</div>
+    <div class="nav-item" onclick="showPage('funil',this)">Funil</div>
     <div class="nav-section">// DADOS</div>
-    <div class="nav-item" onclick="showPage('transactions',this)">Ô¼í Transa├º├Áes</div>
-    <div class="nav-item" onclick="showPage('comprovantes',this)">Ô¼í Comprovantes</div>
-    <div class="nav-section">// TR├üFEGO</div>
-    <div class="nav-item" onclick="showPage('acessos',this)">Ô¼í Acessos &amp; Cloaker</div>
+    <div class="nav-item" onclick="showPage('transactions',this)">Transacoes</div>
+    <div class="nav-item" onclick="showPage('comprovantes',this)">Comprovantes</div>
+    <div class="nav-section">// TRAFEGO</div>
+    <div class="nav-item" onclick="showPage('acessos',this)">Acessos &amp; Cloaker</div>
   </div>
 
   <div class="main">
-
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="stats-grid" id="stats-grid"></div>
-
-      <!-- ROW 1: FATURAMENTO + LIVE FEED -->
       <div class="grid2">
         <div class="panel">
           <div class="panel-header"><span class="panel-title">FATURAMENTO</span></div>
@@ -271,28 +253,26 @@ tbody tr:last-child td{border-bottom:none}
           </div>
         </div>
         <div class="panel">
-          <div class="panel-header"><span class="panel-title">LIVE FEED</span></div>
+          <div class="panel-header">
+            <span class="panel-title">LIVE FEED</span>
+            <span style="font-size:10px;color:var(--dim)">cloaker + acessos ao site</span>
+          </div>
           <div class="log-stream" id="live-feed"><div style="padding:14px;color:var(--dark)">// Aguardando eventos...</div></div>
         </div>
       </div>
-
-      <!-- ROW 2: 3 NEW WIDGETS -->
       <div class="grid3">
-        <!-- MAPA DE CONVERS├âO -->
         <div class="panel">
-          <div class="panel-header"><span class="panel-title">MAPA DE CONVERS├âO</span></div>
+          <div class="panel-header"><span class="panel-title">MAPA DE CONVERSAO</span></div>
           <div id="conv-body">
-            <div class="conv-row"><span class="conv-label">ACESSOS ÔåÆ TX</span><span class="conv-val" id="conv-ac2tx">ÔÇö</span></div>
-            <div class="conv-row"><span class="conv-label">TX ÔåÆ PAGO</span><span class="conv-val" id="conv-tx2paid">ÔÇö</span></div>
-            <div class="conv-row"><span class="conv-label">PAGO ÔåÆ COMPROVAT.</span><span class="conv-val" id="conv-paid2comp">ÔÇö</span></div>
-            <div class="conv-row"><span class="conv-label">REAL ÔåÆ TX</span><span class="conv-val" id="conv-real2tx">ÔÇö</span></div>
-            <div class="conv-row"><span class="conv-label">ABANDONO</span><span class="conv-val" id="conv-abandono" style="color:var(--red)">ÔÇö</span></div>
+            <div class="conv-row"><span class="conv-label">ACESSOS -> TX</span><span class="conv-val" id="conv-ac2tx">--</span></div>
+            <div class="conv-row"><span class="conv-label">TX -> PAGO</span><span class="conv-val" id="conv-tx2paid">--</span></div>
+            <div class="conv-row"><span class="conv-label">PAGO -> COMPROVAT.</span><span class="conv-val" id="conv-paid2comp">--</span></div>
+            <div class="conv-row"><span class="conv-label">REAL -> TX</span><span class="conv-val" id="conv-real2tx">--</span></div>
+            <div class="conv-row"><span class="conv-label">ABANDONO</span><span class="conv-val" id="conv-abandono" style="color:var(--red)">--</span></div>
           </div>
         </div>
-
-        <!-- ├ÜLTIMAS TRANSA├ç├òES -->
         <div class="panel">
-          <div class="panel-header"><span class="panel-title">├ÜLTIMAS TRANSA├ç├òES</span></div>
+          <div class="panel-header"><span class="panel-title">ULTIMAS TRANSACOES</span></div>
           <div style="overflow-x:auto">
             <table class="mini-table">
               <thead><tr><th>NOME</th><th>VALOR</th><th>STATUS</th></tr></thead>
@@ -300,14 +280,12 @@ tbody tr:last-child td{border-bottom:none}
             </table>
           </div>
         </div>
-
-        <!-- STATUS DO SISTEMA -->
         <div class="panel">
           <div class="panel-header"><span class="panel-title">STATUS DO SISTEMA</span></div>
-          <div class="status-row"><span class="status-name">API CPF (Receita)</span><span class="status-online">ÔùÅ ONLINE</span></div>
-          <div class="status-row"><span class="status-name">Gateway Masterfy</span><span class="status-online">ÔùÅ ONLINE</span></div>
-          <div class="status-row"><span class="status-name">Supabase DB</span><span class="status-online">ÔùÅ ONLINE</span></div>
-          <div class="status-row"><span class="status-name">Cloaker Engine</span><span class="status-online">ÔùÅ ONLINE</span></div>
+          <div class="status-row"><span class="status-name">API CPF (Receita)</span><span class="status-online">● ONLINE</span></div>
+          <div class="status-row"><span class="status-name">Gateway Masterfy</span><span class="status-online">● ONLINE</span></div>
+          <div class="status-row"><span class="status-name">Supabase DB</span><span class="status-online">● ONLINE</span></div>
+          <div class="status-row"><span class="status-name">Cloaker Engine</span><span class="status-online">● ONLINE</span></div>
           <div class="status-row"><span class="status-name">Uptime</span><span class="status-online" style="font-size:13px">99.9%</span></div>
         </div>
       </div>
@@ -316,30 +294,30 @@ tbody tr:last-child td{border-bottom:none}
     <!-- FUNIL -->
     <div class="page" id="page-funil">
       <div class="panel">
-        <div class="panel-header"><span class="panel-title">CONVERS├âO DO FUNIL</span></div>
+        <div class="panel-header"><span class="panel-title">CONVERSAO DO FUNIL</span></div>
         <div style="padding:12px" id="funil-rows"></div>
       </div>
     </div>
 
-    <!-- TRANSA├ç├òES -->
+    <!-- TRANSACOES -->
     <div class="page" id="page-transactions">
       <div class="panel">
         <div class="panel-header">
-          <span class="panel-title">TRANSA├ç├òES</span>
+          <span class="panel-title">TRANSACOES</span>
           <div class="toolbar">
             <input class="search-inp" type="text" id="search-tx" placeholder="// buscar cpf, nome, email..." oninput="filterTx()"/>
             <select class="filter-sel" id="filter-status" onchange="filterTx()">
-              <option value="">ALL STATUS</option>
-              <option value="paid">PAID</option>
-              <option value="pending">PENDING</option>
-              <option value="expired">EXPIRED</option>
+              <option value="">TODOS</option>
+              <option value="paid">PAGO</option>
+              <option value="pending">PENDENTE</option>
+              <option value="expired">EXPIRADO</option>
             </select>
           </div>
         </div>
         <div class="tw">
           <table><thead><tr><th>DATA</th><th>NOME</th><th>CPF</th><th>EMAIL</th><th>TELEFONE</th><th>VALOR</th><th>STATUS</th><th>UTM</th><th>ID</th></tr></thead>
           <tbody id="tx-body"></tbody></table>
-          <div id="tx-empty" class="empty-state" style="display:none">// NENHUMA TRANSA├ç├âO</div>
+          <div id="tx-empty" class="empty-state" style="display:none">// NENHUMA TRANSACAO</div>
         </div>
       </div>
     </div>
@@ -361,11 +339,14 @@ tbody tr:last-child td{border-bottom:none}
 
     <!-- ACESSOS & CLOAKER -->
     <div class="page" id="page-acessos">
+      <!-- NOTA: cloaker_logs = quem clicou no anuncio (click.html)
+                 access_logs  = quem carregou o site (index.html)
+           Sao tabelas separadas — um REAL no cloaker pode nao ter access_log ainda -->
       <div class="stats-grid" id="cloaker-stats" style="margin-bottom:14px"></div>
       <div class="panel" style="margin-bottom:14px">
-        <div class="panel-header"><span class="panel-title">CLOAKER ÔÇö RESULTADO POR ACESSO</span></div>
+        <div class="panel-header"><span class="panel-title">CLOAKER - RESULTADO POR ACESSO</span></div>
         <div class="tw">
-          <table><thead><tr><th>DATA</th><th>IP</th><th>RESULTADO</th><th>MOTIVO</th><th>DISPOSITIVO</th><th>PA├ìS</th></tr></thead>
+          <table><thead><tr><th>DATA</th><th>IP</th><th>RESULTADO</th><th>MOTIVO</th><th>DISPOSITIVO</th><th>PAIS</th></tr></thead>
           <tbody id="cloaker-body"></tbody></table>
           <div id="cloaker-empty" class="empty-state" style="display:none">// AGUARDANDO ACESSOS AO CLOAKER</div>
         </div>
@@ -373,7 +354,7 @@ tbody tr:last-child td{border-bottom:none}
       <div class="panel">
         <div class="panel-header"><span class="panel-title">TODOS OS ACESSOS AO SITE</span></div>
         <div class="tw">
-          <table><thead><tr><th>DATA</th><th>IP</th><th>P├üGINA</th><th>REFERRER</th><th>DISPOSITIVO</th></tr></thead>
+          <table><thead><tr><th>DATA</th><th>IP</th><th>PAGINA</th><th>REFERRER</th><th>DISPOSITIVO</th></tr></thead>
           <tbody id="logs-body"></tbody></table>
           <div id="logs-empty" class="empty-state" style="display:none">// NENHUM ACESSO</div>
         </div>
@@ -386,7 +367,7 @@ tbody tr:last-child td{border-bottom:none}
 <!-- MODAL -->
 <div class="modal" id="img-modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">Ô£ò FECHAR</button>
+    <button class="modal-close" onclick="closeModal()">X FECHAR</button>
     <div style="font-size:10px;color:var(--dim);margin-bottom:8px;letter-spacing:1px">// COMPROVANTE</div>
     <img id="modal-img" src="" alt="Comprovante"/>
   </div>
@@ -398,10 +379,7 @@ const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const PASS='drop2025@';
 let allTx=[],allComp=[],allLogs=[],allCloaker=[];
 
-function updateClock(){
-  const el=document.getElementById('term-clock');
-  if(el)el.textContent=new Date().toTimeString().slice(0,8);
-}
+function updateClock(){const el=document.getElementById('term-clock');if(el)el.textContent=new Date().toTimeString().slice(0,8);}
 setInterval(updateClock,1000);updateClock();
 setInterval(()=>{const el=document.getElementById('t-lat');if(el)el.textContent=Math.floor(8+Math.random()*20)+'ms';},3000);
 
@@ -411,7 +389,6 @@ function startApp(){
   loadAll();
   startOnlineCounter();
   setInterval(loadAll,30000);
-  // Poll rápido só para live feed + cloaker (a cada 8s)
   setInterval(loadLiveFeedOnly,8000);
 }
 if(localStorage.getItem('admin_auth')==='ok') startApp();
@@ -422,7 +399,7 @@ function doLogin(){
     localStorage.setItem('admin_auth','ok');
     startApp();
   } else {
-    document.getElementById('login-err').textContent='// ACESSO NEGADO ÔÇö SENHA INCORRETA';
+    document.getElementById('login-err').textContent='// ACESSO NEGADO - SENHA INCORRETA';
   }
 }
 
@@ -435,15 +412,10 @@ async function sbFetch(table,extra=''){
 
 async function loadLiveFeedOnly(){
   try{
-    const [logs,cloaker]=await Promise.all([
-      sbFetch('access_logs'),sbFetch('cloaker_logs')
-    ]);
+    const [logs,cloaker]=await Promise.all([sbFetch('access_logs'),sbFetch('cloaker_logs')]);
     if(Array.isArray(logs))allLogs=logs;
     if(Array.isArray(cloaker))allCloaker=cloaker;
-    renderLiveFeed();
-    updateTopbar();
-    renderStats();
-    renderCloaker();
+    renderLiveFeed();updateTopbar();renderStats();renderCloaker();
   }catch(e){}
 }
 
@@ -461,9 +433,7 @@ async function loadAll(){
     renderTx(allTx);renderComp(allComp);renderLogs(allLogs);
     renderFunil();renderCloaker();updateTopbar();renderLiveFeed();
     document.getElementById('last-upd').textContent=new Date().toLocaleTimeString('pt-BR');
-  }catch(e){
-    document.getElementById('last-upd').textContent='// ERR';
-  }
+  }catch(e){document.getElementById('last-upd').textContent='// ERR';}
 }
 </script>
 
@@ -472,20 +442,18 @@ function updateTopbar(){
   const real=allCloaker.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
   const bots=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BOT').length;
   const blocked=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BLOCKED').length;
-  const tReal=document.getElementById('top-real');
-  const tBots=document.getElementById('top-bots');
-  const tBlocked=document.getElementById('top-blocked');
-  const tLogs=document.getElementById('top-logs');
-  if(tReal)tReal.textContent=real;
-  if(tBots)tBots.textContent=bots;
-  if(tBlocked)tBlocked.textContent=blocked;
-  if(tLogs)tLogs.textContent=allLogs.length;
+  const tReal=document.getElementById('top-real');const tBots=document.getElementById('top-bots');
+  const tBlocked=document.getElementById('top-blocked');const tLogs=document.getElementById('top-logs');
+  if(tReal)tReal.textContent=real;if(tBots)tBots.textContent=bots;
+  if(tBlocked)tBlocked.textContent=blocked;if(tLogs)tLogs.textContent=allLogs.length;
 }
 
+// LIVE FEED — combina cloaker_logs (click no anuncio) + access_logs (carregou o site)
+// REAL/BOT/BLOCKED = veio do cloaker (click.html)
+// ACCESS = veio do site (log-access.js) — contagem separada, por isso pode diferir
 function renderLiveFeed(){
   const feed=document.getElementById('live-feed');
   if(!feed)return;
-  // Marca cada entrada com _type para não confundir campos entre tabelas
   const cloakerItems=allCloaker.slice(0,20).map(l=>({...l,_type:'cloaker'}));
   const accessItems=allLogs.slice(0,10).map(l=>({...l,_type:'access'}));
   const recent=[...cloakerItems,...accessItems]
@@ -499,11 +467,11 @@ function renderLiveFeed(){
     let tag,msg;
     if(l._type==='cloaker'){
       tag=(l.result||'UNKNOWN').toUpperCase();
-      msg=l.reason||'—';
+      msg=l.reason||'-';
     } else {
       tag='ACCESS';
       const isMobile=/android|iphone|ipad/i.test(l.user_agent||'');
-      msg=(l.path||'/')+(l.referrer?' · ref:'+l.referrer:'')+' · '+(isMobile?'Mobile':'Desktop');
+      msg=(l.path||'/')+(l.referrer?' | ref:'+l.referrer:'')+' | '+(isMobile?'Mobile':'Desktop');
     }
     const t=new Date(l.created_at).toLocaleTimeString('pt-BR');
     return`<div class="log-line"><span class="log-time">${t}</span><span class="log-tag ${tag}">${tag}</span><span class="log-msg">${msg}</span></div>`;
@@ -524,17 +492,17 @@ async function startOnlineCounter(){
   upd();setInterval(upd,15000);
 }
 
-function fmt(n){if(!n)return'ÔÇö';return new Date(n).toLocaleString('pt-BR');}
-function fmtCpf(c){if(!c)return'ÔÇö';return c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4');}
+function fmt(n){if(!n)return'-';return new Date(n).toLocaleString('pt-BR');}
+function fmtCpf(c){if(!c)return'-';return c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4');}
 function fmtVal(v){return'R$ '+parseFloat(v||0).toFixed(2).replace('.',',');}
 function pct(a,b){if(!b)return'0%';return((a/b)*100).toFixed(1)+'%';}
 
 function statusBadge(s){
   s=(s||'').toLowerCase();
-  if(s==='paid'||s==='approved')return`<span class="badge paid">ÔûÂ PAGO</span>`;
-  if(s==='pending')return`<span class="badge pending">ÔûÀ PENDENTE</span>`;
-  if(s==='waiting_payment')return`<span class="badge waiting">ÔûÀ AGUARD.</span>`;
-  if(s==='expired'||s==='cancelled')return`<span class="badge expired">Ô£ò EXPIRADO</span>`;
+  if(s==='paid'||s==='approved')return`<span class="badge paid">PAGO</span>`;
+  if(s==='pending')return`<span class="badge pending">PENDENTE</span>`;
+  if(s==='waiting_payment')return`<span class="badge waiting">AGUARDANDO</span>`;
+  if(s==='expired'||s==='cancelled')return`<span class="badge expired">EXPIRADO</span>`;
   return`<span class="badge waiting">${s}</span>`;
 }
 function devBadge(ua){
@@ -543,9 +511,9 @@ function devBadge(ua){
   return`<span class="badge desktop">DESKTOP</span>`;
 }
 function countryFlag(c){
-  const f={'BR':'­ƒçº­ƒçÀ','US':'­ƒç║­ƒç©','PT':'­ƒçÁ­ƒç╣','AR':'­ƒçª­ƒçÀ','MX':'­ƒç▓­ƒç¢','CO':'­ƒç¿­ƒç┤','CL':'­ƒç¿­ƒç▒','PE':'­ƒçÁ­ƒç¬','ES':'­ƒç¬­ƒç©','GB':'­ƒç¼­ƒçº','DE':'­ƒç®­ƒç¬','FR':'­ƒç½­ƒçÀ','CA':'­ƒç¿­ƒçª','AU':'­ƒçª­ƒç║'};
+  const flags={'BR':'BR','US':'US','PT':'PT','AR':'AR','MX':'MX','CO':'CO','CL':'CL','PE':'PE','ES':'ES','GB':'GB','DE':'DE','FR':'FR','CA':'CA','AU':'AU'};
   const code=(c||'').toUpperCase();
-  return(f[code]||'­ƒîì')+' '+code;
+  return(flags[code]||'?')+' '+code;
 }
 </script>
 
@@ -561,11 +529,11 @@ function renderStats(){
   const blocked=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BLOCKED').length;
   const cT=allCloaker.length||1;
   document.getElementById('stats-grid').innerHTML=`
-    <div class="stat-card c-cyan"><div class="s-label">TRANSAÇÕES</div><div class="s-val">${allTx.length}</div></div>
+    <div class="stat-card c-cyan"><div class="s-label">TRANSACOES</div><div class="s-val">${allTx.length}</div></div>
     <div class="stat-card c-yellow"><div class="s-label">PAGOS</div><div class="s-val">${paid}</div><div class="s-sub">TAXA ${conv}%</div></div>
     <div class="stat-card c-orange"><div class="s-label">PENDENTES</div><div class="s-val">${pending}</div><div class="s-sub">R$ ${revP.toFixed(2).replace('.',',')}</div></div>
     <div class="stat-card c-purple"><div class="s-label">COMPROVANTES</div><div class="s-val">${allComp.length}</div></div>
-    <div class="stat-card"><div class="s-label">ACESSOS</div><div class="s-val">${allLogs.length}</div></div>
+    <div class="stat-card"><div class="s-label">ACESSOS SITE</div><div class="s-val">${allLogs.length}</div></div>
     <div class="stat-card c-red"><div class="s-label">ABANDONO</div><div class="s-val">${allTx.length-paid}</div></div>
     <div class="stat-card c-cyan"><div class="s-label">PERMITIDOS</div><div class="s-val">${real}</div><div class="s-sub">${((real/cT)*100).toFixed(0)}% CLOAKER</div></div>
     <div class="stat-card c-red"><div class="s-label">BOTS</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/cT)*100).toFixed(0)}% CLOAKER</div></div>
@@ -591,12 +559,9 @@ function renderLastTx(){
   const body=document.getElementById('last-tx-body');
   if(!body)return;
   const last=allTx.slice(0,5);
-  if(!last.length){
-    body.innerHTML='<tr><td colspan="3" style="color:var(--dark);text-align:center;padding:14px">// sem dados</td></tr>';
-    return;
-  }
+  if(!last.length){body.innerHTML='<tr><td colspan="3" style="color:var(--dark);text-align:center;padding:14px">// sem dados</td></tr>';return;}
   body.innerHTML=last.map(t=>`<tr>
-    <td>${t.customer_name||'ÔÇö'}</td>
+    <td>${t.customer_name||'-'}</td>
     <td style="color:var(--green);font-weight:700">${fmtVal(t.amount)}</td>
     <td>${statusBadge(t.status)}</td>
   </tr>`).join('');
@@ -605,20 +570,17 @@ function renderLastTx(){
 function renderFunil(){
   const paid=allTx.filter(t=>['paid','approved'].includes((t.status||'').toLowerCase())).length;
   const steps=[
-    {icon:'­ƒæü',label:'ACESSOS TOTAIS',val:allLogs.length,base:allLogs.length},
-    {icon:'­ƒôï',label:'CPFs DIGITADOS',val:allTx.length,base:allLogs.length},
-    {icon:'­ƒÆ│',label:'PIX GERADOS',val:allTx.length,base:allLogs.length},
-    {icon:'Ô£à',label:'PAGAMENTOS CONFIRMADOS',val:paid,base:allTx.length||1},
-    {icon:'­ƒôÄ',label:'COMPROVANTES ENVIADOS',val:allComp.length,base:allTx.length||1},
+    {icon:'[V]',label:'ACESSOS TOTAIS',val:allLogs.length,base:allLogs.length},
+    {icon:'[C]',label:'CPFs DIGITADOS',val:allTx.length,base:allLogs.length},
+    {icon:'[P]',label:'PIX GERADOS',val:allTx.length,base:allLogs.length},
+    {icon:'[OK]',label:'PAGAMENTOS CONFIRMADOS',val:paid,base:allTx.length||1},
+    {icon:'[F]',label:'COMPROVANTES ENVIADOS',val:allComp.length,base:allTx.length||1},
   ];
   document.getElementById('funil-rows').innerHTML=steps.map(s=>{
     const p=s.base?((s.val/s.base)*100).toFixed(1):0;
     return`<div class="funnel-row">
       <div class="funnel-icon">${s.icon}</div>
-      <div class="funnel-info">
-        <div class="funnel-label">${s.label}</div>
-        <div class="funnel-bar"><div class="funnel-fill" style="width:${p}%"></div></div>
-      </div>
+      <div class="funnel-info"><div class="funnel-label">${s.label}</div><div class="funnel-bar"><div class="funnel-fill" style="width:${p}%"></div></div></div>
       <div class="funnel-right"><div class="funnel-count">${s.val}</div><div class="funnel-pct">${p}%</div></div>
     </div>`;
   }).join('');
@@ -627,20 +589,19 @@ function renderFunil(){
 
 <script>
 function renderTx(data){
-  const body=document.getElementById('tx-body');
-  const empty=document.getElementById('tx-empty');
+  const body=document.getElementById('tx-body');const empty=document.getElementById('tx-empty');
   if(!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
   body.innerHTML=data.map(t=>`<tr>
     <td style="color:var(--dim);white-space:nowrap">${fmt(t.created_at)}</td>
-    <td>${t.customer_name||'ÔÇö'}</td>
+    <td>${t.customer_name||'-'}</td>
     <td style="font-family:monospace">${fmtCpf(t.customer_cpf)}</td>
-    <td style="color:var(--dim)">${t.customer_email||'ÔÇö'}</td>
-    <td>${t.customer_phone||'ÔÇö'}</td>
+    <td style="color:var(--dim)">${t.customer_email||'-'}</td>
+    <td>${t.customer_phone||'-'}</td>
     <td style="color:var(--green);font-weight:700">${fmtVal(t.amount)}</td>
     <td>${statusBadge(t.status)}</td>
-    <td style="color:var(--dim)">${t.utm_source||'ÔÇö'}</td>
-    <td style="color:var(--dark);font-size:10px">${(t.transaction_id||'').slice(0,12)}ÔÇª</td>
+    <td style="color:var(--dim)">${t.utm_source||'-'}</td>
+    <td style="color:var(--dark);font-size:10px">${(t.transaction_id||'').slice(0,12)}...</td>
   </tr>`).join('');
 }
 
@@ -655,16 +616,15 @@ function filterTx(){
 }
 
 function renderComp(data){
-  const body=document.getElementById('comp-body');
-  const empty=document.getElementById('comp-empty');
+  const body=document.getElementById('comp-body');const empty=document.getElementById('comp-empty');
   if(!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
   body.innerHTML=data.map((c,i)=>`<tr>
     <td style="color:var(--dim);white-space:nowrap">${fmt(c.created_at)}</td>
-    <td>${c.nome||'ÔÇö'}</td>
+    <td>${c.nome||'-'}</td>
     <td style="font-family:monospace">${fmtCpf(c.cpf)}</td>
-    <td style="color:var(--dark);font-size:10px">${(c.transaction_id||'ÔÇö').slice(0,16)}</td>
-    <td>${c.arquivo?`<button class="img-btn" onclick="openImg(${i})">ÔûÂ VER</button>`:'ÔÇö'}</td>
+    <td style="color:var(--dark);font-size:10px">${(c.transaction_id||'-').slice(0,16)}</td>
+    <td>${c.arquivo?`<button class="img-btn" onclick="openImg(${i})">VER</button>`:'-'}</td>
   </tr>`).join('');
 }
 
@@ -674,22 +634,20 @@ function filterComp(){
 }
 
 function renderLogs(data){
-  const body=document.getElementById('logs-body');
-  const empty=document.getElementById('logs-empty');
+  const body=document.getElementById('logs-body');const empty=document.getElementById('logs-empty');
   if(!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
   body.innerHTML=data.map(l=>`<tr>
     <td style="color:var(--dim);white-space:nowrap">${fmt(l.created_at)}</td>
-    <td style="font-family:monospace;font-size:10px">${l.ip||'ÔÇö'}</td>
+    <td style="font-family:monospace;font-size:10px">${l.ip||'-'}</td>
     <td style="color:var(--green2)">${l.path||'/'}</td>
-    <td style="color:var(--dim);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.referrer||'ÔÇö'}</td>
+    <td style="color:var(--dim);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.referrer||'-'}</td>
     <td>${devBadge(l.user_agent)}</td>
   </tr>`).join('');
 }
 
 function renderCloaker(){
-  const body=document.getElementById('cloaker-body');
-  const empty=document.getElementById('cloaker-empty');
+  const body=document.getElementById('cloaker-body');const empty=document.getElementById('cloaker-empty');
   const data=allCloaker;
   const bots=data.filter(c=>(c.result||'').toUpperCase()==='BOT').length;
   const real=data.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
@@ -700,7 +658,7 @@ function renderCloaker(){
     <div class="stat-card c-cyan"><div class="s-label">PERMITIDOS</div><div class="s-val">${real}</div><div class="s-sub">${((real/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
     <div class="stat-card c-red"><div class="s-label">BOTS</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
     <div class="stat-card c-orange"><div class="s-label">BLOQUEADOS</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
-    <div class="stat-card c-purple"><div class="s-label">ACESSOS TOTAIS</div><div class="s-val">${allLogs.length}</div><div class="s-sub">ATUALIZADO AO VIVO</div></div>
+    <div class="stat-card c-purple"><div class="s-label">ACESSOS AO SITE</div><div class="s-val">${allLogs.length}</div><div class="s-sub">tabela separada</div></div>
   `;
   if(!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
@@ -709,9 +667,9 @@ function renderCloaker(){
     const badge=r==='BOT'?`<span class="badge bot">BOT</span>`:r==='REAL'?`<span class="badge real">REAL</span>`:`<span class="badge blocked">BLOQUEADO</span>`;
     return`<tr>
       <td style="color:var(--dim);white-space:nowrap">${fmt(l.created_at)}</td>
-      <td style="font-family:monospace;font-size:10px">${l.ip||'ÔÇö'}</td>
+      <td style="font-family:monospace;font-size:10px">${l.ip||'-'}</td>
       <td>${badge}</td>
-      <td style="color:var(--dim)">${l.reason||'ÔÇö'}</td>
+      <td style="color:var(--dim)">${l.reason||'-'}</td>
       <td>${devBadge(l.user_agent)}</td>
       <td>${countryFlag(l.country)}</td>
     </tr>`;
@@ -723,7 +681,7 @@ function openImg(i){
   if(!c||!c.arquivo){alert('// SEM IMAGEM');return;}
   const img=document.getElementById('modal-img');
   const src=c.arquivo;
-  if(src.length<200){alert('// IMAGEM DE TESTE ÔÇö MUITO PEQUENA');return;}
+  if(src.length<200){alert('// IMAGEM DE TESTE - MUITO PEQUENA');return;}
   img.src=src.startsWith('data:')||src.startsWith('http')?src:'data:image/png;base64,'+src;
   img.onerror=()=>{img.alt='// ERRO AO CARREGAR';};
   document.getElementById('img-modal').classList.add('open');
