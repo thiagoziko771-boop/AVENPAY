@@ -146,8 +146,7 @@ tbody tr:last-child td{border-bottom:none}
     <div class="nav-item" onclick="showPage('transactions')"><span class="nav-icon">💳</span> Transações</div>
     <div class="nav-item" onclick="showPage('comprovantes')"><span class="nav-icon">📎</span> Comprovantes</div>
     <div class="nav-section">Tráfego</div>
-    <div class="nav-item" onclick="showPage('acessos')"><span class="nav-icon">👁️</span> Acessos</div>
-    <div class="nav-item" onclick="showPage('cloaker')"><span class="nav-icon">🤖</span> Cloaker</div>
+    <div class="nav-item" onclick="showPage('acessos')"><span class="nav-icon">👁️</span> Acessos & Cloaker</div>
   </div>
 
   <!-- CONTENT -->
@@ -162,6 +161,10 @@ tbody tr:last-child td{border-bottom:none}
           <div style="padding:24px;text-align:center">
             <div class="rev-big" id="rev-total">R$ 0,00</div>
             <div class="rev-label">Total confirmado</div>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid #1e3a5f">
+              <div id="rev-pending" style="font-size:22px;font-weight:800;color:#fbbf24">R$ 0,00</div>
+              <div class="rev-label">Em aberto (pendentes)</div>
+            </div>
           </div>
         </div>
         <div class="card">
@@ -221,28 +224,24 @@ tbody tr:last-child td{border-bottom:none}
       </div>
     </div>
 
-    <!-- ACESSOS -->
+    <!-- ACESSOS + CLOAKER UNIFICADO -->
     <div class="page" id="page-acessos">
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-header"><span class="card-title">🤖 Cloaker — Resultado por Acesso</span></div>
+        <div class="tw">
+          <table><thead><tr>
+            <th>Data</th><th>IP</th><th>Resultado</th><th>Motivo</th><th>Dispositivo</th><th>País</th>
+          </tr></thead><tbody id="cloaker-body"></tbody></table>
+          <div id="cloaker-empty" class="empty-state" style="display:none"><div class="empty-icon">🤖</div><p>Nenhum acesso registrado no cloaker ainda</p></div>
+        </div>
+      </div>
       <div class="card">
-        <div class="card-header"><span class="card-title">👁️ Acessos Recentes</span></div>
+        <div class="card-header"><span class="card-title">👁️ Todos os Acessos ao Site</span></div>
         <div class="tw">
           <table><thead><tr>
             <th>Data</th><th>IP</th><th>Página</th><th>Referrer</th><th>Dispositivo</th>
           </tr></thead><tbody id="logs-body"></tbody></table>
           <div id="logs-empty" class="empty-state" style="display:none"><div class="empty-icon">👁️</div><p>Nenhum acesso registrado</p></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CLOAKER -->
-    <div class="page" id="page-cloaker">
-      <div class="card">
-        <div class="card-header"><span class="card-title">🤖 Cloaker — Acessos ao click.html</span></div>
-        <div class="tw">
-          <table><thead><tr>
-            <th>Data</th><th>IP</th><th>Resultado</th><th>Motivo</th><th>Dispositivo</th><th>País</th>
-          </tr></thead><tbody id="cloaker-body"></tbody></table>
-          <div id="cloaker-empty" class="empty-state" style="display:none"><div class="empty-icon">🤖</div><p>Nenhum acesso registrado no cloaker</p></div>
         </div>
       </div>
     </div>
@@ -346,16 +345,18 @@ function renderStats(){
   const paid=allTx.filter(t=>['paid','approved'].includes((t.status||'').toLowerCase())).length;
   const pending=allTx.filter(t=>['pending','waiting_payment'].includes((t.status||'').toLowerCase())).length;
   const rev=allTx.filter(t=>['paid','approved'].includes((t.status||'').toLowerCase())).reduce((a,t)=>a+(parseFloat(t.amount)||0),0);
+  const revPending=allTx.filter(t=>['pending','waiting_payment'].includes((t.status||'').toLowerCase())).reduce((a,t)=>a+(parseFloat(t.amount)||0),0);
   const conv=allTx.length?((paid/allTx.length)*100).toFixed(1):0;
   document.getElementById('stats-grid').innerHTML=`
     <div class="stat-card c-blue"><div class="s-label">Transações</div><div class="s-val">${allTx.length}</div><div class="s-icon">💳</div></div>
     <div class="stat-card c-green"><div class="s-label">Pagos</div><div class="s-val">${paid}</div><div class="s-sub">Taxa ${conv}%</div><div class="s-icon">✅</div></div>
-    <div class="stat-card c-yellow"><div class="s-label">Pendentes</div><div class="s-val">${pending}</div><div class="s-icon">⏳</div></div>
+    <div class="stat-card c-yellow"><div class="s-label">Pendentes</div><div class="s-val">${pending}</div><div class="s-sub">R$ ${revPending.toFixed(2).replace('.',',')}</div><div class="s-icon">⏳</div></div>
     <div class="stat-card c-purple"><div class="s-label">Comprovantes</div><div class="s-val">${allComp.length}</div><div class="s-icon">📎</div></div>
     <div class="stat-card c-cyan"><div class="s-label">Acessos</div><div class="s-val">${allLogs.length}</div><div class="s-icon">👁️</div></div>
     <div class="stat-card c-red"><div class="s-label">Abandono</div><div class="s-val">${allTx.length-paid}</div><div class="s-icon">🚪</div></div>
   `;
   document.getElementById('rev-total').textContent='R$ '+rev.toFixed(2).replace('.',',');
+  document.getElementById('rev-pending').textContent='R$ '+revPending.toFixed(2).replace('.',',');
   const mobile=allLogs.filter(l=>/android|iphone|ipad/i.test(l.user_agent||'')).length;
   const desktop=allLogs.length-mobile;
   document.getElementById('device-breakdown').innerHTML=`
@@ -456,6 +457,12 @@ function renderLogs(data){
   </tr>`).join('');
 }
 
+function countryFlag(code){
+  const flags={'BR':'🇧🇷','US':'🇺🇸','PT':'🇵🇹','AR':'🇦🇷','MX':'🇲🇽','CO':'🇨🇴','CL':'🇨🇱','PE':'🇵🇪','UY':'🇺🇾','ES':'🇪🇸','GB':'🇬🇧','DE':'🇩🇪','FR':'🇫🇷','IT':'🇮🇹','CA':'🇨🇦','AU':'🇦🇺','JP':'🇯🇵','CN':'🇨🇳','IN':'🇮🇳','RU':'🇷🇺'};
+  const c=(code||'').toUpperCase();
+  return (flags[c]||'🌍')+' '+c;
+}
+
 function renderCloaker(){
   const body=document.getElementById('cloaker-body');
   const empty=document.getElementById('cloaker-empty');
@@ -476,7 +483,7 @@ function renderCloaker(){
       <td>${badge}</td>
       <td style="font-size:12px;color:#64748b">${l.reason||'—'}</td>
       <td>${dev}</td>
-      <td style="font-size:13px">${l.country==='BR'?'🇧🇷 BR':l.country||'?'}</td>
+      <td style="font-size:13px">${countryFlag(l.country)}</td>
     </tr>`;
   }).join('');
 }
