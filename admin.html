@@ -294,13 +294,16 @@ async function loadAll(){
 }
 
 function startOnlineCounter(){
-  // Simula contagem online com base em acessos dos últimos 5 min
+  // Conta acessos dos últimos 3 minutos no access_logs
   function upd(){
-    const fiveMin=Date.now()-5*60*1000;
-    const recent=allLogs.filter(l=>new Date(l.created_at).getTime()>fiveMin).length;
-    document.getElementById('online-count').textContent=recent;
+    const threeMin=Date.now()-3*60*1000;
+    // Conta IPs únicos nos últimos 3 min
+    const recentIps=new Set(allLogs.filter(l=>new Date(l.created_at).getTime()>threeMin).map(l=>l.ip||'x'));
+    const count=recentIps.size||0;
+    document.getElementById('online-count').textContent=count;
   }
-  upd();setInterval(upd,10000);
+  upd();
+  setInterval(upd,5000);
 }
 
 function fmt(n){if(!n)return'-';return new Date(n).toLocaleString('pt-BR');}
@@ -463,10 +466,30 @@ function renderCloaker(){
 
 function openImg(i){
   const c=allComp[i];
-  if(!c||!c.arquivo){alert('Imagem não disponível');return;}
+  if(!c||!c.arquivo){
+    alert('Este comprovante não tem imagem salva.');
+    return;
+  }
   const img=document.getElementById('modal-img');
-  img.src=c.arquivo.startsWith('data:')||c.arquivo.startsWith('http')?c.arquivo:'data:image/png;base64,'+c.arquivo;
-  img.onerror=()=>{img.alt='Erro ao carregar imagem';};
+  const src=c.arquivo;
+  // Detecta se é base64 válido com conteúdo real
+  if(src.startsWith('data:')){
+    // Verifica se tem conteúdo real (base64 com mais de 200 chars)
+    if(src.length < 200){
+      alert('Imagem de teste — muito pequena para exibir. Imagens reais dos clientes aparecerão normalmente.');
+      return;
+    }
+    img.src=src;
+  } else if(src.startsWith('http')){
+    img.src=src;
+  } else {
+    img.src='data:image/png;base64,'+src;
+  }
+  img.onerror=()=>{
+    img.style.display='none';
+    img.insertAdjacentHTML('afterend','<p style="text-align:center;color:#f87171;padding:20px">Erro ao carregar imagem. Formato não suportado.</p>');
+  };
+  img.style.display='block';
   document.getElementById('img-modal').classList.add('open');
 }
 function closeModal(){document.getElementById('img-modal').classList.remove('open');}
