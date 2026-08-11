@@ -7,154 +7,184 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--green:#00ff88;--green2:#00cc66;--red:#ff4444;--yellow:#ffcc00;--blue:#00ccff;--purple:#cc44ff;--bg:#020a04;--bg2:#050f07;--border:#0a3a1a;--dim:#1a4a2a}
-body{font-family:'Share Tech Mono',monospace;background:var(--bg);color:var(--green);min-height:100vh;overflow-x:hidden}
-/* SCANLINE */
-body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,136,.015) 2px,rgba(0,255,136,.015) 4px);pointer-events:none;z-index:9999}
+:root{
+  --green:#00ff88;
+  --green2:#00cc66;
+  --red:#ff4444;
+  --dim:#336633;
+  --bg:#020a04;
+  --bg2:#050f07;
+  --border:#0a3a1a;
+  --dark:#1a4a2a;
+}
+body{font-family:'Share Tech Mono',monospace;background:var(--bg);color:var(--green);min-height:100vh;overflow-x:hidden;font-size:13px}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,136,.012) 2px,rgba(0,255,136,.012) 4px);pointer-events:none;z-index:9999}
+</style>
+
+<style>
 /* LOGIN */
 .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#000;position:relative;overflow:hidden}
 .login-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,#001a08 0%,#000 60%);opacity:.9}
 .login-terminal{position:absolute;left:5%;top:50%;transform:translateY(-50%);width:42%;max-width:480px;display:none}
 @media(min-width:900px){.login-terminal{display:block}}
 .term-box{border:1px solid var(--green2);border-radius:4px;overflow:hidden}
-.term-header{background:#000;border-bottom:1px solid var(--green2);padding:6px 12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--green2)}
+.term-header{background:#000;border-bottom:1px solid var(--green2);padding:6px 12px;display:flex;align-items:center;gap:8px;font-size:11px;color:var(--dim)}
 .term-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 1.2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .term-body{background:#000;padding:14px;font-size:11px;line-height:1.8;min-height:200px}
-.term-line{color:#444}
-.term-line.g{color:var(--green)}
+.term-line{color:var(--dark)}
+.term-line.g{color:var(--green2)}
 .term-line.r{color:var(--red)}
-.term-line.y{color:var(--yellow)}
-.term-line.b{color:var(--blue)}
-.term-line .tag{font-weight:700}
+.term-line .tag{font-weight:700;color:var(--green)}
 .term-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border-top:1px solid var(--green2)}
 .term-stat{background:#000;padding:10px;text-align:center}
 .term-stat-val{font-size:20px;font-weight:700;color:var(--green);font-family:'Orbitron',monospace}
-.term-stat-label{font-size:9px;color:#336633;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
-.login-box{position:relative;z-index:2;background:#000;border:1px solid var(--green2);border-radius:4px;padding:36px 32px;width:100%;max-width:340px;box-shadow:0 0 40px rgba(0,255,136,.15)}
+.term-stat-label{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.login-box{position:relative;z-index:2;background:#000;border:1px solid var(--green2);border-radius:4px;padding:36px 32px;width:100%;max-width:340px;box-shadow:0 0 40px rgba(0,255,136,.12)}
 .login-logo{text-align:center;margin-bottom:28px}
 .login-logo svg{width:44px;height:44px;margin-bottom:8px}
 .login-logo h1{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;color:var(--green);letter-spacing:2px;text-shadow:0 0 20px var(--green)}
-.login-logo p{font-size:11px;color:#336633;margin-top:4px;letter-spacing:1px}
-.field-label{font-size:10px;color:#336633;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.login-logo p{font-size:11px;color:var(--dim);margin-top:4px;letter-spacing:1px}
+.field-label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
 .inp{width:100%;padding:11px 14px;background:#000;border:1px solid var(--green2);border-radius:2px;color:var(--green);font-size:13px;margin-bottom:16px;font-family:'Share Tech Mono',monospace;transition:border .2s,box-shadow .2s;outline:none}
 .inp:focus{border-color:var(--green);box-shadow:0 0 10px rgba(0,255,136,.3)}
 .btn-login{width:100%;padding:12px;background:transparent;color:var(--green);border:1px solid var(--green);border-radius:2px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Share Tech Mono',monospace;letter-spacing:2px;text-transform:uppercase;transition:all .2s}
-.btn-login:hover{background:rgba(0,255,136,.1);box-shadow:0 0 15px rgba(0,255,136,.3)}
+.btn-login:hover{background:rgba(0,255,136,.1);box-shadow:0 0 15px rgba(0,255,136,.25)}
 #login-err{color:var(--red);font-size:11px;margin-top:8px;text-align:center;min-height:16px}
+</style>
+
+<style>
 /* TOPBAR */
-.topbar{background:#000;border-bottom:1px solid var(--border);padding:0 16px;height:36px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:200;font-size:11px}
-.topbar-left{display:flex;align-items:center;gap:16px}
-.topbar-brand{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--green);letter-spacing:2px;text-shadow:0 0 10px var(--green)}
-.online-pill{color:var(--green);display:flex;align-items:center;gap:5px;font-size:11px}
+.topbar{background:#000;border-bottom:1px solid var(--border);padding:0 16px;height:38px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:200;font-size:11px}
+.topbar-left{display:flex;align-items:center;gap:18px}
+.topbar-brand{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--green);letter-spacing:2px;text-shadow:0 0 10px var(--green)}
+.online-pill{color:var(--dim);display:flex;align-items:center;gap:5px;font-size:11px}
+.online-pill strong{color:var(--green)}
 .pulse{width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green);animation:blink 1s infinite}
-.sys-stats{display:flex;gap:20px;color:#336633;font-size:11px}
-.sys-stat span{color:var(--green)}
-.topbar-right{display:flex;align-items:center;gap:10px;color:#336633;font-size:11px}
-#last-upd{color:#336633}
+.sys-stats{display:flex;gap:18px;color:var(--dim);font-size:11px}
+.sys-stats span strong{color:var(--green)}
+.sys-stats span.red-val strong{color:var(--red)}
+.topbar-right{display:flex;align-items:center;gap:10px;color:var(--dim);font-size:11px}
+#last-upd{color:var(--dim)}
 .btn-sm{padding:4px 10px;background:transparent;border:1px solid var(--green2);color:var(--green2);border-radius:2px;cursor:pointer;font-size:10px;font-family:'Share Tech Mono',monospace;transition:all .2s;letter-spacing:1px}
 .btn-sm:hover{background:rgba(0,255,136,.1);color:var(--green)}
 /* SIDEBAR */
-.sidebar{width:200px;background:#000;border-right:1px solid var(--border);position:fixed;top:36px;left:0;bottom:0;overflow-y:auto;padding:12px 0}
-.nav-section{padding:10px 14px 4px;font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#1a4a2a;font-weight:700}
-.nav-item{padding:8px 16px;cursor:pointer;font-size:11px;color:#336633;display:flex;align-items:center;gap:8px;transition:all .15s;border-left:2px solid transparent;letter-spacing:.5px}
+.sidebar{width:200px;background:#000;border-right:1px solid var(--border);position:fixed;top:38px;left:0;bottom:0;overflow-y:auto;padding:12px 0}
+.nav-section{padding:10px 14px 4px;font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--dark);font-weight:700}
+.nav-item{padding:9px 16px;cursor:pointer;font-size:12px;color:var(--dim);display:flex;align-items:center;gap:8px;transition:all .15s;border-left:2px solid transparent;letter-spacing:.5px}
 .nav-item:hover{background:rgba(0,255,136,.05);color:var(--green2)}
 .nav-item.active{background:rgba(0,255,136,.08);color:var(--green);border-left-color:var(--green);text-shadow:0 0 8px var(--green)}
 /* MAIN */
-.main{margin-left:200px;margin-top:36px;padding:16px;min-height:calc(100vh - 36px)}
+.main{margin-left:200px;margin-top:38px;padding:16px;min-height:calc(100vh - 38px)}
 .page{display:none}.page.active{display:block}
-/* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--border);margin-bottom:16px;border:1px solid var(--border)}
-.stat-card{background:#000;padding:14px;position:relative;overflow:hidden;border-left:2px solid transparent}
-.stat-card.c-green{border-left-color:var(--green)}
+/* STATS GRID */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);margin-bottom:16px;border:1px solid var(--border)}
+.stat-card{background:#000;padding:16px;position:relative;overflow:hidden;border-left:2px solid var(--green2)}
 .stat-card.c-red{border-left-color:var(--red)}
-.stat-card.c-yellow{border-left-color:var(--yellow)}
-.stat-card.c-blue{border-left-color:var(--blue)}
-.stat-card.c-purple{border-left-color:var(--purple)}
-.stat-card.c-cyan{border-left-color:#00ccff}
-.s-label{font-size:9px;color:#336633;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-.s-val{font-size:26px;font-weight:700;color:var(--green);font-family:'Orbitron',monospace;line-height:1;text-shadow:0 0 10px var(--green)}
+.s-label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.s-val{font-size:28px;font-weight:700;color:var(--green);font-family:'Orbitron',monospace;line-height:1;text-shadow:0 0 10px var(--green)}
 .stat-card.c-red .s-val{color:var(--red);text-shadow:0 0 10px var(--red)}
-.stat-card.c-yellow .s-val{color:var(--yellow);text-shadow:0 0 10px var(--yellow)}
-.stat-card.c-blue .s-val{color:var(--blue);text-shadow:0 0 10px var(--blue)}
-.stat-card.c-purple .s-val{color:var(--purple);text-shadow:0 0 10px var(--purple)}
-.stat-card.c-cyan .s-val{color:#00ccff;text-shadow:0 0 10px #00ccff}
-.s-sub{font-size:10px;color:#336633;margin-top:4px}
-/* PANEL */
+.s-sub{font-size:11px;color:var(--dim);margin-top:5px}
+</style>
+
+<style>
+/* PANELS */
 .panel{background:#000;border:1px solid var(--border);margin-bottom:14px}
 .panel-header{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;background:#020a04}
-.panel-title{font-size:11px;font-weight:700;color:var(--green);letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.panel-title{font-size:12px;font-weight:700;color:var(--green);letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
 .panel-title::before{content:'▶';font-size:9px;color:var(--green2)}
 .toolbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .search-inp{padding:6px 10px;background:#000;border:1px solid var(--green2);border-radius:2px;color:var(--green);font-size:11px;width:220px;font-family:'Share Tech Mono',monospace}
 .search-inp:focus{outline:none;border-color:var(--green);box-shadow:0 0 8px rgba(0,255,136,.2)}
 .filter-sel{padding:6px 8px;background:#000;border:1px solid var(--green2);border-radius:2px;color:var(--green);font-size:11px;font-family:'Share Tech Mono',monospace;cursor:pointer}
 .tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:11px}
-th{padding:8px 12px;text-align:left;color:#336633;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;border-bottom:1px solid var(--border);background:#020a04}
-td{padding:8px 12px;border-bottom:1px solid #050f07;vertical-align:middle;font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:9px 12px;text-align:left;color:var(--dim);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;border-bottom:1px solid var(--border);background:#020a04}
+td{padding:9px 12px;border-bottom:1px solid #050f07;vertical-align:middle;font-size:12px}
 tbody tr{background:#000;transition:background .1s}
 tbody tr:hover{background:#020a04}
 tbody tr:last-child td{border-bottom:none}
 /* BADGES */
 .badge{padding:2px 8px;border-radius:2px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px;font-family:'Share Tech Mono',monospace;letter-spacing:.5px}
 .badge.paid{background:rgba(0,255,136,.1);color:var(--green);border:1px solid var(--green2)}
-.badge.pending{background:rgba(255,204,0,.1);color:var(--yellow);border:1px solid #665200}
+.badge.pending{background:transparent;color:var(--dim);border:1px solid var(--dim)}
 .badge.expired{background:rgba(255,68,68,.1);color:var(--red);border:1px solid #661111}
-.badge.waiting{background:rgba(0,204,255,.1);color:var(--blue);border:1px solid #005566}
-.badge.real{background:rgba(0,255,136,.15);color:var(--green);border:1px solid var(--green);text-shadow:0 0 6px var(--green)}
-.badge.bot{background:rgba(255,68,68,.15);color:var(--red);border:1px solid var(--red);text-shadow:0 0 6px var(--red)}
-.badge.blocked{background:rgba(204,68,255,.1);color:var(--purple);border:1px solid #661188}
-.badge.mobile{background:rgba(0,204,255,.1);color:var(--blue);border:1px solid #005566}
-.badge.desktop{background:rgba(0,255,136,.05);color:#336633;border:1px solid var(--border)}
+.badge.waiting{background:transparent;color:var(--dim);border:1px solid var(--dark)}
+.badge.real{background:rgba(0,255,136,.12);color:var(--green);border:1px solid var(--green);text-shadow:0 0 6px var(--green)}
+.badge.bot{background:rgba(255,68,68,.12);color:var(--red);border:1px solid var(--red);text-shadow:0 0 6px var(--red)}
+.badge.blocked{background:transparent;color:var(--dim);border:1px solid var(--dark)}
+.badge.mobile{background:transparent;color:var(--green2);border:1px solid var(--green2)}
+.badge.desktop{background:transparent;color:var(--dim);border:1px solid var(--border)}
 .img-btn{padding:4px 10px;background:transparent;color:var(--green2);border:1px solid var(--green2);border-radius:2px;cursor:pointer;font-size:10px;font-family:'Share Tech Mono',monospace;transition:all .2s}
 .img-btn:hover{background:rgba(0,255,136,.1);color:var(--green)}
-.empty-state{text-align:center;padding:40px;color:#1a4a2a;font-size:12px}
+.empty-state{text-align:center;padding:40px;color:var(--dark);font-size:12px}
+</style>
+
+<style>
 /* MODAL */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;align-items:center;justify-content:center}
 .modal.open{display:flex}
-.modal-box{background:#000;border:1px solid var(--green2);border-radius:2px;padding:20px;max-width:90vw;max-height:88vh;overflow:auto;position:relative;box-shadow:0 0 30px rgba(0,255,136,.2)}
-.modal-close{position:absolute;top:10px;right:12px;background:none;border:none;color:#336633;font-size:18px;cursor:pointer;width:auto;font-family:'Share Tech Mono',monospace}
+.modal-box{background:#000;border:1px solid var(--green2);border-radius:2px;padding:20px;max-width:90vw;max-height:88vh;overflow:auto;position:relative;box-shadow:0 0 30px rgba(0,255,136,.15)}
+.modal-close{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;font-family:'Share Tech Mono',monospace}
 .modal-close:hover{color:var(--red)}
 .modal img{max-width:100%;max-height:60vh;display:block;margin:8px auto}
 /* FUNNEL */
-.funnel-row{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#020a04;margin-bottom:2px;border-left:2px solid var(--green2)}
+.funnel-row{display:flex;align-items:center;gap:12px;padding:11px 14px;background:#020a04;margin-bottom:2px;border-left:2px solid var(--green2)}
 .funnel-icon{font-size:16px;width:24px}
 .funnel-info{flex:1}
-.funnel-label{font-size:11px;color:#336633}
+.funnel-label{font-size:12px;color:var(--dim)}
 .funnel-bar{height:3px;background:#0a1a0a;margin-top:4px}
 .funnel-fill{height:100%;background:linear-gradient(90deg,var(--green2),var(--green));transition:width .6s}
 .funnel-right{text-align:right}
-.funnel-count{font-size:18px;font-weight:700;color:var(--green);font-family:'Orbitron',monospace}
-.funnel-pct{font-size:10px;color:#336633}
+.funnel-count{font-size:20px;font-weight:700;color:var(--green);font-family:'Orbitron',monospace}
+.funnel-pct{font-size:10px;color:var(--dim)}
 /* REVENUE */
 .rev-big{font-size:44px;font-weight:900;color:var(--green);font-family:'Orbitron',monospace;letter-spacing:-1px;text-shadow:0 0 20px var(--green)}
-.rev-pending{font-size:24px;font-weight:700;color:var(--yellow);font-family:'Orbitron',monospace;text-shadow:0 0 12px var(--yellow)}
+.rev-pending{font-size:26px;font-weight:700;color:var(--dim);font-family:'Orbitron',monospace}
+/* LAYOUT */
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-/* LOG STREAM */
-.log-stream{background:#000;border:1px solid var(--border);padding:0;max-height:180px;overflow-y:auto;font-size:10px;line-height:1.9}
-.log-line{padding:2px 14px;border-bottom:1px solid #050f07;display:flex;align-items:center;gap:10px}
-.log-time{color:#1a4a2a;white-space:nowrap;min-width:58px}
-.log-tag{font-weight:700;min-width:60px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px}
+/* LIVE FEED */
+.log-stream{background:#000;border:none;padding:0;max-height:200px;overflow-y:auto;font-size:11px;line-height:1.9}
+.log-line{padding:3px 14px;border-bottom:1px solid #050f07;display:flex;align-items:center;gap:10px}
+.log-time{color:var(--dark);white-space:nowrap;min-width:58px}
+.log-tag{font-weight:700;min-width:60px;font-size:10px}
 .log-tag.REAL{color:var(--green)}
 .log-tag.BOT{color:var(--red)}
-.log-tag.BLOCKED{color:var(--purple)}
-.log-msg{color:#336633;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.grid2{grid-template-columns:1fr}.login-terminal{display:none}}
+.log-tag.BLOCKED{color:var(--dim)}
+.log-tag.ACCESS{color:var(--dim)}
+.log-msg{color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
+/* STATUS PANEL */
+.status-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border)}
+.status-row:last-child{border-bottom:none}
+.status-name{font-size:12px;color:var(--dim)}
+.status-online{color:var(--green);font-size:12px;font-weight:700}
+/* CONVERSION PANEL */
+.conv-row{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border)}
+.conv-row:last-child{border-bottom:none}
+.conv-label{font-size:12px;color:var(--dim)}
+.conv-val{font-size:16px;font-weight:700;color:var(--green);font-family:'Orbitron',monospace}
+/* MINI TABLE */
+.mini-table{width:100%;border-collapse:collapse;font-size:11px}
+.mini-table th{padding:7px 12px;text-align:left;color:var(--dim);font-size:10px;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border);background:#020a04}
+.mini-table td{padding:7px 12px;border-bottom:1px solid #050f07;color:var(--green)}
+.mini-table tr:last-child td{border-bottom:none}
+.mini-table tbody tr:hover{background:#020a04}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}.login-terminal{display:none}}
 </style>
 
-<!-- LOGIN -->
+<!-- LOGIN SCREEN -->
 <div id="login-screen" class="login-wrap">
   <div class="login-bg"></div>
   <div class="login-terminal">
     <div class="term-box">
-      <div class="term-header"><span class="term-dot"></span> SYS-BOOT · CLOAK-FMRT4F <span style="margin-left:auto;color:#1a4a2a" id="term-clock"></span></div>
+      <div class="term-header"><span class="term-dot"></span> SYS-BOOT · CLOAK-FMRT4F <span style="margin-left:auto" id="term-clock"></span></div>
       <div class="term-body" id="term-log">
         <div class="term-line g"><span class="tag">[ROOT]</span> CLOAK-CORE V7.4 · OK</div>
         <div class="term-line g"><span class="tag">[SSL]</span> OPENSSL TLS 1.3 · OK</div>
-        <div class="term-line g"><span class="tag">[FW]</span> FIREWALL RULES LOADED · <span style="color:var(--yellow)">1M+ PAÍSES</span></div>
+        <div class="term-line g"><span class="tag">[FW]</span> FIREWALL RULES LOADED · OK</div>
         <div class="term-line g"><span class="tag">[GEO]</span> GEOIP DB LOADED · 195 PAÍSES</div>
-        <div class="term-line" id="auth-line"><span class="tag" style="color:var(--yellow)">[AUTH]</span> HANDSHAKE READY · <span style="color:var(--green)">■</span></div>
+        <div class="term-line g"><span class="tag">[AUTH]</span> HANDSHAKE READY · <span style="color:var(--green)">■</span></div>
       </div>
       <div class="term-stats">
         <div class="term-stat"><div class="term-stat-val">99.9%</div><div class="term-stat-label">UPTIME</div></div>
@@ -181,12 +211,12 @@ tbody tr:last-child td{border-bottom:none}
   <div class="topbar">
     <div class="topbar-left">
       <span class="topbar-brand">◈ CLOAKER TH 07</span>
-      <div class="online-pill"><span class="pulse"></span><span id="online-count">0</span> ONLINE</div>
+      <div class="online-pill"><span class="pulse"></span><strong id="online-count">0</strong>&nbsp;ONLINE</div>
       <div class="sys-stats">
-        <span>PERMITIDOS: <span id="top-real">0</span></span>
-        <span>BOTS: <span id="top-bots" style="color:var(--red)">0</span></span>
-        <span>BLOQ: <span id="top-blocked" style="color:var(--purple)">0</span></span>
-        <span>ACESSO: <span id="top-logs">0</span></span>
+        <span>PERM: <strong id="top-real">0</strong></span>
+        <span class="red-val">BOTS: <strong id="top-bots">0</strong></span>
+        <span>BLOQ: <strong id="top-blocked">0</strong></span>
+        <span>ACESS: <strong id="top-logs">0</strong></span>
       </div>
     </div>
     <div class="topbar-right">
@@ -203,28 +233,67 @@ tbody tr:last-child td{border-bottom:none}
     <div class="nav-item" onclick="showPage('transactions',this)">⬡ Transações</div>
     <div class="nav-item" onclick="showPage('comprovantes',this)">⬡ Comprovantes</div>
     <div class="nav-section">// TRÁFEGO</div>
-    <div class="nav-item" onclick="showPage('acessos',this)">⬡ Acessos & Cloaker</div>
+    <div class="nav-item" onclick="showPage('acessos',this)">⬡ Acessos &amp; Cloaker</div>
   </div>
 
   <div class="main">
+
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="stats-grid" id="stats-grid"></div>
+
+      <!-- ROW 1: FATURAMENTO + LIVE FEED -->
       <div class="grid2">
         <div class="panel">
           <div class="panel-header"><span class="panel-title">FATURAMENTO</span></div>
-          <div style="padding:20px;text-align:center">
+          <div style="padding:22px;text-align:center">
             <div class="rev-big" id="rev-total">R$ 0,00</div>
-            <div style="font-size:10px;color:#336633;margin-top:4px;letter-spacing:1px">TOTAL CONFIRMADO</div>
+            <div style="font-size:10px;color:var(--dim);margin-top:4px;letter-spacing:1px">TOTAL CONFIRMADO</div>
             <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
               <div class="rev-pending" id="rev-pending">R$ 0,00</div>
-              <div style="font-size:10px;color:#336633;margin-top:4px;letter-spacing:1px">EM ABERTO (PENDENTES)</div>
+              <div style="font-size:10px;color:var(--dim);margin-top:4px;letter-spacing:1px">EM ABERTO (PENDENTES)</div>
             </div>
           </div>
         </div>
         <div class="panel">
           <div class="panel-header"><span class="panel-title">LIVE FEED</span></div>
-          <div class="log-stream" id="live-feed"><div style="padding:14px;color:#1a4a2a">// Aguardando eventos...</div></div>
+          <div class="log-stream" id="live-feed"><div style="padding:14px;color:var(--dark)">// Aguardando eventos...</div></div>
+        </div>
+      </div>
+
+      <!-- ROW 2: 3 NEW WIDGETS -->
+      <div class="grid3">
+        <!-- MAPA DE CONVERSÃO -->
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">MAPA DE CONVERSÃO</span></div>
+          <div id="conv-body">
+            <div class="conv-row"><span class="conv-label">ACESSOS → TX</span><span class="conv-val" id="conv-ac2tx">—</span></div>
+            <div class="conv-row"><span class="conv-label">TX → PAGO</span><span class="conv-val" id="conv-tx2paid">—</span></div>
+            <div class="conv-row"><span class="conv-label">PAGO → COMPROVAT.</span><span class="conv-val" id="conv-paid2comp">—</span></div>
+            <div class="conv-row"><span class="conv-label">REAL → TX</span><span class="conv-val" id="conv-real2tx">—</span></div>
+            <div class="conv-row"><span class="conv-label">ABANDONO</span><span class="conv-val" id="conv-abandono" style="color:var(--red)">—</span></div>
+          </div>
+        </div>
+
+        <!-- ÚLTIMAS TRANSAÇÕES -->
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">ÚLTIMAS TRANSAÇÕES</span></div>
+          <div style="overflow-x:auto">
+            <table class="mini-table">
+              <thead><tr><th>NOME</th><th>VALOR</th><th>STATUS</th></tr></thead>
+              <tbody id="last-tx-body"><tr><td colspan="3" style="color:var(--dark);text-align:center;padding:16px">// carregando...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- STATUS DO SISTEMA -->
+        <div class="panel">
+          <div class="panel-header"><span class="panel-title">STATUS DO SISTEMA</span></div>
+          <div class="status-row"><span class="status-name">API CPF (Receita)</span><span class="status-online">● ONLINE</span></div>
+          <div class="status-row"><span class="status-name">Gateway Masterfy</span><span class="status-online">● ONLINE</span></div>
+          <div class="status-row"><span class="status-name">Supabase DB</span><span class="status-online">● ONLINE</span></div>
+          <div class="status-row"><span class="status-name">Cloaker Engine</span><span class="status-online">● ONLINE</span></div>
+          <div class="status-row"><span class="status-name">Uptime</span><span class="status-online" style="font-size:13px">99.9%</span></div>
         </div>
       </div>
     </div>
@@ -295,14 +364,15 @@ tbody tr:last-child td{border-bottom:none}
         </div>
       </div>
     </div>
-  </div>
-</div>
+
+  </div><!-- end .main -->
+</div><!-- end #main-screen -->
 
 <!-- MODAL -->
 <div class="modal" id="img-modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕ FECHAR</button>
-    <div style="font-size:10px;color:#336633;margin-bottom:8px;letter-spacing:1px">// COMPROVANTE</div>
+    <div style="font-size:10px;color:var(--dim);margin-bottom:8px;letter-spacing:1px">// COMPROVANTE</div>
     <img id="modal-img" src="" alt="Comprovante"/>
   </div>
 </div>
@@ -313,20 +383,21 @@ const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const PASS='drop2025@';
 let allTx=[],allComp=[],allLogs=[],allCloaker=[];
 
-// Clock terminal
-function updateClock(){const n=new Date();const t=n.toTimeString().slice(0,8);const el=document.getElementById('term-clock');if(el)el.textContent=t;}
+function updateClock(){
+  const el=document.getElementById('term-clock');
+  if(el)el.textContent=new Date().toTimeString().slice(0,8);
+}
 setInterval(updateClock,1000);updateClock();
-
-// Login terminal latency random
 setInterval(()=>{const el=document.getElementById('t-lat');if(el)el.textContent=Math.floor(8+Math.random()*20)+'ms';},3000);
 
 function startApp(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('main-screen').style.display='block';
-  loadAll();startOnlineCounter();setInterval(loadAll,30000);
+  loadAll();
+  startOnlineCounter();
+  setInterval(loadAll,30000);
 }
 if(localStorage.getItem('admin_auth')==='ok') startApp();
-
 document.getElementById('admin-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
 function doLogin(){
@@ -339,39 +410,61 @@ function doLogin(){
 }
 
 async function sbFetch(table,extra=''){
-  const r=await fetch(`${SB_URL}/rest/v1/${table}?order=created_at.desc&limit=1000${extra}`,{headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}});
+  const r=await fetch(`${SB_URL}/rest/v1/${table}?order=created_at.desc&limit=1000${extra}`,{
+    headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}
+  });
   return r.json();
 }
 
 async function loadAll(){
   document.getElementById('last-upd').textContent='SYNC...';
   try{
-    const [tx,comp,logs,cloaker]=await Promise.all([sbFetch('transactions'),sbFetch('comprovantes'),sbFetch('access_logs'),sbFetch('cloaker_logs')]);
-    allTx=Array.isArray(tx)?tx:[];allComp=Array.isArray(comp)?comp:[];allLogs=Array.isArray(logs)?logs:[];allCloaker=Array.isArray(cloaker)?cloaker:[];
-    renderStats();renderTx(allTx);renderComp(allComp);renderLogs(allLogs);renderFunil();renderCloaker();updateTopbar();renderLiveFeed();
+    const [tx,comp,logs,cloaker]=await Promise.all([
+      sbFetch('transactions'),sbFetch('comprovantes'),sbFetch('access_logs'),sbFetch('cloaker_logs')
+    ]);
+    allTx=Array.isArray(tx)?tx:[];
+    allComp=Array.isArray(comp)?comp:[];
+    allLogs=Array.isArray(logs)?logs:[];
+    allCloaker=Array.isArray(cloaker)?cloaker:[];
+    renderStats();renderConvMap();renderLastTx();
+    renderTx(allTx);renderComp(allComp);renderLogs(allLogs);
+    renderFunil();renderCloaker();updateTopbar();renderLiveFeed();
     document.getElementById('last-upd').textContent=new Date().toLocaleTimeString('pt-BR');
-  }catch(e){document.getElementById('last-upd').textContent='// ERR';}
+  }catch(e){
+    document.getElementById('last-upd').textContent='// ERR';
+  }
 }
+</script>
 
+<script>
 function updateTopbar(){
   const real=allCloaker.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
   const bots=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BOT').length;
   const blocked=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BLOCKED').length;
-  const tReal=document.getElementById('top-real');const tBots=document.getElementById('top-bots');
-  const tBlocked=document.getElementById('top-blocked');const tLogs=document.getElementById('top-logs');
-  if(tReal)tReal.textContent=real;if(tBots)tBots.textContent=bots;
-  if(tBlocked)tBlocked.textContent=blocked;if(tLogs)tLogs.textContent=allLogs.length;
+  const tReal=document.getElementById('top-real');
+  const tBots=document.getElementById('top-bots');
+  const tBlocked=document.getElementById('top-blocked');
+  const tLogs=document.getElementById('top-logs');
+  if(tReal)tReal.textContent=real;
+  if(tBots)tBots.textContent=bots;
+  if(tBlocked)tBlocked.textContent=blocked;
+  if(tLogs)tLogs.textContent=allLogs.length;
 }
 
 function renderLiveFeed(){
   const feed=document.getElementById('live-feed');
   if(!feed)return;
-  const recent=[...allCloaker.slice(0,8),...allLogs.slice(0,4)].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,12);
-  if(!recent.length){feed.innerHTML='<div style="padding:14px;color:#1a4a2a">// Aguardando eventos...</div>';return;}
+  const recent=[...allCloaker.slice(0,8),...allLogs.slice(0,4)]
+    .sort((a,b)=>new Date(b.created_at)-new Date(a.created_at))
+    .slice(0,12);
+  if(!recent.length){
+    feed.innerHTML='<div style="padding:14px;color:var(--dark)">// Aguardando eventos...</div>';
+    return;
+  }
   feed.innerHTML=recent.map(l=>{
     const isCloaker=l.result!==undefined;
     const tag=isCloaker?(l.result||'').toUpperCase():'ACCESS';
-    const msg=isCloaker?(l.reason||''):`${l.path||'/'} · ${/android|iphone/i.test(l.user_agent||'')?'Mobile':'Desktop'}`;
+    const msg=isCloaker?(l.reason||'—'):`${l.path||'/'} · ${/android|iphone/i.test(l.user_agent||'')?'Mobile':'Desktop'}`;
     const t=new Date(l.created_at).toLocaleTimeString('pt-BR');
     return`<div class="log-line"><span class="log-time">${t}</span><span class="log-tag ${tag}">${tag}</span><span class="log-msg">${msg}</span></div>`;
   }).join('');
@@ -381,7 +474,9 @@ async function startOnlineCounter(){
   async function upd(){
     try{
       const twoMin=new Date(Date.now()-2*60*1000).toISOString();
-      const r=await fetch(`${SB_URL}/rest/v1/online_sessions?last_seen=gte.${twoMin}&select=session_id`,{headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}});
+      const r=await fetch(`${SB_URL}/rest/v1/online_sessions?last_seen=gte.${twoMin}&select=session_id`,{
+        headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}
+      });
       const d=await r.json();
       document.getElementById('online-count').textContent=Array.isArray(d)?d.length:0;
     }catch(e){document.getElementById('online-count').textContent='0';}
@@ -392,6 +487,7 @@ async function startOnlineCounter(){
 function fmt(n){if(!n)return'—';return new Date(n).toLocaleString('pt-BR');}
 function fmtCpf(c){if(!c)return'—';return c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4');}
 function fmtVal(v){return'R$ '+parseFloat(v||0).toFixed(2).replace('.',',');}
+function pct(a,b){if(!b)return'0%';return((a/b)*100).toFixed(1)+'%';}
 
 function statusBadge(s){
   s=(s||'').toLowerCase();
@@ -411,7 +507,9 @@ function countryFlag(c){
   const code=(c||'').toUpperCase();
   return(f[code]||'🌍')+' '+code;
 }
+</script>
 
+<script>
 function renderStats(){
   const paid=allTx.filter(t=>['paid','approved'].includes((t.status||'').toLowerCase())).length;
   const pending=allTx.filter(t=>['pending','waiting_payment'].includes((t.status||'').toLowerCase())).length;
@@ -423,18 +521,45 @@ function renderStats(){
   const blocked=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BLOCKED').length;
   const cT=allCloaker.length||1;
   document.getElementById('stats-grid').innerHTML=`
-    <div class="stat-card c-blue"><div class="s-label">TRANSAÇÕES</div><div class="s-val">${allTx.length}</div></div>
-    <div class="stat-card c-green"><div class="s-label">PAGOS</div><div class="s-val">${paid}</div><div class="s-sub">TAXA ${conv}%</div></div>
-    <div class="stat-card c-yellow"><div class="s-label">PENDENTES</div><div class="s-val">${pending}</div><div class="s-sub">R$ ${revP.toFixed(2).replace('.',',')}</div></div>
-    <div class="stat-card c-cyan"><div class="s-label">COMPROVANTES</div><div class="s-val">${allComp.length}</div></div>
-    <div class="stat-card c-blue"><div class="s-label">ACESSOS</div><div class="s-val">${allLogs.length}</div></div>
+    <div class="stat-card"><div class="s-label">TRANSAÇÕES</div><div class="s-val">${allTx.length}</div></div>
+    <div class="stat-card"><div class="s-label">PAGOS</div><div class="s-val">${paid}</div><div class="s-sub">TAXA ${conv}%</div></div>
+    <div class="stat-card"><div class="s-label">PENDENTES</div><div class="s-val">${pending}</div><div class="s-sub">R$ ${revP.toFixed(2).replace('.',',')}</div></div>
+    <div class="stat-card"><div class="s-label">COMPROVANTES</div><div class="s-val">${allComp.length}</div></div>
+    <div class="stat-card"><div class="s-label">ACESSOS</div><div class="s-val">${allLogs.length}</div></div>
     <div class="stat-card c-red"><div class="s-label">ABANDONO</div><div class="s-val">${allTx.length-paid}</div></div>
-    <div class="stat-card c-green"><div class="s-label">✅ PERMITIDOS</div><div class="s-val">${real}</div><div class="s-sub">${((real/cT)*100).toFixed(0)}% CLOAKER</div></div>
-    <div class="stat-card c-red"><div class="s-label">🤖 BOTS</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/cT)*100).toFixed(0)}% CLOAKER</div></div>
-    <div class="stat-card c-purple"><div class="s-label">🖥️ DESKTOP</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/cT)*100).toFixed(0)}% CLOAKER</div></div>
+    <div class="stat-card"><div class="s-label">PERMITIDOS</div><div class="s-val">${real}</div><div class="s-sub">${((real/cT)*100).toFixed(0)}% CLOAKER</div></div>
+    <div class="stat-card c-red"><div class="s-label">BOTS</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/cT)*100).toFixed(0)}% CLOAKER</div></div>
+    <div class="stat-card"><div class="s-label">BLOQUEADOS</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/cT)*100).toFixed(0)}% CLOAKER</div></div>
   `;
   document.getElementById('rev-total').textContent='R$ '+rev.toFixed(2).replace('.',',');
   document.getElementById('rev-pending').textContent='R$ '+revP.toFixed(2).replace('.',',');
+}
+
+function renderConvMap(){
+  const paid=allTx.filter(t=>['paid','approved'].includes((t.status||'').toLowerCase())).length;
+  const real=allCloaker.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
+  const abandon=allTx.length-paid;
+  const el=id=>document.getElementById(id);
+  if(el('conv-ac2tx'))el('conv-ac2tx').textContent=pct(allTx.length,allLogs.length||1);
+  if(el('conv-tx2paid'))el('conv-tx2paid').textContent=pct(paid,allTx.length||1);
+  if(el('conv-paid2comp'))el('conv-paid2comp').textContent=pct(allComp.length,paid||1);
+  if(el('conv-real2tx'))el('conv-real2tx').textContent=pct(allTx.length,real||1);
+  if(el('conv-abandono'))el('conv-abandono').textContent=abandon;
+}
+
+function renderLastTx(){
+  const body=document.getElementById('last-tx-body');
+  if(!body)return;
+  const last=allTx.slice(0,5);
+  if(!last.length){
+    body.innerHTML='<tr><td colspan="3" style="color:var(--dark);text-align:center;padding:14px">// sem dados</td></tr>';
+    return;
+  }
+  body.innerHTML=last.map(t=>`<tr>
+    <td>${t.customer_name||'—'}</td>
+    <td style="color:var(--green);font-weight:700">${fmtVal(t.amount)}</td>
+    <td>${statusBadge(t.status)}</td>
+  </tr>`).join('');
 }
 
 function renderFunil(){
@@ -447,27 +572,38 @@ function renderFunil(){
     {icon:'📎',label:'COMPROVANTES ENVIADOS',val:allComp.length,base:allTx.length||1},
   ];
   document.getElementById('funil-rows').innerHTML=steps.map(s=>{
-    const pct=s.base?((s.val/s.base)*100).toFixed(1):0;
-    return`<div class="funnel-row"><div class="funnel-icon">${s.icon}</div><div class="funnel-info"><div class="funnel-label">${s.label}</div><div class="funnel-bar"><div class="funnel-fill" style="width:${pct}%"></div></div></div><div class="funnel-right"><div class="funnel-count">${s.val}</div><div class="funnel-pct">${pct}%</div></div></div>`;
+    const p=s.base?((s.val/s.base)*100).toFixed(1):0;
+    return`<div class="funnel-row">
+      <div class="funnel-icon">${s.icon}</div>
+      <div class="funnel-info">
+        <div class="funnel-label">${s.label}</div>
+        <div class="funnel-bar"><div class="funnel-fill" style="width:${p}%"></div></div>
+      </div>
+      <div class="funnel-right"><div class="funnel-count">${s.val}</div><div class="funnel-pct">${p}%</div></div>
+    </div>`;
   }).join('');
 }
+</script>
 
+<script>
 function renderTx(data){
-  const body=document.getElementById('tx-body');const empty=document.getElementById('tx-empty');
+  const body=document.getElementById('tx-body');
+  const empty=document.getElementById('tx-empty');
   if(!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
   body.innerHTML=data.map(t=>`<tr>
-    <td style="color:#336633;white-space:nowrap">${fmt(t.created_at)}</td>
+    <td style="color:var(--dim);white-space:nowrap">${fmt(t.created_at)}</td>
     <td>${t.customer_name||'—'}</td>
     <td style="font-family:monospace">${fmtCpf(t.customer_cpf)}</td>
-    <td style="color:#336633">${t.customer_email||'—'}</td>
+    <td style="color:var(--dim)">${t.customer_email||'—'}</td>
     <td>${t.customer_phone||'—'}</td>
     <td style="color:var(--green);font-weight:700">${fmtVal(t.amount)}</td>
     <td>${statusBadge(t.status)}</td>
-    <td style="color:var(--blue)">${t.utm_source||'—'}</td>
-    <td style="color:#1a4a2a;font-size:10px">${(t.transaction_id||'').slice(0,12)}…</td>
+    <td style="color:var(--dim)">${t.utm_source||'—'}</td>
+    <td style="color:var(--dark);font-size:10px">${(t.transaction_id||'').slice(0,12)}…</td>
   </tr>`).join('');
 }
+
 function filterTx(){
   const q=document.getElementById('search-tx').value.toLowerCase();
   const s=document.getElementById('filter-status').value.toLowerCase();
@@ -479,37 +615,41 @@ function filterTx(){
 }
 
 function renderComp(data){
-  const body=document.getElementById('comp-body');const empty=document.getElementById('comp-empty');
+  const body=document.getElementById('comp-body');
+  const empty=document.getElementById('comp-empty');
   if(!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
   body.innerHTML=data.map((c,i)=>`<tr>
-    <td style="color:#336633;white-space:nowrap">${fmt(c.created_at)}</td>
+    <td style="color:var(--dim);white-space:nowrap">${fmt(c.created_at)}</td>
     <td>${c.nome||'—'}</td>
     <td style="font-family:monospace">${fmtCpf(c.cpf)}</td>
-    <td style="color:#1a4a2a;font-size:10px">${(c.transaction_id||'—').slice(0,16)}</td>
+    <td style="color:var(--dark);font-size:10px">${(c.transaction_id||'—').slice(0,16)}</td>
     <td>${c.arquivo?`<button class="img-btn" onclick="openImg(${i})">▶ VER</button>`:'—'}</td>
   </tr>`).join('');
 }
+
 function filterComp(){
   const q=document.getElementById('search-comp').value.toLowerCase();
   renderComp(allComp.filter(c=>(c.nome||'').toLowerCase().includes(q)||(c.cpf||'').includes(q)));
 }
 
 function renderLogs(data){
-  const body=document.getElementById('logs-body');const empty=document.getElementById('logs-empty');
+  const body=document.getElementById('logs-body');
+  const empty=document.getElementById('logs-empty');
   if(!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
   body.innerHTML=data.map(l=>`<tr>
-    <td style="color:#336633;white-space:nowrap">${fmt(l.created_at)}</td>
+    <td style="color:var(--dim);white-space:nowrap">${fmt(l.created_at)}</td>
     <td style="font-family:monospace;font-size:10px">${l.ip||'—'}</td>
-    <td style="color:var(--blue)">${l.path||'/'}</td>
-    <td style="color:#336633;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.referrer||'—'}</td>
+    <td style="color:var(--green2)">${l.path||'/'}</td>
+    <td style="color:var(--dim);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.referrer||'—'}</td>
     <td>${devBadge(l.user_agent)}</td>
   </tr>`).join('');
 }
 
 function renderCloaker(){
-  const body=document.getElementById('cloaker-body');const empty=document.getElementById('cloaker-empty');
+  const body=document.getElementById('cloaker-body');
+  const empty=document.getElementById('cloaker-empty');
   const data=allCloaker;
   const bots=data.filter(c=>(c.result||'').toUpperCase()==='BOT').length;
   const real=data.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
@@ -517,21 +657,21 @@ function renderCloaker(){
   const cT=data.length||1;
   const cs=document.getElementById('cloaker-stats');
   if(cs)cs.innerHTML=`
-    <div class="stat-card c-green"><div class="s-label">✅ PERMITIDOS</div><div class="s-val">${real}</div><div class="s-sub">${((real/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
-    <div class="stat-card c-red"><div class="s-label">🤖 BOTS</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
-    <div class="stat-card c-purple"><div class="s-label">🖥️ DESKTOP BLOQ.</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
-    <div class="stat-card c-cyan"><div class="s-label">👁 TOTAL ACESSOS SITE</div><div class="s-val">${allLogs.length}</div><div class="s-sub">ATUALIZADO AO VIVO</div></div>
+    <div class="stat-card"><div class="s-label">PERMITIDOS</div><div class="s-val">${real}</div><div class="s-sub">${((real/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
+    <div class="stat-card c-red"><div class="s-label">BOTS</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
+    <div class="stat-card"><div class="s-label">BLOQUEADOS</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
+    <div class="stat-card"><div class="s-label">ACESSOS TOTAIS</div><div class="s-val">${allLogs.length}</div><div class="s-sub">ATUALIZADO AO VIVO</div></div>
   `;
   if(!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
   body.innerHTML=data.map(l=>{
     const r=(l.result||'').toUpperCase();
-    const badge=r==='BOT'?`<span class="badge bot">🤖 BOT</span>`:r==='REAL'?`<span class="badge real">✅ REAL</span>`:`<span class="badge blocked">🖥️ BLOQUEADO</span>`;
+    const badge=r==='BOT'?`<span class="badge bot">BOT</span>`:r==='REAL'?`<span class="badge real">REAL</span>`:`<span class="badge blocked">BLOQUEADO</span>`;
     return`<tr>
-      <td style="color:#336633;white-space:nowrap">${fmt(l.created_at)}</td>
+      <td style="color:var(--dim);white-space:nowrap">${fmt(l.created_at)}</td>
       <td style="font-family:monospace;font-size:10px">${l.ip||'—'}</td>
       <td>${badge}</td>
-      <td style="color:#336633">${l.reason||'—'}</td>
+      <td style="color:var(--dim)">${l.reason||'—'}</td>
       <td>${devBadge(l.user_agent)}</td>
       <td>${countryFlag(l.country)}</td>
     </tr>`;
@@ -539,7 +679,8 @@ function renderCloaker(){
 }
 
 function openImg(i){
-  const c=allComp[i];if(!c||!c.arquivo){alert('// SEM IMAGEM');return;}
+  const c=allComp[i];
+  if(!c||!c.arquivo){alert('// SEM IMAGEM');return;}
   const img=document.getElementById('modal-img');
   const src=c.arquivo;
   if(src.length<200){alert('// IMAGEM DE TESTE — MUITO PEQUENA');return;}
@@ -547,6 +688,7 @@ function openImg(i){
   img.onerror=()=>{img.alt='// ERRO AO CARREGAR';};
   document.getElementById('img-modal').classList.add('open');
 }
+
 function closeModal(){document.getElementById('img-modal').classList.remove('open');}
 
 function showPage(id,el){
