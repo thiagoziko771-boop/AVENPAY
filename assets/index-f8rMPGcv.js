@@ -12930,7 +12930,7 @@ function d3() {
         nome: w.DADOS.nome,
         dataNascimento: w.DADOS.data_nascimento || "",
         nomeMae: w.DADOS.nome_mae || ""
-      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.70});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.70});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`)
+      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.70});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.70});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "" }))})`)
     } catch (h) {
       console.error("Error fetching data:", h);
       const w = {
@@ -12939,7 +12939,6 @@ function d3() {
         nome_mae: "",
         data_nascimento: "",
         sexo: "",
-        manualEntry: !0
       };
       a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w))}`)
     } finally {
