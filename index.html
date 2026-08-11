@@ -210,6 +210,24 @@
 </head>
 
 <body>
+<!-- Heartbeat Online -->
+<script>
+(function(){
+  var SB_URL="https://ldyhodwdhavrgyooukpi.supabase.co";
+  var SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxkeWhvZHdkaGF2cmd5b291a3BpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjQxMDUyNCwiZXhwIjoyMTAxOTg2NTI0fQ.JvEtOi46gaL5fAFk8XnUUeEyPTibpC79NwPGMF8SvdY";
+  var sid=sessionStorage.getItem("_sid");
+  if(!sid){sid=Math.random().toString(36).slice(2)+Date.now().toString(36);sessionStorage.setItem("_sid",sid);}
+  function beat(){
+    fetch(SB_URL+"/rest/v1/online_sessions",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Prefer":"resolution=merge-duplicates"},
+      body:JSON.stringify({session_id:sid,last_seen:new Date().toISOString(),page:window.location.pathname})
+    }).catch(function(){});
+  }
+  beat();
+  setInterval(beat,30000);
+})();
+</script>
     <div id="root"></div>
 
 </body>

@@ -262,7 +262,7 @@ tbody tr:last-child td{border-bottom:none}
 const SB_URL = 'https://ldyhodwdhavrgyooukpi.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxkeWhvZHdkaGF2cmd5b291a3BpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjQxMDUyNCwiZXhwIjoyMTAxOTg2NTI0fQ.JvEtOi46gaL5fAFk8XnUUeEyPTibpC79NwPGMF8SvdY';
 const PASS = 'drop2025@';
-let allTx=[],allComp=[],allLogs=[];
+let allTx=[],allComp=[],allLogs=[],allCloaker=[];
 let onlineInterval=null;
 
 document.getElementById('admin-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
@@ -287,23 +287,34 @@ async function sbFetch(table,extra=''){
 async function loadAll(){
   document.getElementById('last-upd').textContent='Carregando...';
   try{
-    [allTx,allComp,allLogs]=await Promise.all([sbFetch('transactions'),sbFetch('comprovantes'),sbFetch('access_logs')]);
+    const [tx,comp,logs,cloaker]=await Promise.all([
+      sbFetch('transactions'),
+      sbFetch('comprovantes'),
+      sbFetch('access_logs'),
+      sbFetch('cloaker_logs')
+    ]);
+    allTx=tx;allComp=comp;allLogs=logs;allCloaker=cloaker;
     renderStats();renderTx(allTx);renderComp(allComp);renderLogs(allLogs);renderFunil();renderCloaker();
     document.getElementById('last-upd').textContent='Atualizado: '+new Date().toLocaleTimeString('pt-BR');
   }catch(e){document.getElementById('last-upd').textContent='Erro ao carregar';}
 }
 
 function startOnlineCounter(){
-  // Conta acessos dos últimos 3 minutos no access_logs
-  function upd(){
-    const threeMin=Date.now()-3*60*1000;
-    // Conta IPs únicos nos últimos 3 min
-    const recentIps=new Set(allLogs.filter(l=>new Date(l.created_at).getTime()>threeMin).map(l=>l.ip||'x'));
-    const count=recentIps.size||0;
-    document.getElementById('online-count').textContent=count;
+  async function upd(){
+    try {
+      const twoMin = new Date(Date.now()-2*60*1000).toISOString();
+      const r = await fetch(`${SB_URL}/rest/v1/online_sessions?last_seen=gte.${twoMin}&select=session_id`,{
+        headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}
+      });
+      const data = await r.json();
+      const count = Array.isArray(data) ? data.length : 0;
+      document.getElementById('online-count').textContent = count;
+    } catch(e) {
+      document.getElementById('online-count').textContent = '0';
+    }
   }
   upd();
-  setInterval(upd,5000);
+  setInterval(upd, 15000);
 }
 
 function fmt(n){if(!n)return'-';return new Date(n).toLocaleString('pt-BR');}
@@ -440,26 +451,26 @@ function renderLogs(data){
 }
 
 function renderCloaker(){
-  // Usa access_logs para mostrar acessos identificando bots
   const body=document.getElementById('cloaker-body');
   const empty=document.getElementById('cloaker-empty');
-  const BOT_UA=['bot','crawler','spider','facebook','facebot','meta-external','googlebot','bingbot','python','curl','wget','headless','phantom','selenium'];
-  const data=allLogs.filter(l=>l.path&&(l.path.includes('click')||l.referrer));
-  if(!data.length){body.innerHTML='';empty.style.display='block';return;}
+  const data=allCloaker;
+  if(!data||!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
-  body.innerHTML=data.slice(0,200).map(l=>{
-    const ua=(l.user_agent||'').toLowerCase();
-    const isBot=BOT_UA.some(b=>ua.includes(b));
-    const isMobile=/android|iphone|ipad/i.test(ua);
-    const result=isBot?`<span class="badge bot">🤖 BOT</span>`:isMobile?`<span class="badge real">✅ REAL</span>`:`<span class="badge blocked">🖥️ DESKTOP</span>`;
-    const motivo=isBot?'User-agent bot':isMobile?'Mobile Brasil':'Desktop bloqueado';
+  body.innerHTML=data.map(l=>{
+    const r=(l.result||'').toUpperCase();
+    let badge='';
+    if(r==='BOT') badge=`<span class="badge bot">🤖 BOT</span>`;
+    else if(r==='REAL') badge=`<span class="badge real">✅ REAL</span>`;
+    else badge=`<span class="badge blocked">🖥️ BLOQUEADO</span>`;
+    const ua=(l.user_agent||'');
+    const dev=/android|iphone|ipad/i.test(ua)?`<span class="badge mobile">📱 mobile</span>`:`<span class="badge desktop">🖥️ desktop</span>`;
     return`<tr>
       <td style="white-space:nowrap;font-size:12px;color:#64748b">${fmt(l.created_at)}</td>
       <td style="font-family:monospace;font-size:12px">${l.ip||'—'}</td>
-      <td>${result}</td>
-      <td style="font-size:12px;color:#64748b">${motivo}</td>
-      <td>${deviceBadge(l.user_agent)}</td>
-      <td style="font-size:12px">🇧🇷</td>
+      <td>${badge}</td>
+      <td style="font-size:12px;color:#64748b">${l.reason||'—'}</td>
+      <td>${dev}</td>
+      <td style="font-size:13px">${l.country==='BR'?'🇧🇷 BR':l.country||'?'}</td>
     </tr>`;
   }).join('');
 }
