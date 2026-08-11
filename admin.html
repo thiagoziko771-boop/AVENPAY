@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Painel Admin — Loja Drop 05</title>
+<title>Cloaker TH 07</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',system-ui,sans-serif;background:#070d1a;color:#e2e8f0;min-height:100vh}
 /* LOGIN */
-.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at center,#0f1f3d 0%,#070d1a 70%)}
-.login-box{background:#0d1b2e;border:1px solid #1e3a5f;border-radius:20px;padding:44px 40px;width:100%;max-width:380px;box-shadow:0 30px 60px rgba(0,0,0,.6)}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at center,#0f1f3d 0%,#070d1a 70%);background-image:url('https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1920&q=80');background-size:cover;background-position:center;position:relative}
+.login-wrap::before{content:'';position:absolute;inset:0;background:rgba(7,13,26,.85);backdrop-filter:blur(3px)}
+.login-box{position:relative;z-index:1;background:rgba(13,27,46,.95);border:1px solid #1e3a5f;border-radius:20px;padding:44px 40px;width:100%;max-width:380px;box-shadow:0 30px 60px rgba(0,0,0,.6)}
 .login-logo{text-align:center;margin-bottom:32px}
 .login-logo .icon{font-size:42px;margin-bottom:10px}
 .login-logo h1{font-size:22px;font-weight:800;color:#fff}
@@ -114,8 +115,8 @@ tbody tr:last-child td{border-bottom:none}
   <div class="login-box">
     <div class="login-logo">
       <div class="icon">🛡️</div>
-      <h1>Painel Admin</h1>
-      <p>Loja Drop 05 · Acesso Restrito</p>
+      <h1>Cloaker TH 07</h1>
+      <p>Painel de Controle · Acesso Restrito</p>
     </div>
     <input class="inp" type="password" id="admin-pass" placeholder="Senha de acesso" autocomplete="off"/>
     <button class="btn-login" onclick="doLogin()">Entrar</button>
@@ -128,7 +129,7 @@ tbody tr:last-child td{border-bottom:none}
   <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-left">
-      <span class="topbar-brand">🛡️ Drop 05 Admin</span>
+      <span class="topbar-brand">🛡️ Cloaker TH 07</span>
       <div class="online-pill"><span class="pulse"></span><span id="online-count">0</span> online</div>
     </div>
     <div class="topbar-right">
@@ -226,6 +227,7 @@ tbody tr:last-child td{border-bottom:none}
 
     <!-- ACESSOS + CLOAKER UNIFICADO -->
     <div class="page" id="page-acessos">
+      <div class="stats-grid" id="cloaker-stats" style="margin-bottom:16px"></div>
       <div class="card" style="margin-bottom:20px">
         <div class="card-header"><span class="card-title">🤖 Cloaker — Resultado por Acesso</span></div>
         <div class="tw">
@@ -347,6 +349,9 @@ function renderStats(){
   const rev=allTx.filter(t=>['paid','approved'].includes((t.status||'').toLowerCase())).reduce((a,t)=>a+(parseFloat(t.amount)||0),0);
   const revPending=allTx.filter(t=>['pending','waiting_payment'].includes((t.status||'').toLowerCase())).reduce((a,t)=>a+(parseFloat(t.amount)||0),0);
   const conv=allTx.length?((paid/allTx.length)*100).toFixed(1):0;
+  const bots=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BOT').length;
+  const real=allCloaker.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
+  const blocked=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BLOCKED').length;
   document.getElementById('stats-grid').innerHTML=`
     <div class="stat-card c-blue"><div class="s-label">Transações</div><div class="s-val">${allTx.length}</div><div class="s-icon">💳</div></div>
     <div class="stat-card c-green"><div class="s-label">Pagos</div><div class="s-val">${paid}</div><div class="s-sub">Taxa ${conv}%</div><div class="s-icon">✅</div></div>
@@ -354,6 +359,9 @@ function renderStats(){
     <div class="stat-card c-purple"><div class="s-label">Comprovantes</div><div class="s-val">${allComp.length}</div><div class="s-icon">📎</div></div>
     <div class="stat-card c-cyan"><div class="s-label">Acessos</div><div class="s-val">${allLogs.length}</div><div class="s-icon">👁️</div></div>
     <div class="stat-card c-red"><div class="s-label">Abandono</div><div class="s-val">${allTx.length-paid}</div><div class="s-icon">🚪</div></div>
+    <div class="stat-card c-green"><div class="s-label">✅ Permitidos</div><div class="s-val">${real}</div><div class="s-sub">Mobile Brasil</div><div class="s-icon">✅</div></div>
+    <div class="stat-card c-red"><div class="s-label">🤖 Bots</div><div class="s-val">${bots}</div><div class="s-sub">Bloqueados</div><div class="s-icon">🤖</div></div>
+    <div class="stat-card c-purple"><div class="s-label">🖥️ Desktop</div><div class="s-val">${blocked}</div><div class="s-sub">Bloqueados</div><div class="s-icon">🖥️</div></div>
   `;
   document.getElementById('rev-total').textContent='R$ '+rev.toFixed(2).replace('.',',');
   document.getElementById('rev-pending').textContent='R$ '+revPending.toFixed(2).replace('.',',');
@@ -467,6 +475,18 @@ function renderCloaker(){
   const body=document.getElementById('cloaker-body');
   const empty=document.getElementById('cloaker-empty');
   const data=allCloaker;
+  const bots=data.filter(c=>(c.result||'').toUpperCase()==='BOT').length;
+  const real=data.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
+  const blocked=data.filter(c=>(c.result||'').toUpperCase()==='BLOCKED').length;
+  const total=data.length||1;
+  // Stats no topo da página acessos
+  const cs=document.getElementById('cloaker-stats');
+  if(cs) cs.innerHTML=`
+    <div class="stat-card c-green"><div class="s-label">✅ Permitidos</div><div class="s-val">${real}</div><div class="s-sub">${((real/total)*100).toFixed(0)}% do total</div><div class="s-icon">✅</div></div>
+    <div class="stat-card c-red"><div class="s-label">🤖 Bots bloqueados</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/total)*100).toFixed(0)}% do total</div><div class="s-icon">🤖</div></div>
+    <div class="stat-card c-purple"><div class="s-label">🖥️ Desktop bloqueado</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/total)*100).toFixed(0)}% do total</div><div class="s-icon">🖥️</div></div>
+    <div class="stat-card c-cyan"><div class="s-label">👁️ Total acessos site</div><div class="s-val">${allLogs.length}</div><div class="s-sub">Todos os dispositivos</div><div class="s-icon">👁️</div></div>
+  `;
   if(!data||!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
   body.innerHTML=data.map(l=>{
