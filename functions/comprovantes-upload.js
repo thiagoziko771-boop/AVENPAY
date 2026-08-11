@@ -51,10 +51,13 @@ exports.handler = async (event) => {
     const supabase = getSupabase();
     await supabase.from("comprovantes").insert({
       transaction_id: body.transaction_id || body.id || null,
-      cpf: body.cpf || null,
-      nome: body.nome || null,
+      cpf:    body.cpf || body.customer_cpf || null,
+      nome:   body.nome || body.customer_name || null,
       arquivo: body.arquivo || body.file || body.url || null,
-      extra: body,
+      extra: {
+        filename:       body.filename || null,
+        customer_email: body.customer_email || null,
+      },
     });
   } catch (_) {}
 
