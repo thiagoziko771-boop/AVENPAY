@@ -352,6 +352,7 @@ function renderStats(){
   const bots=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BOT').length;
   const real=allCloaker.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
   const blocked=allCloaker.filter(c=>(c.result||'').toUpperCase()==='BLOCKED').length;
+  const cTotal=allCloaker.length||1;
   document.getElementById('stats-grid').innerHTML=`
     <div class="stat-card c-blue"><div class="s-label">Transações</div><div class="s-val">${allTx.length}</div><div class="s-icon">💳</div></div>
     <div class="stat-card c-green"><div class="s-label">Pagos</div><div class="s-val">${paid}</div><div class="s-sub">Taxa ${conv}%</div><div class="s-icon">✅</div></div>
@@ -359,9 +360,9 @@ function renderStats(){
     <div class="stat-card c-purple"><div class="s-label">Comprovantes</div><div class="s-val">${allComp.length}</div><div class="s-icon">📎</div></div>
     <div class="stat-card c-cyan"><div class="s-label">Acessos</div><div class="s-val">${allLogs.length}</div><div class="s-icon">👁️</div></div>
     <div class="stat-card c-red"><div class="s-label">Abandono</div><div class="s-val">${allTx.length-paid}</div><div class="s-icon">🚪</div></div>
-    <div class="stat-card c-green"><div class="s-label">✅ Permitidos</div><div class="s-val">${real}</div><div class="s-sub">Mobile Brasil</div><div class="s-icon">✅</div></div>
-    <div class="stat-card c-red"><div class="s-label">🤖 Bots</div><div class="s-val">${bots}</div><div class="s-sub">Bloqueados</div><div class="s-icon">🤖</div></div>
-    <div class="stat-card c-purple"><div class="s-label">🖥️ Desktop</div><div class="s-val">${blocked}</div><div class="s-sub">Bloqueados</div><div class="s-icon">🖥️</div></div>
+    <div class="stat-card c-green"><div class="s-label">✅ Permitidos</div><div class="s-val">${real}</div><div class="s-sub">${((real/cTotal)*100).toFixed(0)}% do cloaker</div><div class="s-icon">✅</div></div>
+    <div class="stat-card c-red"><div class="s-label">🤖 Bots</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/cTotal)*100).toFixed(0)}% do cloaker</div><div class="s-icon">🤖</div></div>
+    <div class="stat-card c-purple"><div class="s-label">🖥️ Desktop</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/cTotal)*100).toFixed(0)}% do cloaker</div><div class="s-icon">🖥️</div></div>
   `;
   document.getElementById('rev-total').textContent='R$ '+rev.toFixed(2).replace('.',',');
   document.getElementById('rev-pending').textContent='R$ '+revPending.toFixed(2).replace('.',',');
@@ -478,14 +479,14 @@ function renderCloaker(){
   const bots=data.filter(c=>(c.result||'').toUpperCase()==='BOT').length;
   const real=data.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
   const blocked=data.filter(c=>(c.result||'').toUpperCase()==='BLOCKED').length;
-  const total=data.length||1;
-  // Stats no topo da página acessos
+  const cTotal=data.length||1;
+  // Stats no topo da página acessos — sempre atualiza
   const cs=document.getElementById('cloaker-stats');
   if(cs) cs.innerHTML=`
-    <div class="stat-card c-green"><div class="s-label">✅ Permitidos</div><div class="s-val">${real}</div><div class="s-sub">${((real/total)*100).toFixed(0)}% do total</div><div class="s-icon">✅</div></div>
-    <div class="stat-card c-red"><div class="s-label">🤖 Bots bloqueados</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/total)*100).toFixed(0)}% do total</div><div class="s-icon">🤖</div></div>
-    <div class="stat-card c-purple"><div class="s-label">🖥️ Desktop bloqueado</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/total)*100).toFixed(0)}% do total</div><div class="s-icon">🖥️</div></div>
-    <div class="stat-card c-cyan"><div class="s-label">👁️ Total acessos site</div><div class="s-val">${allLogs.length}</div><div class="s-sub">Todos os dispositivos</div><div class="s-icon">👁️</div></div>
+    <div class="stat-card c-green"><div class="s-label">✅ Permitidos</div><div class="s-val">${real}</div><div class="s-sub">${((real/cTotal)*100).toFixed(0)}% do cloaker</div><div class="s-icon">✅</div></div>
+    <div class="stat-card c-red"><div class="s-label">🤖 Bots</div><div class="s-val">${bots}</div><div class="s-sub">${((bots/cTotal)*100).toFixed(0)}% do cloaker</div><div class="s-icon">🤖</div></div>
+    <div class="stat-card c-purple"><div class="s-label">🖥️ Desktop bloq.</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/cTotal)*100).toFixed(0)}% do cloaker</div><div class="s-icon">🖥️</div></div>
+    <div class="stat-card c-cyan"><div class="s-label">👁️ Total acessos site</div><div class="s-val">${allLogs.length}</div><div class="s-sub">Atualizado ao vivo</div><div class="s-icon">👁️</div></div>
   `;
   if(!data||!data.length){body.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';
