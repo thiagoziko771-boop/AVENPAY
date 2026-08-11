@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+    .header { background: #1e293b; padding: 16px 24px; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 18px; font-weight: 700; color: #f8fafc; }
+    .header span { font-size: 13px; color: #94a3b8; }
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 80vh; }
+    .login-box { background: #1e293b; padding: 32px; border-radius: 12px; width: 100%; max-width: 360px; border: 1px solid #334155; }
+    .login-box h2 { font-size: 20px; margin-bottom: 20px; text-align: center; }
+    input[type=password], input[type=text] { width: 100%; padding: 10px 14px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #e2e8f0; font-size: 14px; margin-bottom: 12px; }
+    button { width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    button:hover { background: #2563eb; }
+    .tabs { display: flex; gap: 8px; padding: 16px 24px; border-bottom: 1px solid #334155; background: #1e293b; }
+    .tab { padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; background: transparent; color: #94a3b8; border: 1px solid transparent; }
+    .tab.active { background: #3b82f6; color: white; }
+    .content { padding: 24px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .stat { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 16px; }
+    .stat-label { font-size: 12px; color: #94a3b8; margin-bottom: 4px; }
+    .stat-value { font-size: 24px; font-weight: 700; color: #f8fafc; }
+    .stat-value.green { color: #22c55e; }
+    .stat-value.yellow { color: #eab308; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { background: #1e293b; padding: 10px 12px; text-align: left; color: #94a3b8; font-weight: 600; border-bottom: 1px solid #334155; white-space: nowrap; }
+    td { padding: 10px 12px; border-bottom: 1px solid #1e293b; vertical-align: middle; }
+    tr:hover td { background: #1e293b; }
+    .badge { padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+    .badge.paid { background: #166534; color: #86efac; }
+    .badge.pending { background: #713f12; color: #fde68a; }
+    .badge.expired { background: #450a0a; color: #fca5a5; }
+    .badge.approved { background: #1e3a5f; color: #93c5fd; }
+    .img-btn { padding: 4px 10px; background: #3b82f6; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; }
+    .img-btn:hover { background: #2563eb; }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
+    .modal.open { display: flex; }
+    .modal-box { background: #1e293b; border-radius: 12px; padding: 20px; max-width: 90vw; max-height: 90vh; overflow: auto; position: relative; }
+    .modal-close { position: absolute; top: 10px; right: 14px; background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer; width: auto; }
+    .modal img { max-width: 100%; max-height: 70vh; border-radius: 8px; }
+    .refresh-btn { padding: 8px 16px; background: #1e293b; border: 1px solid #334155; color: #e2e8f0; border-radius: 8px; cursor: pointer; font-size: 13px; width: auto; }
+    .refresh-btn:hover { background: #334155; }
+    .search { padding: 8px 14px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #e2e8f0; font-size: 13px; width: 240px; }
+    .toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .empty { text-align: center; padding: 40px; color: #475569; }
+  </style>
+</head>
+<body>
+
+<div id="login-screen" class="login-wrap">
+  <div class="login-box">
+    <h2>🔐 Painel Admin</h2>
+    <input type="password" id="admin-pass" placeholder="Senha de acesso" />
+    <button onclick="doLogin()">Entrar</button>
+    <p id="login-err" style="color:#f87171;font-size:12px;margin-top:8px;text-align:center;"></p>
+  </div>
+</div>
+
+<div id="main-screen" style="display:none;">
+  <div class="header">
+    <h1>Painel Admin — Loja Drop 05</h1>
+    <span id="last-update"></span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('transactions')">Transações</div>
+    <div class="tab" onclick="showTab('comprovantes')">Comprovantes</div>
+    <div class="tab" onclick="showTab('logs')">Acessos</div>
+  </div>
+
+  <div class="content">
+    <!-- STATS -->
+    <div class="stats" id="stats-row"></div>
+
+    <!-- TRANSACTIONS -->
+    <div id="tab-transactions">
+      <div class="toolbar">
+        <input class="search" type="text" id="search-tx" placeholder="Buscar CPF, nome, email..." oninput="filterTable('tx')" />
+        <button class="refresh-btn" onclick="loadAll()">↻ Atualizar</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th><th>Nome</th><th>CPF</th><th>Email</th><th>Telefone</th><th>Valor</th><th>Status</th><th>UTM Source</th><th>ID</th>
+            </tr>
+          </thead>
+          <tbody id="tx-body"></tbody>
+        </table>
+        <div id="tx-empty" class="empty" style="display:none;">Nenhuma transação encontrada</div>
+      </div>
+    </div>
+
+    <!-- COMPROVANTES -->
+    <div id="tab-comprovantes" style="display:none;">
+      <div class="toolbar">
+        <input class="search" type="text" id="search-comp" placeholder="Buscar CPF, nome..." oninput="filterTable('comp')" />
+        <button class="refresh-btn" onclick="loadAll()">↻ Atualizar</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th><th>Nome</th><th>CPF</th><th>Transação ID</th><th>Comprovante</th>
+            </tr>
+          </thead>
+          <tbody id="comp-body"></tbody>
+        </table>
+        <div id="comp-empty" class="empty" style="display:none;">Nenhum comprovante encontrado</div>
+      </div>
+    </div>
+
+    <!-- LOGS -->
+    <div id="tab-logs" style="display:none;">
+      <div class="toolbar">
+        <button class="refresh-btn" onclick="loadAll()">↻ Atualizar</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th><th>IP</th><th>Página</th><th>Referrer</th><th>User Agent</th>
+            </tr>
+          </thead>
+          <tbody id="logs-body"></tbody>
+        </table>
+        <div id="logs-empty" class="empty" style="display:none;">Nenhum acesso registrado</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL IMAGEM -->
+<div class="modal" id="img-modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('img-modal').classList.remove('open')">✕</button>
+    <img id="modal-img" src="" alt="Comprovante" />
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://ldyhodwdhavrgyooukpi.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxkeWhvZHdkaGF2cmd5b291a3BpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjQxMDUyNCwiZXhwIjoyMTAxOTg2NTI0fQ.JvEtOi46gaL5fAFk8XnUUeEyPTibpC79NwPGMF8SvdY';
+  const ADMIN_PASS = 'drop2025@';
+
+  let allTx = [], allComp = [], allLogs = [];
+
+  function doLogin() {
+    const pass = document.getElementById('admin-pass').value;
+    if (pass === ADMIN_PASS) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('main-screen').style.display = 'block';
+      loadAll();
+    } else {
+      document.getElementById('login-err').textContent = 'Senha incorreta';
+    }
+  }
+
+  document.getElementById('admin-pass').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  async function supaFetch(table, order = 'created_at') {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?order=${order}.desc&limit=500`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    return r.json();
+  }
+
+  async function loadAll() {
+    document.getElementById('last-update').textContent = 'Carregando...';
+    [allTx, allComp, allLogs] = await Promise.all([
+      supaFetch('transactions'),
+      supaFetch('comprovantes'),
+      supaFetch('access_logs')
+    ]);
+    renderStats();
+    renderTx(allTx);
+    renderComp(allComp);
+    renderLogs(allLogs);
+    document.getElementById('last-update').textContent = 'Atualizado: ' + new Date().toLocaleTimeString('pt-BR');
+  }
+
+  function renderStats() {
+    const paid = allTx.filter(t => t.status === 'paid' || t.status === 'PAID' || t.status === 'APPROVED').length;
+    const pending = allTx.filter(t => t.status === 'PENDING' || t.status === 'pending' || t.status === 'waiting_payment').length;
+    const totalVal = allTx.filter(t => t.status === 'paid' || t.status === 'PAID' || t.status === 'APPROVED').reduce((a, t) => a + (parseFloat(t.amount) || 0), 0);
+    document.getElementById('stats-row').innerHTML = `
+      <div class="stat"><div class="stat-label">Total Transações</div><div class="stat-value">${allTx.length}</div></div>
+      <div class="stat"><div class="stat-label">Pagos</div><div class="stat-value green">${paid}</div></div>
+      <div class="stat"><div class="stat-label">Pendentes</div><div class="stat-value yellow">${pending}</div></div>
+      <div class="stat"><div class="stat-label">Faturamento</div><div class="stat-value green">R$ ${totalVal.toFixed(2).replace('.', ',')}</div></div>
+      <div class="stat"><div class="stat-label">Comprovantes</div><div class="stat-value">${allComp.length}</div></div>
+      <div class="stat"><div class="stat-label">Acessos</div><div class="stat-value">${allLogs.length}</div></div>
+    `;
+  }
+
+  function statusBadge(s) {
+    s = (s || '').toLowerCase();
+    if (s === 'paid' || s === 'approved') return `<span class="badge paid">${s}</span>`;
+    if (s === 'pending' || s === 'waiting_payment') return `<span class="badge pending">${s}</span>`;
+    if (s === 'expired' || s === 'cancelled') return `<span class="badge expired">${s}</span>`;
+    return `<span class="badge approved">${s}</span>`;
+  }
+
+  function fmtDate(d) {
+    if (!d) return '-';
+    return new Date(d).toLocaleString('pt-BR');
+  }
+
+  function fmtCpf(c) {
+    if (!c) return '-';
+    return c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+
+  function renderTx(data) {
+    const body = document.getElementById('tx-body');
+    if (!data.length) { body.innerHTML = ''; document.getElementById('tx-empty').style.display = 'block'; return; }
+    document.getElementById('tx-empty').style.display = 'none';
+    body.innerHTML = data.map(t => `
+      <tr>
+        <td>${fmtDate(t.created_at)}</td>
+        <td>${t.customer_name || '-'}</td>
+        <td>${fmtCpf(t.customer_cpf)}</td>
+        <td>${t.customer_email || '-'}</td>
+        <td>${t.customer_phone || '-'}</td>
+        <td>R$ ${parseFloat(t.amount || 0).toFixed(2).replace('.', ',')}</td>
+        <td>${statusBadge(t.status)}</td>
+        <td>${t.utm_source || '-'}</td>
+        <td style="font-size:11px;color:#64748b;">${(t.transaction_id || '').slice(0, 16)}...</td>
+      </tr>
+    `).join('');
+  }
+
+  function renderComp(data) {
+    const body = document.getElementById('comp-body');
+    if (!data.length) { body.innerHTML = ''; document.getElementById('comp-empty').style.display = 'block'; return; }
+    document.getElementById('comp-empty').style.display = 'none';
+    body.innerHTML = data.map(c => `
+      <tr>
+        <td>${fmtDate(c.created_at)}</td>
+        <td>${c.nome || '-'}</td>
+        <td>${fmtCpf(c.cpf)}</td>
+        <td style="font-size:11px;color:#64748b;">${(c.transaction_id || '-').slice(0, 20)}</td>
+        <td>${c.arquivo ? `<button class="img-btn" onclick="openImg('${c.id}')">Ver imagem</button>` : '-'}</td>
+      </tr>
+    `).join('');
+  }
+
+  function renderLogs(data) {
+    const body = document.getElementById('logs-body');
+    if (!data.length) { body.innerHTML = ''; document.getElementById('logs-empty').style.display = 'block'; return; }
+    document.getElementById('logs-empty').style.display = 'none';
+    body.innerHTML = data.map(l => `
+      <tr>
+        <td>${fmtDate(l.created_at)}</td>
+        <td>${l.ip || '-'}</td>
+        <td>${l.path || '-'}</td>
+        <td>${l.referrer || '-'}</td>
+        <td style="font-size:11px;color:#64748b;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.user_agent || '-'}</td>
+      </tr>
+    `).join('');
+  }
+
+  function filterTable(type) {
+    if (type === 'tx') {
+      const q = document.getElementById('search-tx').value.toLowerCase();
+      renderTx(allTx.filter(t =>
+        (t.customer_name || '').toLowerCase().includes(q) ||
+        (t.customer_cpf || '').includes(q) ||
+        (t.customer_email || '').toLowerCase().includes(q)
+      ));
+    } else {
+      const q = document.getElementById('search-comp').value.toLowerCase();
+      renderComp(allComp.filter(c =>
+        (c.nome || '').toLowerCase().includes(q) ||
+        (c.cpf || '').includes(q)
+      ));
+    }
+  }
+
+  function openImg(id) {
+    const comp = allComp.find(c => c.id === id);
+    if (!comp || !comp.arquivo) return;
+    document.getElementById('modal-img').src = comp.arquivo;
+    document.getElementById('img-modal').classList.add('open');
+  }
+
+  function closeModal(e) {
+    if (e.target.id === 'img-modal') document.getElementById('img-modal').classList.remove('open');
+  }
+
+  function showTab(tab) {
+    ['transactions', 'comprovantes', 'logs'].forEach(t => {
+      document.getElementById(`tab-${t}`).style.display = t === tab ? 'block' : 'none';
+    });
+    document.querySelectorAll('.tab').forEach((el, i) => {
+      el.classList.toggle('active', ['transactions', 'comprovantes', 'logs'][i] === tab);
+    });
+  }
+
+  // Auto refresh a cada 30 segundos
+  setInterval(() => {
+    if (document.getElementById('main-screen').style.display !== 'none') loadAll();
+  }, 30000);
+</script>
+</body>
+</html>
