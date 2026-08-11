@@ -21911,6 +21911,61 @@ function IE() {
                 children: "• Guarde seu número de protocolo para consultas"
               })]
             })]
+          }), l.jsx("div", {
+            className: "bg-yellow-50 p-4 rounded-lg border border-yellow-200 mb-6",
+            children: l.jsxs("div", {
+              className: "space-y-3",
+              children: [l.jsx("h4", {
+                className: "font-semibold text-yellow-900 text-sm",
+                children: "📎 Enviar Comprovante de Pagamento"
+              }), l.jsx("p", {
+                className: "text-xs text-yellow-800",
+                children: "Anexe o comprovante do pagamento das taxas para agilizar a liberação do seu cadastro."
+              }), l.jsx("input", {
+                type: "file",
+                accept: "image/*,.pdf",
+                id: "comp-upload-concluido",
+                style: {display:"none"},
+                onChange: async (ev) => {
+                  const file = ev.target.files && ev.target.files[0];
+                  if (!file) return;
+                  const btn = document.getElementById("comp-btn-concluido");
+                  const status = document.getElementById("comp-status-concluido");
+                  if (btn) btn.textContent = "Enviando...";
+                  try {
+                    const ud = localStorage.getItem("userData");
+                    const txId = localStorage.getItem("currentTransactionId") || "";
+                    const userData = ud ? JSON.parse(ud) : {};
+                    const base64 = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
+                    const resp = await fetch("/api/comprovantes-upload", {
+                      method: "POST",
+                      headers: {"Content-Type": "application/json"},
+                      body: JSON.stringify({ transaction_id: txId, customer_name: userData.nome || "", customer_cpf: userData.cpf || "", arquivo: base64, filename: file.name })
+                    });
+                    const result = await resp.json();
+                    if (result.success) {
+                      if (status) { status.textContent = "✅ Comprovante enviado com sucesso!"; status.style.color = "#166534"; }
+                      if (btn) btn.textContent = "Enviado ✓";
+                    } else {
+                      if (status) { status.textContent = "Erro ao enviar. Tente novamente."; status.style.color = "#991b1b"; }
+                      if (btn) btn.textContent = "Enviar Comprovante";
+                    }
+                  } catch(err) {
+                    if (status) { status.textContent = "Erro de conexão. Tente novamente."; status.style.color = "#991b1b"; }
+                    if (btn) btn.textContent = "Enviar Comprovante";
+                  }
+                }
+              }), l.jsx("button", {
+                id: "comp-btn-concluido",
+                onClick: () => { const el = document.getElementById("comp-upload-concluido"); if (el) el.click(); },
+                className: "w-full py-2 px-4 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-sm font-medium transition-all",
+                children: "Enviar Comprovante"
+              }), l.jsx("p", {
+                id: "comp-status-concluido",
+                className: "text-xs text-center",
+                children: ""
+              })]
+            })
           }), l.jsxs("div", {
             className: "flex gap-3",
             children: [l.jsxs(jn, {
