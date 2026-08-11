@@ -21756,6 +21756,12 @@ function DE() {
               className: "text-xs text-gray-500 mt-1",
               children: "O pagamento será confirmado automaticamente"
             })]
+          }), l.jsx("div", {
+            className: "bg-yellow-50 p-4 rounded-lg border border-yellow-300 mb-4",
+            children: l.jsxs("p", {
+              className: "text-sm text-yellow-800 text-center font-medium",
+              children: ["⚠️ Após realizar o pagamento, ", l.jsx("strong", { children: "volte à página anterior" }), " e role até o final para enviar o comprovante e confirmar seu cadastro."]
+            })
           }), t && l.jsx("div", {
             className: "border-t pt-4",
             children: l.jsxs("p", {
