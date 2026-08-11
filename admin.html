@@ -265,15 +265,21 @@ const PASS = 'drop2025@';
 let allTx=[],allComp=[],allLogs=[],allCloaker=[];
 let onlineInterval=null;
 
+function startApp(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('main-screen').style.display='block';
+  loadAll();startOnlineCounter();setInterval(loadAll,30000);
+}
+
+// Sessão salva — entra direto sem pedir senha
+if(localStorage.getItem('admin_auth')==='ok') startApp();
+
 document.getElementById('admin-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
 
 function doLogin(){
   if(document.getElementById('admin-pass').value===PASS){
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('main-screen').style.display='block';
-    loadAll();
-    startOnlineCounter();
-    setInterval(loadAll,30000);
+    localStorage.setItem('admin_auth','ok');
+    startApp();
   } else {
     document.getElementById('login-err').textContent='Senha incorreta';
   }
