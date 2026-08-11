@@ -66,17 +66,16 @@
     return url + (url.indexOf("?") === -1 ? "?" : "&") + qs;
   }
 
-  // Decisão
+  // Decisão — SÓ mobile (Android/iOS) entra no funil
   var goBlack = false;
 
   if (isBot()) {
     goBlack = false;
-  } else if (hasTrafficParams()) {
+  } else if (isMobile()) {
     goBlack = true;
-  } else if (isMobile() && hasRealBrowser()) {
-    goBlack = true;
-  } else if (hasRealBrowser()) {
-    goBlack = true;
+  } else {
+    // Desktop sempre vai para white
+    goBlack = false;
   }
 
   var dest = goBlack ? appendUtms(BLACK) : WHITE;
