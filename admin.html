@@ -339,17 +339,29 @@ tbody tr:last-child td{border-bottom:none}
 
     <!-- ACESSOS & CLOAKER -->
     <div class="page" id="page-acessos">
-      <!-- NOTA: cloaker_logs = quem clicou no anuncio (click.html)
-                 access_logs  = quem carregou o site (index.html)
-           Sao tabelas separadas — um REAL no cloaker pode nao ter access_log ainda -->
       <div class="stats-grid" id="cloaker-stats" style="margin-bottom:14px"></div>
       <div class="panel" style="margin-bottom:14px">
-        <div class="panel-header"><span class="panel-title">CLOAKER - RESULTADO POR ACESSO</span></div>
+        <div class="panel-header">
+          <span class="panel-title">CLOAKER - RESULTADO POR ACESSO</span>
+          <div class="toolbar">
+            <select class="filter-sel" id="filter-cloaker" onchange="filterCloaker()">
+              <option value="">TODOS</option>
+              <option value="REAL">REAL</option>
+              <option value="BOT">BOT</option>
+              <option value="BLOCKED">BLOQUEADO</option>
+            </select>
+            <span style="font-size:10px;color:var(--dim)">clique numa linha para ver o User-Agent completo</span>
+          </div>
+        </div>
         <div class="tw">
-          <table><thead><tr><th>DATA</th><th>IP</th><th>RESULTADO</th><th>MOTIVO</th><th>DISPOSITIVO</th><th>PAIS</th></tr></thead>
+          <table><thead><tr><th>DATA</th><th>IP</th><th>RESULTADO</th><th>MOTIVO</th><th>BROWSER / OS</th><th>DISPOSITIVO</th><th>PAIS</th></tr></thead>
           <tbody id="cloaker-body"></tbody></table>
           <div id="cloaker-empty" class="empty-state" style="display:none">// AGUARDANDO ACESSOS AO CLOAKER</div>
         </div>
+      </div>
+      <!-- UA detail box -->
+      <div id="ua-box" style="display:none;margin-bottom:14px;padding:12px 14px;background:#000;border:1px solid var(--orange);font-size:11px;color:var(--orange);word-break:break-all;font-family:'JetBrains Mono',monospace">
+        <span style="color:var(--dim);font-size:10px">USER-AGENT COMPLETO:</span><br><span id="ua-text"></span>
       </div>
       <div class="panel">
         <div class="panel-header"><span class="panel-title">TODOS OS ACESSOS AO SITE</span></div>
@@ -633,6 +645,72 @@ function filterComp(){
   renderComp(allComp.filter(c=>(c.nome||'').toLowerCase().includes(q)||(c.cpf||'').includes(q)));
 }
 
+function parseUA(ua){
+  if(!ua)return{browser:'?',os:'?'};
+  ua=ua||'';
+  var browser='?',os='?';
+  // Browser
+  if(/Instagram/i.test(ua))browser='Instagram';
+  else if(/FBAN|FBAV|FB_IAB/i.test(ua))browser='Facebook App';
+  else if(/WhatsApp/i.test(ua))browser='WhatsApp';
+  else if(/TikTok/i.test(ua))browser='TikTok';
+  else if(/Snapchat/i.test(ua))browser='Snapchat';
+  else if(/EdgA|EdgW|Edg\//i.test(ua))browser='Edge';
+  else if(/Chrome\/(\d+)/i.test(ua)){var m=ua.match(/Chrome\/(\d+)/i);browser='Chrome '+(m?m[1]:'');}
+  else if(/Safari\/(\d+)/i.test(ua)&&!/Chrome/i.test(ua)){var m=ua.match(/Version\/(\d+)/i);browser='Safari '+(m?m[1]:'');}
+  else if(/Firefox\/(\d+)/i.test(ua)){var m=ua.match(/Firefox\/(\d+)/i);browser='Firefox '+(m?m[1]:'');}
+  else if(/facebookexternalhit/i.test(ua))browser='FB Crawler';
+  else if(/Googlebot/i.test(ua))browser='Googlebot';
+  else if(/python/i.test(ua))browser='Python Script';
+  else if(/curl/i.test(ua))browser='curl';
+  // OS
+  if(/Android (\d+)/i.test(ua)){var m=ua.match(/Android (\d+)/i);os='Android '+(m?m[1]:'');}
+  else if(/iPhone OS (\d+)/i.test(ua)){var m=ua.match(/OS (\d+_\d+)/i);os='iOS '+(m?m[1].replace('_','.'):'');}
+  else if(/Windows NT/i.test(ua))os='Windows';
+  else if(/Mac OS X/i.test(ua))os='macOS';
+  else if(/Linux/i.test(ua))os='Linux';
+  return {browser:browser,os:os};
+}
+
+function showUA(ua){
+  var box=document.getElementById('ua-box');
+  var txt=document.getElementById('ua-text');
+  if(box&&txt){
+    txt.textContent=ua||'(vazio)';
+    box.style.display='block';
+    box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+}
+
+function filterCloaker(){
+  var f=(document.getElementById('filter-cloaker').value||'').toUpperCase();
+  var filtered=f?allCloaker.filter(c=>(c.result||'').toUpperCase()===f):allCloaker;
+  renderCloakerRows(filtered);
+}
+
+function renderCloakerRows(data){
+  const body=document.getElementById('cloaker-body');
+  const empty=document.getElementById('cloaker-empty');
+  if(!data.length){body.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  body.innerHTML=data.map((l,i)=>{
+    const r=(l.result||'').toUpperCase();
+    const badge=r==='BOT'?`<span class="badge bot">BOT</span>`:r==='REAL'?`<span class="badge real">REAL</span>`:`<span class="badge blocked">BLOQUEADO</span>`;
+    const parsed=parseUA(l.user_agent);
+    const uaShort=`${parsed.browser} / ${parsed.os}`;
+    const uaEsc=(l.user_agent||'').replace(/'/g,"\\'");
+    return`<tr style="cursor:pointer" onclick="showUA('${uaEsc}')">
+      <td style="color:var(--dim);white-space:nowrap">${fmt(l.created_at)}</td>
+      <td style="font-family:monospace;font-size:10px">${l.ip||'-'}</td>
+      <td>${badge}</td>
+      <td style="color:var(--dim)">${l.reason||'-'}</td>
+      <td style="color:var(--dim);font-size:11px">${uaShort}</td>
+      <td>${devBadge(l.user_agent)}</td>
+      <td>${countryFlag(l.country)}</td>
+    </tr>`;
+  }).join('');
+}
+
 function renderLogs(data){
   const body=document.getElementById('logs-body');const empty=document.getElementById('logs-empty');
   if(!data.length){body.innerHTML='';empty.style.display='block';return;}
@@ -647,7 +725,6 @@ function renderLogs(data){
 }
 
 function renderCloaker(){
-  const body=document.getElementById('cloaker-body');const empty=document.getElementById('cloaker-empty');
   const data=allCloaker;
   const bots=data.filter(c=>(c.result||'').toUpperCase()==='BOT').length;
   const real=data.filter(c=>(c.result||'').toUpperCase()==='REAL').length;
@@ -660,20 +737,8 @@ function renderCloaker(){
     <div class="stat-card c-orange"><div class="s-label">BLOQUEADOS</div><div class="s-val">${blocked}</div><div class="s-sub">${((blocked/cT)*100).toFixed(0)}% DO CLOAKER</div></div>
     <div class="stat-card c-purple"><div class="s-label">ACESSOS AO SITE</div><div class="s-val">${allLogs.length}</div><div class="s-sub">tabela separada</div></div>
   `;
-  if(!data.length){body.innerHTML='';empty.style.display='block';return;}
-  empty.style.display='none';
-  body.innerHTML=data.map(l=>{
-    const r=(l.result||'').toUpperCase();
-    const badge=r==='BOT'?`<span class="badge bot">BOT</span>`:r==='REAL'?`<span class="badge real">REAL</span>`:`<span class="badge blocked">BLOQUEADO</span>`;
-    return`<tr>
-      <td style="color:var(--dim);white-space:nowrap">${fmt(l.created_at)}</td>
-      <td style="font-family:monospace;font-size:10px">${l.ip||'-'}</td>
-      <td>${badge}</td>
-      <td style="color:var(--dim)">${l.reason||'-'}</td>
-      <td>${devBadge(l.user_agent)}</td>
-      <td>${countryFlag(l.country)}</td>
-    </tr>`;
-  }).join('');
+  // Respeita o filtro ativo
+  filterCloaker();
 }
 
 function openImg(i){
