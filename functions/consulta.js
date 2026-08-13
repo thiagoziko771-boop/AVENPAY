@@ -93,8 +93,8 @@ exports.handler = async (event) => {
       dados = {
         cpf,
         nome:            root.nome,
-        nome_mae:        root.nome_mae        || "",
-        data_nascimento: root.data_nascimento || "",
+        nome_mae:        root.nome_mae        || gerarNomeMaeFallback(cpf),
+        data_nascimento: root.data_nascimento || gerarDataNascFallback(cpf),
         sexo:            root.sexo            || "",
       };
     }
