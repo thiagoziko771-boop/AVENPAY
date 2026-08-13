@@ -103,10 +103,9 @@ body{background:#fff;margin:0;padding:0;}
     if (window._phantom || window.callPhantom) return true;
     if (window.__nightmare) return true;
     if (document.documentElement.getAttribute("webdriver")) return true;
-    if (navigator.plugins && navigator.plugins.length === 0 &&
-        /chrome/i.test(navigator.userAgent) &&
-        !/android/i.test(navigator.userAgent)) return true;
+    // Sem linguagem definida (bot headless)
     if (!navigator.language && !navigator.languages) return true;
+    // Resolucao zerada
     if (screen.width === 0 || screen.height === 0) return true;
     return false;
   }
