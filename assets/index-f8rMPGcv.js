@@ -1,4 +1,4 @@
-﻿var Nh = e => {
+var Nh = e => {
   throw TypeError(e)
 };
 var rc = (e, t, n) => t.has(e) || Nh("Cannot " + n);
@@ -12930,7 +12930,7 @@ function d3() {
         nome: w.DADOS.nome,
         dataNascimento: w.DADOS.data_nascimento || "",
         nomeMae: w.DADOS.nome_mae || ""
-      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.70});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.70});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
+      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
     } catch (h) {
       console.error("Error fetching data:", h);
       const w = {
@@ -14896,13 +14896,13 @@ function gp() {
     if (m) try { const A = JSON.parse(m); b = A.email || ""; C = A.phone || "" } catch (A) { console.error("Error parsing userData:", A) }
     if (typeof window.fbq < "u") try {
       window.fbq("track", "Purchase", {
-        value: 78.90,
+        value: 79.00,
         currency: "BRL",
         content_name: "Loja Drop 05",
         content_type: "product"
       }), console.log("Facebook Pixel: Purchase tracked")
     } catch (A) { console.error("Facebook Pixel error:", A) }
-    try { const _utmPurchase = () => { try { window.utmify("track", "Purchase", { value: 78.90, currency: "BRL" }), console.log("Utmify: Purchase tracked") } catch (e) { console.error("Utmify error:", e) } }; if (window.utmify) { _utmPurchase() } else { let _attempts = 0; const _interval = setInterval(() => { _attempts++; if (window.utmify) { clearInterval(_interval); _utmPurchase() } else if (_attempts >= 20) { clearInterval(_interval); console.warn("Utmify: not loaded") } }, 500) } } catch (A) { console.error("Utmify setup error:", A) }
+    try { const _utmPurchase = () => { try { window.utmify("track", "Purchase", { value: 79.00, currency: "BRL" }), console.log("Utmify: Purchase tracked") } catch (e) { console.error("Utmify error:", e) } }; if (window.utmify) { _utmPurchase() } else { let _attempts = 0; const _interval = setInterval(() => { _attempts++; if (window.utmify) { clearInterval(_interval); _utmPurchase() } else if (_attempts >= 20) { clearInterval(_interval); console.warn("Utmify: not loaded") } }, 500) } } catch (A) { console.error("Utmify setup error:", A) }
     localStorage.setItem(p, new Date().toISOString())
   }, []), x.useEffect(() => {
     if (v.current) return;
@@ -14929,7 +14929,7 @@ function gp() {
           body: JSON.stringify({
             nome: C.nome,
             cpf: C.cpf,
-            valor: 78.90,
+            valor: 79.00,
             email: C.email || "",
             telefone: C.phone || "",
             detran: j
@@ -14956,7 +14956,7 @@ function gp() {
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                amount: 78.9,
+                amount: 79.00,
                 customer_name: b.nome,
                 customer_email: b.email || "cliente@email.com",
                 customer_phone: b.phone || "11999999999",
@@ -21139,7 +21139,7 @@ function kE() {
       return isNaN(y.getTime()) ? h : y.toLocaleDateString("pt-BR")
     },
     f = h => {
-      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"Loja Drop 05",currency:"BRL",value:64.70,num_items:1});}}catch(e){}})(); e("/chat")
+      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"Loja Drop 05",currency:"BRL",value:64.00,num_items:1});}}catch(e){}})(); e("/chat")
     };
   return l.jsxs("div", {
     children: [l.jsx(rt, {}), l.jsx("div", {
@@ -21401,7 +21401,7 @@ function DE() {
           console.log("PAGAMENTO CONFIRMADO!");
           const I = `fb_conversion_${M}`;
           return !localStorage.getItem(I) && typeof window.fbq < "u" && (window.fbq("track", "Purchase", {
-            value: (t == null ? void 0 : t.amount) || 64.70,
+            value: (t == null ? void 0 : t.amount) || 64.00,
             currency: "BRL",
             content_name: "Loja Drop 05",
             content_type: "product",
@@ -21439,7 +21439,7 @@ function DE() {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            amount: 64.70,
+            amount: 64.00,
             customer_name: _.nome,
             customer_email: _.email,
             customer_phone: _.phone,
@@ -22089,7 +22089,7 @@ function OE() {
           if (console.log("PAGAMENTO CONFIRMADO!", Y.bank_tx_id), typeof window < "u" && window.fbq) {
             const ge = window.fbq;
             ge("track", "Purchase", {
-              value: (m == null ? void 0 : m.amount) || 64.70,
+              value: (m == null ? void 0 : m.amount) || 64.00,
               currency: "BRL",
               content_type: "product",
               content_ids: [B],
@@ -22114,7 +22114,7 @@ function OE() {
           if (console.log("PAGAMENTO CONFIRMADO (manual)!", W.bank_tx_id), typeof window < "u" && window.fbq) {
             const Y = window.fbq;
             Y("track", "Purchase", {
-              value: (m == null ? void 0 : m.amount) || 64.70,
+              value: (m == null ? void 0 : m.amount) || 64.00,
               currency: "BRL",
               content_type: "product",
               content_ids: [m.deposit_id],
@@ -22209,7 +22209,7 @@ function OE() {
     const Y = "fb_addtocart_chat_tracked";
     if (!localStorage.getItem(Y) && typeof window.fbq < "u") try {
       window.fbq("track", "AddToCart", {
-        value: 64.70,
+        value: 64.00,
         currency: "BRL",
         content_name: "Loja Drop 05",
         content_type: "product"
@@ -22246,7 +22246,7 @@ function OE() {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            amount: 64.70,
+            amount: 64.00,
             customer_name: ge.nome,
             customer_email: ge.email || "cliente@email.com",
             customer_phone: ge.phone || "11999999999",
