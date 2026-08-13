@@ -82,6 +82,18 @@
   status = 200
 
 [[redirects]]
+  from = "/click.html"
+  to = "/click.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/admin.html"
+  to = "/admin.html"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
