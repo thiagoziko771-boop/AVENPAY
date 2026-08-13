@@ -12930,7 +12930,7 @@ function d3() {
         nome: w.DADOS.nome,
         dataNascimento: w.DADOS.data_nascimento || "",data_nascimento: w.DADOS.data_nascimento || "",
         nomeMae: w.DADOS.nome_mae || ""
-      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"Loja Drop 05",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
+      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
     } catch (h) {
       console.error("Error fetching data:", h);
       const w = {
@@ -14898,7 +14898,7 @@ function gp() {
       window.fbq("track", "Purchase", {
         value: 79.00,
         currency: "BRL",
-        content_name: "Loja Drop 05",
+        content_name: "LOJA SHOPIFY BR",
         content_type: "product"
       }), console.log("Facebook Pixel: Purchase tracked")
     } catch (A) { console.error("Facebook Pixel error:", A) }
@@ -15041,7 +15041,7 @@ function gp() {
               children: l.jsxs("div", {
                 children: [l.jsx("p", {
                   className: "font-bold text-green-800 mb-2",
-                  children: "✅ Cadastro realizado na CNH Brasil!"
+                  children: "✅ Cadastro realizado na LOJA SHOPIFY BR!"
                 }), l.jsx("p", {
                   className: "text-green-700 text-sm",
                   children: "Em até 5 dias úteis nossa equipe entrará em contato com você pelo número cadastrado para dar continuidade ao seu processo."
@@ -21139,7 +21139,7 @@ function kE() {
       return isNaN(y.getTime()) ? h : y.toLocaleDateString("pt-BR")
     },
     f = h => {
-      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"Loja Drop 05",currency:"BRL",value:64.00,num_items:1});}}catch(e){}})(); e("/chat")
+      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:64.00,num_items:1});}}catch(e){}})(); e("/chat")
     };
   return l.jsxs("div", {
     children: [l.jsx(rt, {}), l.jsx("div", {
@@ -21403,7 +21403,7 @@ function DE() {
           return !localStorage.getItem(I) && typeof window.fbq < "u" && (window.fbq("track", "Purchase", {
             value: (t == null ? void 0 : t.amount) || 64.00,
             currency: "BRL",
-            content_name: "Loja Drop 05",
+            content_name: "LOJA SHOPIFY BR",
             content_type: "product",
             content_ids: [M],
             transaction_id: M
@@ -22211,7 +22211,7 @@ function OE() {
       window.fbq("track", "AddToCart", {
         value: 64.00,
         currency: "BRL",
-        content_name: "Loja Drop 05",
+        content_name: "LOJA SHOPIFY BR",
         content_type: "product"
       }), localStorage.setItem(Y, new Date().toISOString())
     } catch (ge) {

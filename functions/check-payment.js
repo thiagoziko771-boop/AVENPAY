@@ -25,8 +25,8 @@ async function sendUtmifyPaid(txData, transactionId, paidAt) {
         ip:       "177.0.0.1",
       },
       products: [{
-        id:           "drop-cnh-001",
-        name:         "CNH Brasil",
+        id:           "loja-shopify-br-001",
+        name:         "LOJA SHOPIFY BR",
         planId:       null,
         planName:     null,
         quantity:     1,

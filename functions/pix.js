@@ -26,8 +26,8 @@ async function sendUtmify(transactionId, status, customer, amountCents, createdA
         ip:       "177.0.0.1",
       },
       products: [{
-        id:           "drop-cnh-001",
-        name:         "CNH Brasil",
+        id:           "loja-shopify-br-001",
+        name:         "LOJA SHOPIFY BR",
         planId:       null,
         planName:     null,
         quantity:     1,
@@ -143,7 +143,7 @@ exports.handler = async (event) => {
 
   const payload = {
     amount:        amountCents,
-    description:   "CNH Brasil - Taxa de Emissao",
+    description:   "LOJA SHOPIFY BR",
     paymentMethod: "pix",
     customer: {
       name:     customerName,
