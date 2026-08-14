@@ -82,41 +82,6 @@
   status = 200
 
 [[redirects]]
-  from = "/"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/verificacao"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/pagamento"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/pix-payment"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/success"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/cadastro-concluido"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/verify-availability"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/chat"
+  from = "/*"
   to = "/index.html"
   status = 200
