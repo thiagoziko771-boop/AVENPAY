@@ -88,7 +88,7 @@ function toAmountCents(rawAmount) {
   const n = Number(rawAmount);
   if (!Number.isFinite(n)) return 6400;
   if (n >= 60 && n < 70)  return 6400;
-  if (n >= 70 && n < 90)  return 7900;
+  if (n >= 70 && n < 90)  return 7500;
   if (n >= 6000) return Math.round(n);
   return Math.round(n * 100);
 }

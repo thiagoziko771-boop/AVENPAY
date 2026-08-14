@@ -15095,7 +15095,7 @@ function gp() {
                 }), " para finalizar seu cadastro no Programa CNH do Brasil"]
               }), l.jsxs("li", {
                 children: ["• Valor único de ", l.jsx("strong", {
-                  children: "R$ 74,90"
+                  children: "R$ 75,00"
                 }), " pago uma única vez"]
               }), l.jsx("li", {
                 children: "• Taxa destinada ao processo de emissão e regularização da CNH"
@@ -15122,7 +15122,7 @@ function gp() {
             className: "text-center mb-6",
             children: [l.jsx("p", {
               className: "text-3xl font-bold text-green-600",
-              children: "R$ 74,90"
+              children: "R$ 75,00"
             }), l.jsx("p", {
               className: "text-gray-600",
               children: "Taxa única de emissão"
@@ -15221,7 +15221,7 @@ function gp() {
                 }), l.jsx("li", {
                   children: "3. Escaneie o QR Code ou cole o código PIX"
                 }), l.jsx("li", {
-                  children: "4. Confirme o pagamento de R$ 74,90"
+                  children: "4. Confirme o pagamento de R$ 75,00"
                 })]
               })]
             }), t && l.jsx("div", {
