@@ -90,15 +90,15 @@ function gerarCpfValido() {
   return d.join('');
 }
 
-// WinnerPay recebe centavos (inteiros)
-function toAmountCents(rawAmount) {
-  if (rawAmount == null) return 6400;
+// WinnerPay recebe REAIS (não centavos)
+function toAmountReais(rawAmount) {
+  if (rawAmount == null) return 64.00;
   const n = Number(rawAmount);
-  if (!Number.isFinite(n)) return 6400;
-  if (n >= 60 && n < 70)  return 6400;  // R$ 64,00
-  if (n >= 70 && n < 90)  return 7500;  // R$ 75,00
-  if (n >= 6000) return Math.round(n);
-  return Math.round(n * 100);
+  if (!Number.isFinite(n)) return 64.00;
+  if (n >= 60 && n < 70)  return 64.00;  // R$ 64,00
+  if (n >= 70 && n < 90)  return 75.00;  // R$ 75,00
+  if (n >= 6000) return n / 100;         // veio em centavos
+  return n;
 }
 
 function fmtPhone(phone) {
@@ -128,7 +128,7 @@ exports.handler = async (event) => {
 
   const randId      = Math.random().toString(36).slice(2,10);
   const rawAmount   = body.amount ?? body.valor ?? body.total ?? 64;
-  const amountCents = toAmountCents(rawAmount);
+  const amountReais = toAmountReais(rawAmount);
 
   const customerName  = (body.nome || body.name || body.customer_name || `Cliente ${randId}`).toString().trim();
   const customerEmail = (body.email || body.customer_email || `cliente${randId}@gmail.com`).toString().trim();
@@ -137,18 +137,15 @@ exports.handler = async (event) => {
   const customerCpf   = cpfRaw.length === 11 ? cpfRaw : gerarCpfValido();
   const utms          = body.utm || {};
 
-  // WinnerPay — POST /financial/receber-pix
-  // Autenticação: Basic Base64(client_id:client_secret)
   const payload = {
-    amount:       amountCents,
-    description:  "LOJA SHOPIFY 02",
+    amount:      amountReais,
+    description: "LOJA SHOPIFY 02",
     payer: {
       name:     customerName,
       email:    customerEmail,
       document: customerCpf,
       phone:    customerPhone,
     },
-    // QR Code como imagem PNG base64
     include_qr_image: false,
   };
 
@@ -183,16 +180,16 @@ exports.handler = async (event) => {
     return jsonResponse(500, { success: false, error: "Resposta invalida da gateway" });
   }
 
-  // WinnerPay retorna: transaction_id, pix_code (ou qr_code), status
-  const data          = parsed.transaction || parsed.data || parsed || {};
+  // WinnerPay retorna: transaction.transaction_id, pix_copia_e_cola
+  const data          = parsed.transaction || {};
   const transactionId = data.transaction_id || parsed.transaction_id || null;
-  const pixCode       = data.pix_code || data.qr_code || data.brcode || parsed.pix_code || null;
+  const pixCode       = parsed.pix_copia_e_cola || parsed.qr_code_data || data.metadata?.pix_copia_e_cola || null;
 
   try {
     const supabase = getSupabase();
     await supabase.from("transactions").insert({
       transaction_id: transactionId,
-      amount:         amountCents / 100,
+      amount:         amountReais,
       customer_name:  customerName,
       customer_email: customerEmail,
       customer_cpf:   customerCpf,
@@ -210,7 +207,7 @@ exports.handler = async (event) => {
   await sendUtmify(
     transactionId, "waiting_payment",
     { name: customerName, email: customerEmail, phone: customerPhone, cpf: customerCpf },
-    amountCents,
+    Math.round(amountReais * 100),
     new Date().toISOString().replace("T"," ").slice(0,19),
     utms
   );
