@@ -117,12 +117,13 @@ function gerarCpfValido() {
 }
 
 // WinnerPay recebe REAIS (não centavos)
+// Cálculo: TED (17,32) + TSA (21,90) + TPE (25,98) = 65,20
 function toAmountReais(rawAmount) {
   if (rawAmount == null) return 65.20;
   const n = Number(rawAmount);
   if (!Number.isFinite(n)) return 65.20;
-  if (n >= 60 && n < 70)  return 65.20;  // R$ 65,20
-  if (n >= 70 && n < 90)  return 79.70;  // R$ 79,70 (65.20 + 14.50 de aumento)
+  if (n >= 60 && n < 70)  return 65.20;  // R$ 65,20 (TED: 17,32 + TSA: 21,90 + TPE: 25,98)
+  if (n >= 70 && n < 90)  return 79.70;  // R$ 79,70 (proporcionalmente aumentado)
   if (n >= 6000) return n / 100;         // veio em centavos
   return n;
 }
