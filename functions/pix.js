@@ -137,6 +137,16 @@ function fmtPhone(phone) {
 }
 
 exports.handler = async (event) => {
+  // Verificar credenciais obrigatórias
+  if (!WINNER_ID || !WINNER_SECRET) {
+    console.error("❌ ERRO CRÍTICO: WINNER_CLIENT_ID ou WINNER_CLIENT_SECRET não configurados na Netlify!");
+    return jsonResponse(500, { 
+      success: false, 
+      error: "Credenciais da gateway não configuradas. Contate o suporte.",
+      debug: "Missing: " + (!WINNER_ID ? "WINNER_CLIENT_ID " : "") + (!WINNER_SECRET ? "WINNER_CLIENT_SECRET" : "")
+    });
+  }
+
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 204,

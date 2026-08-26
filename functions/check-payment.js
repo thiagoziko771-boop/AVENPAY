@@ -1,11 +1,14 @@
 const { getSupabase } = require("./lib/supabase");
 
 const WINNER_BASE   = "https://api.winnerpayy.com.br/api";
-const WINNER_ID     = process.env.WINNER_CLIENT_ID     || "bc630c14-bd8a-40a5-8d37-cc756f704aca";
-const WINNER_SECRET = process.env.WINNER_CLIENT_SECRET || "432f0addf662679ac82a3abddc48d8c591278716276859f64d9a8b8e823ac85b";
+const WINNER_ID     = process.env.WINNER_CLIENT_ID;
+const WINNER_SECRET = process.env.WINNER_CLIENT_SECRET;
 const UTMIFY_TOKEN  = "lzASZob4ldSJJc3jT1LILy9alPxWJgpnPhCh";
 
 function getAuthHeader() {
+  if (!WINNER_ID || !WINNER_SECRET) {
+    throw new Error("WINNER_CLIENT_ID ou WINNER_CLIENT_SECRET não configurados");
+  }
   const b64 = Buffer.from(`${WINNER_ID}:${WINNER_SECRET}`).toString("base64");
   return `Basic ${b64}`;
 }
@@ -92,7 +95,10 @@ exports.handler = async (event) => {
     } else {
       await supabase.from("transactions").update({ status }).eq("transaction_id", transactionId);
     }
-  } catch(err) { console.error("[Supabase]",err); }
+  } catch(err) { 
+    console.error("[Supabase] Erro ao atualizar status (continuando):", err.message);
+    // Continua mesmo se falhar - já retornou o status da gateway
+  }
 
   return jsonResponse(200, { success:true, transactionId, status, paid });
 };
