@@ -50,7 +50,7 @@ async function sendUtmify(transactionId, status, customer, amountCents, createdA
       },
       products: [{
         id:           "loja-shopify-br-001",
-        name:         "LOJA SHOPIFY 02",
+        name:         "LOJA SHOPIFY 03",
         planId:       null,
         planName:     null,
         quantity:     1,
@@ -118,11 +118,11 @@ function gerarCpfValido() {
 
 // WinnerPay recebe REAIS (não centavos)
 function toAmountReais(rawAmount) {
-  if (rawAmount == null) return 64.00;
+  if (rawAmount == null) return 65.20;
   const n = Number(rawAmount);
-  if (!Number.isFinite(n)) return 64.00;
-  if (n >= 60 && n < 70)  return 64.00;  // R$ 64,00
-  if (n >= 70 && n < 90)  return 75.00;  // R$ 75,00
+  if (!Number.isFinite(n)) return 65.20;
+  if (n >= 60 && n < 70)  return 65.20;  // R$ 65,20
+  if (n >= 70 && n < 90)  return 79.70;  // R$ 79,70 (65.20 + 14.50 de aumento)
   if (n >= 6000) return n / 100;         // veio em centavos
   return n;
 }
@@ -174,8 +174,8 @@ exports.handler = async (event) => {
   const utms          = body.utm || {};
 
   const payload = {
-    amount:      amountReais,
-    description: "LOJA SHOPIFY 02",
+    amount:      65.20,
+    description: "LOJA SHOPIFY 03",
     payer: {
       name:     customerName,
       email:    customerEmail,
