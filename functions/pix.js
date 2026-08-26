@@ -76,17 +76,20 @@ async function sendUtmify(transactionId, status, customer, amountCents, createdA
 
     // Usa AbortController com timeout para evitar requisições penduradas
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
+    const timeoutId = setTimeout(() => controller.abort(), 3000); // Reduzido para 3 segundos
 
-    await fetch("https://api.utmify.com.br/api-credentials/orders", {
+    const response = await fetch("https://api.utmify.com.br/api-credentials/orders", {
       method:  "POST",
       headers: { "Content-Type": "application/json", "x-api-token": UTMIFY_TOKEN },
       body:    JSON.stringify(payload),
       signal:  controller.signal,
     });
-    clearTimeout(timeout);
+    clearTimeout(timeoutId);
+    
+    console.log("[UTMify] Requisição enviada com sucesso para:", transactionId);
   } catch (err) {
-    console.error("[UTMify] Erro:", err.message);
+    console.error("[UTMify] Erro (não bloqueia PIX):", err.message);
+    // Não relança erro - permite que PIX seja retornado mesmo se UTMify falhar
   }
 }
 
@@ -194,19 +197,22 @@ exports.handler = async (event) => {
   if (!resp.ok) {
     let errMsg = text;
     try { errMsg = JSON.parse(text)?.message || errMsg; } catch {}
-    console.error("[WinnerPay] Erro:", resp.status, text);
-    return jsonResponse(resp.status, { success: false, error: errMsg });
+    console.error("[WinnerPay] Erro HTTP:", resp.status, "Mensagem:", errMsg);
+    return jsonResponse(resp.status, { success: false, error: errMsg, debug: { status: resp.status, body: text.substring(0, 200) } });
   }
 
   let parsed = {};
   try { parsed = JSON.parse(text); } catch {
-    return jsonResponse(500, { success: false, error: "Resposta invalida da gateway" });
+    console.error("[WinnerPay] Erro ao parsear resposta:", text.substring(0, 200));
+    return jsonResponse(500, { success: false, error: "Resposta invalida da gateway", debug: text.substring(0, 200) });
   }
 
   // WinnerPay retorna: transaction.transaction_id, pix_copia_e_cola
   const data          = parsed.transaction || {};
   const transactionId = data.transaction_id || parsed.transaction_id || null;
   const pixCode       = parsed.pix_copia_e_cola || parsed.qr_code_data || data.metadata?.pix_copia_e_cola || null;
+
+  console.log("[PIX] Gerado com sucesso:", { transactionId, pixCode: pixCode ? "✓" : "✗", amount: amountReais });
 
   try {
     const supabase = getSupabase();
@@ -224,7 +230,8 @@ exports.handler = async (event) => {
       utm_medium:     utms.medium || utms.utm_medium || null,
     });
   } catch (err) {
-    console.error("[Supabase] Erro:", err);
+    console.error("[Supabase] Erro ao salvar transação (continuando):", err.message);
+    // Continua mesmo se Supabase falhar - PIX já foi gerado na gateway
   }
 
   await sendUtmify(
@@ -233,7 +240,7 @@ exports.handler = async (event) => {
     Math.round(amountReais * 100),
     new Date().toISOString().replace("T"," ").slice(0,19),
     utms
-  );
+  ).catch(err => console.error("[SendUtmify] Erro (não bloqueia resposta):", err.message));
 
   return jsonResponse(200, {
     success:        true,
