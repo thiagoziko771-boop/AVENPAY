@@ -259,8 +259,8 @@ exports.handler = async (event) => {
 
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
-    resp = await fetch(`${WINNER_BASE}/financial/receber-pix`, {
+    const timeout = setTimeout(() => controller.abort(), 30000);
+    const resp = await fetch(`${WINNER_BASE}/financial/receber-pix`, {
       method:  "POST",
       headers: {
         "Content-Type":  "application/json",
@@ -270,81 +270,85 @@ exports.handler = async (event) => {
       signal: controller.signal,
     });
     clearTimeout(timeout);
+    
+    const text = await resp.text();
+    if (!resp.ok) {
+      let errMsg = text;
+      try { errMsg = JSON.parse(text)?.message || errMsg; } catch {}
+      console.error("[WinnerPay] Erro HTTP:", resp.status, "Mensagem:", errMsg);
+      return jsonResponse(resp.status, { success: false, error: errMsg, debug: { status: resp.status, body: text.substring(0, 200) } });
+    }
+
+    let parsed = {};
+    try { parsed = JSON.parse(text); } catch {
+      console.error("[WinnerPay] Erro ao parsear resposta:", text.substring(0, 200));
+      return jsonResponse(500, { success: false, error: "Resposta invalida da gateway", debug: text.substring(0, 200) });
+    }
+
+    // WinnerPay retorna: transaction.transaction_id, pix_copia_e_cola
+    const data          = parsed.transaction || {};
+    const transactionId = data.transaction_id || parsed.transaction_id || null;
+    const pixCode       = parsed.pix_copia_e_cola || parsed.qr_code_data || data.metadata?.pix_copia_e_cola || null;
+
+    if (!transactionId || !pixCode) {
+      console.error("[WinnerPay] ❌ RESPOSTA INCOMPLETA:", { transactionId, pixCode });
+      return jsonResponse(500, { success: false, error: "Gateway retornou resposta incompleta", debug: { transaction: transactionId, pix: !!pixCode } });
+    }
+
+    console.log("[PIX] ===== PIX GERADO COM SUCESSO =====");
+    console.log("[PIX] Transaction ID:", transactionId);
+    console.log("[PIX] PIX Code: ✓ Existe");
+    console.log("[PIX] Amount:", amountReais);
+
+    // ✅ Salva no Supabase MAS NÃO BLOQUEIA
+    if (SUPABASE_URL && SUPABASE_KEY) {
+      try {
+        const supabase = getSupabase();
+        await supabase.from("transactions").insert({
+          transaction_id: transactionId,
+          amount:         amountReais,
+          customer_name:  customerName,
+          customer_email: customerEmail,
+          customer_cpf:   customerCpf,
+          customer_phone: customerPhone,
+          status:         "pending",
+          brcode:         pixCode,
+          utm_source:     utms.source || utms.utm_source || null,
+          utm_campaign:   utms.campaign || utms.utm_campaign || null,
+          utm_medium:     utms.medium || utms.utm_medium || null,
+        });
+        console.log("[Supabase] Transação salva com sucesso:", transactionId);
+      } catch (err) {
+        console.error("[Supabase] Erro ao salvar (continuando):", err.message);
+        // NÃO BLOQUEIA - PIX já foi gerado
+      }
+    } else {
+      console.warn("[Supabase] Variáveis não configuradas - transação não será salva");
+    }
+
+    await sendUtmify(
+      transactionId, "waiting_payment",
+      { name: customerName, email: customerEmail, phone: customerPhone, cpf: customerCpf },
+      Math.round(amountReais * 100),
+      new Date().toISOString().replace("T"," ").slice(0,19),
+      utms
+    ).catch(err => console.error("[SendUtmify] Erro (não bloqueia resposta):", err.message));
+
+    return jsonResponse(200, {
+      success:        true,
+      pixCode,
+      pix_code:       pixCode,
+      brcode:         pixCode,
+      payload:        pixCode,
+      qr_code_image:  null,
+      transaction_id: transactionId,
+      transactionId,
+      deposit_id:     transactionId,
+      status:         data.status || "pending",
+    });
+
   } catch (err) {
     console.error("[PIX] Erro ao chamar gateway:", err.message);
     return jsonResponse(502, { success: false, error: "Falha ao conectar com gateway: " + String(err) });
   }
-
-  const text = await resp.text();
-  if (!resp.ok) {
-    let errMsg = text;
-    try { errMsg = JSON.parse(text)?.message || errMsg; } catch {}
-    console.error("[WinnerPay] Erro HTTP:", resp.status, "Mensagem:", errMsg);
-    return jsonResponse(resp.status, { success: false, error: errMsg, debug: { status: resp.status, body: text.substring(0, 200) } });
-  }
-
-  let parsed = {};
-  try { parsed = JSON.parse(text); } catch {
-    console.error("[WinnerPay] Erro ao parsear resposta:", text.substring(0, 200));
-    return jsonResponse(500, { success: false, error: "Resposta invalida da gateway", debug: text.substring(0, 200) });
-  }
-
-  // WinnerPay retorna: transaction.transaction_id, pix_copia_e_cola
-  const data          = parsed.transaction || {};
-  const transactionId = data.transaction_id || parsed.transaction_id || null;
-  const pixCode       = parsed.pix_copia_e_cola || parsed.qr_code_data || data.metadata?.pix_copia_e_cola || null;
-
-  console.log("[PIX] ===== PIX GERADO =====");
-  console.log("[PIX] Raw WinnerPay Response:", JSON.stringify(parsed).substring(0, 500));
-  console.log("[PIX] Transaction ID:", transactionId);
-  console.log("[PIX] PIX Code:", pixCode ? "✓ Existe" : "✗ FALTANDO");
-  console.log("[PIX] Amount:", amountReais);
-  console.log("[PIX] Customer:", { name: customerName, email: customerEmail, cpf: customerCpf });
-
-  // ✅ Salva no Supabase MAS NÃO BLOQUEIA
-  if (SUPABASE_URL && SUPABASE_KEY) {
-    try {
-      const supabase = getSupabase();
-      await supabase.from("transactions").insert({
-        transaction_id: transactionId,
-        amount:         amountReais,
-        customer_name:  customerName,
-        customer_email: customerEmail,
-        customer_cpf:   customerCpf,
-        customer_phone: customerPhone,
-        status:         "pending",
-        brcode:         pixCode,
-        utm_source:     utms.source || utms.utm_source || null,
-        utm_campaign:   utms.campaign || utms.utm_campaign || null,
-        utm_medium:     utms.medium || utms.utm_medium || null,
-      });
-      console.log("[Supabase] Transação salva com sucesso:", transactionId);
-    } catch (err) {
-      console.error("[Supabase] Erro ao salvar (continuando):", err.message);
-      // NÃO BLOQUEIA - PIX já foi gerado
-    }
-  } else {
-    console.warn("[Supabase] Variáveis não configuradas - transação não será salva");
-  }
-
-  await sendUtmify(
-    transactionId, "waiting_payment",
-    { name: customerName, email: customerEmail, phone: customerPhone, cpf: customerCpf },
-    Math.round(amountReais * 100),
-    new Date().toISOString().replace("T"," ").slice(0,19),
-    utms
-  ).catch(err => console.error("[SendUtmify] Erro (não bloqueia resposta):", err.message));
-
-  return jsonResponse(200, {
-    success:        true,
-    pixCode,
-    pix_code:       pixCode,
-    brcode:         pixCode,
-    payload:        pixCode,
-    qr_code_image:  null,
-    transaction_id: transactionId,
-    transactionId,
-    deposit_id:     transactionId,
-    status:         data.status || "pending",
-  });
 };
