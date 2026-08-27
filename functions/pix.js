@@ -5,12 +5,19 @@ const WINNER_ID     = process.env.WINNER_CLIENT_ID;
 const WINNER_SECRET = process.env.WINNER_CLIENT_SECRET;
 const UTMIFY_TOKEN  = "lzASZob4ldSJJc3jT1LILy9alPxWJgpnPhCh";
 
+// Variáveis Supabase para verificação
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
 // Cache para evitar múltiplas chamadas ao UTMify para o mesmo transactionId
 const utmifyCache = new Map();
 const CACHE_TTL = 60000; // 60 segundos
 
 // Basic Auth header: Base64(client_id:client_secret)
 function getAuthHeader() {
+  if (!WINNER_ID || !WINNER_SECRET) {
+    throw new Error("❌ CREDENCIAIS INVÁLIDAS: WINNER_CLIENT_ID ou WINNER_CLIENT_SECRET não configurados!");
+  }
   const creds = `${WINNER_ID}:${WINNER_SECRET}`;
   const b64 = Buffer.from(creds).toString("base64");
   return `Basic ${b64}`;
@@ -231,7 +238,6 @@ exports.handler = async (event) => {
     include_qr_image: false,
   };
 
-  let resp;
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 15000);
@@ -239,13 +245,14 @@ exports.handler = async (event) => {
       method:  "POST",
       headers: {
         "Content-Type":  "application/json",
-        "Authorization": getAuthHeader(),
+        "Authorization": getAuthHeader(),  // ❌ BLOQUEIO: Se falhar aqui, todo PIX falha
       },
       body:   JSON.stringify(payload),
       signal: controller.signal,
     });
     clearTimeout(timeout);
   } catch (err) {
+    console.error("[PIX] Erro ao chamar gateway:", err.message);
     return jsonResponse(502, { success: false, error: "Falha ao conectar com gateway: " + String(err) });
   }
 
@@ -270,24 +277,30 @@ exports.handler = async (event) => {
 
   console.log("[PIX] Gerado com sucesso:", { transactionId, pixCode: pixCode ? "✓" : "✗", amount: amountReais });
 
-  try {
-    const supabase = getSupabase();
-    await supabase.from("transactions").insert({
-      transaction_id: transactionId,
-      amount:         amountReais,
-      customer_name:  customerName,
-      customer_email: customerEmail,
-      customer_cpf:   customerCpf,
-      customer_phone: customerPhone,
-      status:         "pending",
-      brcode:         pixCode,
-      utm_source:     utms.source || utms.utm_source || null,
-      utm_campaign:   utms.campaign || utms.utm_campaign || null,
-      utm_medium:     utms.medium || utms.utm_medium || null,
-    });
-  } catch (err) {
-    console.error("[Supabase] Erro ao salvar transação (continuando):", err.message);
-    // Continua mesmo se Supabase falhar - PIX já foi gerado na gateway
+  // ✅ Salva no Supabase MAS NÃO BLOQUEIA
+  if (SUPABASE_URL && SUPABASE_KEY) {
+    try {
+      const supabase = getSupabase();
+      await supabase.from("transactions").insert({
+        transaction_id: transactionId,
+        amount:         amountReais,
+        customer_name:  customerName,
+        customer_email: customerEmail,
+        customer_cpf:   customerCpf,
+        customer_phone: customerPhone,
+        status:         "pending",
+        brcode:         pixCode,
+        utm_source:     utms.source || utms.utm_source || null,
+        utm_campaign:   utms.campaign || utms.utm_campaign || null,
+        utm_medium:     utms.medium || utms.utm_medium || null,
+      });
+      console.log("[Supabase] Transação salva com sucesso:", transactionId);
+    } catch (err) {
+      console.error("[Supabase] Erro ao salvar (continuando):", err.message);
+      // NÃO BLOQUEIA - PIX já foi gerado
+    }
+  } else {
+    console.warn("[Supabase] Variáveis não configuradas - transação não será salva");
   }
 
   await sendUtmify(
