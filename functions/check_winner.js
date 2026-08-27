@@ -1,11 +1,17 @@
+// ❌ REMOVIDO: Credenciais hardcoded
+// Use variáveis de ambiente: WINNER_CLIENT_ID e WINNER_CLIENT_SECRET
+
 const { getSupabase } = require("./lib/supabase");
 
 const WINNER_BASE   = "https://api.winnerpayy.com.br/api";
-const WINNER_ID     = process.env.WINNER_CLIENT_ID     || "bc630c14-bd8a-40a5-8d37-cc756f704aca";
-const WINNER_SECRET = process.env.WINNER_CLIENT_SECRET || "432f0addf662679ac82a3abddc48d8c591278716276859f64d9a8b8e823ac85b";
-const UTMIFY_TOKEN  = "lzASZob4ldSJJc3jT1LILy9alPxWJgpnPhCh";
+const WINNER_ID     = process.env.WINNER_CLIENT_ID;
+const WINNER_SECRET = process.env.WINNER_CLIENT_SECRET;
+const UTMIFY_TOKEN  = process.env.UTMIFY_TOKEN || "lzASZob4ldSJJc3jT1LILy9alPxWJgpnPhCh";
 
 function getAuthHeader() {
+  if (!WINNER_ID || !WINNER_SECRET) {
+    throw new Error("❌ ERRO CRÍTICO: WINNER_CLIENT_ID e WINNER_CLIENT_SECRET não configurados na Netlify!");
+  }
   const b64 = Buffer.from(`${WINNER_ID}:${WINNER_SECRET}`).toString("base64");
   return `Basic ${b64}`;
 }

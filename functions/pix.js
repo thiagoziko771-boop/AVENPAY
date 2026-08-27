@@ -107,24 +107,69 @@ function jsonResponse(statusCode, body) {
 }
 
 function gerarCpfValido() {
-  const n = () => Math.floor(Math.random() * 9);
-  const d = Array.from({ length: 9 }, n);
-  let s1 = d.reduce((a, v, i) => a + v * (10 - i), 0);
-  let r1 = (s1 * 10) % 11; if (r1 >= 10) r1 = 0; d.push(r1);
-  let s2 = d.reduce((a, v, i) => a + v * (11 - i), 0);
-  let r2 = (s2 * 10) % 11; if (r2 >= 10) r2 = 0; d.push(r2);
+  // Gera CPF com dígitos verificadores corretos
+  const d = new Array(9);
+  for (let i = 0; i < 9; i++) {
+    d[i] = Math.floor(Math.random() * 10);
+  }
+  
+  // Calcula primeiro dígito verificador
+  let soma = 0;
+  for (let i = 0; i < 9; i++) {
+    soma += d[i] * (10 - i);
+  }
+  let resto = soma % 11;
+  d[9] = resto < 2 ? 0 : 11 - resto;
+  
+  // Calcula segundo dígito verificador
+  soma = 0;
+  for (let i = 0; i < 10; i++) {
+    soma += d[i] * (11 - i);
+  }
+  resto = soma % 11;
+  d[10] = resto < 2 ? 0 : 11 - resto;
+  
   return d.join('');
 }
 
 // WinnerPay recebe REAIS (não centavos)
 // Cálculo: TED (17,32) + TSA (21,90) + TPE (25,98) = 65,20
 function toAmountReais(rawAmount) {
-  if (rawAmount == null) return 65.20;
+  // Se não informar, padrão é R$ 65,20
+  if (rawAmount == null || rawAmount === undefined || rawAmount === "") {
+    console.log("[PIX] Sem amount informado, usando padrão R$ 65,20");
+    return 65.20;
+  }
+  
   const n = Number(rawAmount);
-  if (!Number.isFinite(n)) return 65.20;
-  if (n >= 60 && n < 70)  return 65.20;  // R$ 65,20 (TED: 17,32 + TSA: 21,90 + TPE: 25,98)
-  if (n >= 70 && n < 90)  return 79.70;  // R$ 79,70 (proporcionalmente aumentado)
-  if (n >= 6000) return n / 100;         // veio em centavos
+  
+  // Se não for um número válido, usa padrão
+  if (!Number.isFinite(n)) {
+    console.log("[PIX] Amount inválido:", rawAmount, "usando padrão R$ 65,20");
+    return 65.20;
+  }
+  
+  // Se vier em centavos (> 6000), converte para reais
+  if (n >= 6000) {
+    const result = n / 100;
+    console.log("[PIX] Amount em centavos:", n, "convertido para:", result);
+    return result;
+  }
+  
+  // Se estiver entre 60 e 70, assume R$ 65,20 (valor padrão)
+  if (n >= 60 && n < 70) {
+    console.log("[PIX] Amount entre 60-70, usando R$ 65,20");
+    return 65.20;
+  }
+  
+  // Se estiver entre 70 e 90, assume R$ 79,70 (valor aumentado)
+  if (n >= 70 && n < 90) {
+    console.log("[PIX] Amount entre 70-90, usando R$ 79,70");
+    return 79.70;
+  }
+  
+  // Caso contrário, usa o valor informado
+  console.log("[PIX] Amount informado:", n);
   return n;
 }
 
