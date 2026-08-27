@@ -54,12 +54,21 @@ exports.handler = async (event) => {
 
   // WinnerPay — GET /dashboard/transactions/:transactionId
   let statusResp, text = "";
+  
+  let authHeader;
+  try {
+    authHeader = getAuthHeader();
+  } catch (err) {
+    console.error("[CheckPayment] Credenciais inválidas:", err.message);
+    return jsonResponse(500, { success: false, error: "Credenciais não configuradas", debug: err.message });
+  }
+  
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000);
     statusResp = await fetch(
       `${WINNER_BASE}/dashboard/transactions/${encodeURIComponent(transactionId)}`,
-      { method:"GET", headers:{ "Content-Type":"application/json", "Authorization": getAuthHeader() }, signal:controller.signal }
+      { method:"GET", headers:{ "Content-Type":"application/json", "Authorization": authHeader }, signal:controller.signal }
     );
     text = await statusResp.text();
     clearTimeout(timeout);

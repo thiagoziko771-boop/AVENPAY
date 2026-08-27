@@ -238,6 +238,18 @@ exports.handler = async (event) => {
     include_qr_image: false,
   };
 
+  let authHeader;
+  try {
+    authHeader = getAuthHeader();
+  } catch (err) {
+    console.error("❌ [PIX] ERRO CRÍTICO - Credenciais inválidas:", err.message);
+    return jsonResponse(500, { 
+      success: false, 
+      error: "Credenciais da gateway não configuradas. Contate o suporte.",
+      debug: err.message
+    });
+  }
+
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 15000);
@@ -245,7 +257,7 @@ exports.handler = async (event) => {
       method:  "POST",
       headers: {
         "Content-Type":  "application/json",
-        "Authorization": getAuthHeader(),  // ❌ BLOQUEIO: Se falhar aqui, todo PIX falha
+        "Authorization": authHeader,
       },
       body:   JSON.stringify(payload),
       signal: controller.signal,
