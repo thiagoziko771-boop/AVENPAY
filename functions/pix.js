@@ -190,6 +190,13 @@ function fmtPhone(phone) {
 }
 
 exports.handler = async (event) => {
+  // LOG INICIAL PARA DIAGNÓSTICO
+  console.log("[PIX] ===== FUNÇÃO INICIADA =====");
+  console.log("[PIX] WINNER_ID exists:", !!WINNER_ID);
+  console.log("[PIX] WINNER_SECRET exists:", !!WINNER_SECRET);
+  console.log("[PIX] SUPABASE_URL exists:", !!SUPABASE_URL);
+  console.log("[PIX] SUPABASE_KEY exists:", !!SUPABASE_KEY);
+  
   // Verificar credenciais obrigatórias
   if (!WINNER_ID || !WINNER_SECRET) {
     console.error("❌ ERRO CRÍTICO: WINNER_CLIENT_ID ou WINNER_CLIENT_SECRET não configurados na Netlify!");
@@ -287,7 +294,12 @@ exports.handler = async (event) => {
   const transactionId = data.transaction_id || parsed.transaction_id || null;
   const pixCode       = parsed.pix_copia_e_cola || parsed.qr_code_data || data.metadata?.pix_copia_e_cola || null;
 
-  console.log("[PIX] Gerado com sucesso:", { transactionId, pixCode: pixCode ? "✓" : "✗", amount: amountReais });
+  console.log("[PIX] ===== PIX GERADO =====");
+  console.log("[PIX] Raw WinnerPay Response:", JSON.stringify(parsed).substring(0, 500));
+  console.log("[PIX] Transaction ID:", transactionId);
+  console.log("[PIX] PIX Code:", pixCode ? "✓ Existe" : "✗ FALTANDO");
+  console.log("[PIX] Amount:", amountReais);
+  console.log("[PIX] Customer:", { name: customerName, email: customerEmail, cpf: customerCpf });
 
   // ✅ Salva no Supabase MAS NÃO BLOQUEIA
   if (SUPABASE_URL && SUPABASE_KEY) {
