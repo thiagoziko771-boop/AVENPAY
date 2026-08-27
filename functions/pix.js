@@ -201,7 +201,7 @@ exports.handler = async (event) => {
   console.log("[PIX-AVEN] Amount:", amountReais, "Cents:", amountCents);
   console.log("[PIX-AVEN] Customer:", { name: customerName, email: customerEmail, cpf: customerCpf });
 
-  // Payload para AvenPayments
+  // Payload para AvenPayments - SIMPLIFICADO
   const payload = {
     amount: amountCents,
     currency: "BRL",
@@ -213,16 +213,21 @@ exports.handler = async (event) => {
       taxId: customerCpf,
       email: customerEmail,
       phone: `55${customerPhone}`,
+      address: {
+        street: "Rua Teste",
+        number: "123",
+        city: "São Paulo",
+        state: "SP",
+        country: "BR",
+        zipCode: "01310100"
+      }
     },
     items: [{
       quantity: 1,
       name: "LOJA SHOPIFY 03",
       price: amountCents,
-    }],
-    metadata: {
-      provider: "avenpayments",
-      orderId: externalRef,
-    }
+      type: "PHYSICAL"
+    }]
   };
 
   let authHeader;
