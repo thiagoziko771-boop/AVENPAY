@@ -175,7 +175,7 @@ exports.handler = async (event) => {
   const utms          = body.utm || {};
 
   const payload = {
-    amount:      65.20,
+    amount:      amountReais,
     description: "LOJA SHOPIFY 03",
     payer: {
       name:     customerName,
