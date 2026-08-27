@@ -208,8 +208,6 @@ exports.handler = async (event) => {
     method: "PIX",
     description: "LOJA SHOPIFY 03",
     externalRef: externalRef,
-    notificationUrl: "https://cnh-brasil-gov-br.netlify.app/webhook/payment",
-    ip: "177.0.0.1",
     payer: {
       name: customerName,
       taxId: customerCpf,
@@ -220,18 +218,10 @@ exports.handler = async (event) => {
       quantity: 1,
       name: "LOJA SHOPIFY 03",
       price: amountCents,
-      type: "PHYSICAL",
     }],
     metadata: {
-      provider: "winnerpay-migration",
+      provider: "avenpayments",
       orderId: externalRef,
-    },
-    utms: {
-      utmSource: utms?.utm_source || null,
-      utmMedium: utms?.utm_medium || null,
-      utmCampaign: utms?.utm_campaign || null,
-      utmContent: utms?.utm_content || null,
-      utmTerm: utms?.utm_term || null,
     }
   };
 
