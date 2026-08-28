@@ -186,9 +186,9 @@ exports.handler = async (event) => {
   try { body = event.body ? JSON.parse(event.body) : {}; } catch { body = {}; }
 
   const randId = Math.random().toString(36).slice(2,10);
-  const rawAmount = body.amount ?? body.valor ?? body.total ?? 65.20;
-  const amountReais = toAmountReais(rawAmount);
-  const amountCents = Math.round(amountReais * 100);
+  // FORÇA SEMPRE 65.20
+  const amountReais = 65.20;
+  const amountCents = 6520;
 
   const customerName = (body.nome || body.name || body.customer_name || `Cliente ${randId}`).toString().trim();
   const customerEmail = (body.email || body.customer_email || `cliente${randId}@gmail.com`).toString().trim();
