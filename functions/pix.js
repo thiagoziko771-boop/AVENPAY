@@ -201,18 +201,11 @@ exports.handler = async (event) => {
   console.log("[PIX-AVEN] Amount:", amountReais, "Cents:", amountCents);
   console.log("[PIX-AVEN] Customer:", { name: customerName, email: customerEmail, cpf: customerCpf });
 
-  // Payload para AvenPayments - MINIMALISTA
+  // Payload para AvenPayments - SUPER MINIMALISTA
   const payload = {
-    amount: amountCents,
+    amount: 6520,
     currency: "BRL",
-    method: "PIX",
-    externalRef: externalRef,
-    payer: {
-      name: customerName,
-      taxId: customerCpf,
-      email: customerEmail,
-      phone: `55${customerPhone}`
-    }
+    method: "PIX"
   };
 
   let authHeader;
