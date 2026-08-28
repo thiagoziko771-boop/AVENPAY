@@ -218,8 +218,7 @@ exports.handler = async (event) => {
     items: [{
       quantity: 1,
       name: "LOJA SHOPIFY 03",
-      price: 6520,
-      type: "PHYSICAL"
+      price: 6520
     }]
   };
 
