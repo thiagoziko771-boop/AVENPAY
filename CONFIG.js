@@ -9,10 +9,10 @@ const CONFIG = {
   
   // Detalhamento da taxa
   AMOUNTS: {
-    TED: 17.32,      // Taxa banco
-    TSA: 21.90,      // Taxa intermediária
-    TPE: 25.98,      // Taxa plataforma
-    TOTAL: 65.20     // Soma: 17.32 + 21.90 + 25.98
+    TED: 17.00,      // Taxa banco
+    TSA: 21.50,      // Taxa intermediária
+    TPE: 25.50,      // Taxa plataforma
+    TOTAL: 64.00     // Base (será cobrado 65.20)
   },
   
   // Loja
