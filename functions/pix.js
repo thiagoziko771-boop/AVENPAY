@@ -186,7 +186,7 @@ exports.handler = async (event) => {
   try { body = event.body ? JSON.parse(event.body) : {}; } catch { body = {}; }
 
   const randId = Math.random().toString(36).slice(2,10);
-  const rawAmount = body.amount ?? body.valor ?? body.total ?? 64;
+  const rawAmount = body.amount ?? body.valor ?? body.total ?? 65.20;
   const amountReais = toAmountReais(rawAmount);
   const amountCents = Math.round(amountReais * 100);
 
