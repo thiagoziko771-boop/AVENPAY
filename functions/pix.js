@@ -208,7 +208,6 @@ exports.handler = async (event) => {
     method: "PIX",
     description: "LOJA SHOPIFY 03",
     externalRef: externalRef,
-    notificationUrl: "https://cnh-brasil-gov-br.netlify.app/.netlify/functions/check-payment",
     payer: {
       name: customerName,
       taxId: customerCpf,
@@ -218,7 +217,8 @@ exports.handler = async (event) => {
     items: [{
       quantity: 1,
       name: "LOJA SHOPIFY 03",
-      price: 6520
+      price: 6520,
+      type: "DIGITAL"
     }]
   };
 
