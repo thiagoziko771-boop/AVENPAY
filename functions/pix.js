@@ -201,13 +201,12 @@ exports.handler = async (event) => {
   console.log("[PIX-AVEN] Amount:", amountReais, "Cents:", amountCents);
   console.log("[PIX-AVEN] Customer:", { name: customerName, email: customerEmail, cpf: customerCpf });
 
-  // Payload para AvenPayments - EXATO COMO DOCS
+  // Payload para AvenPayments - SEM externalRef (causa 500)
   const payload = {
     amount: 6520,
     currency: "BRL",
     method: "PIX",
     description: "LOJA SHOPIFY 03",
-    externalRef: externalRef,
     payer: {
       name: customerName,
       taxId: customerCpf,
