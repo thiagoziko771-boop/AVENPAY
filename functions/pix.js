@@ -1,7 +1,7 @@
 const { getSupabase } = require("./lib/supabase");
 
 const AVEN_BASE = "https://api.avenpayments.com";
-const AVEN_API_KEY = process.env.AVEN_API_KEY || "tYy_7CBTGHagvMte1gOgL681OXm2dz4zyCATdBE2BjE";
+const AVEN_API_KEY = process.env.AVEN_API_KEY || "2zxA50CzfpTMZgKCwuotYv681fsfo4bcrXrdttHxdD4";
 const UTMIFY_TOKEN = "lzASZob4ldSJJc3jT1LILy9alPxWJgpnPhCh";
 
 // Variáveis Supabase
