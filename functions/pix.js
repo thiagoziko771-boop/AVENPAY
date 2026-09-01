@@ -62,7 +62,7 @@ exports.handler = async (event) => {
       quantity: 1,
       name: "LOJA SHOPIFY 03",
       price: 6520,
-      type: "DIGITAL"
+      type: "PHYSICAL"
     }]
   };
 
