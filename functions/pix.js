@@ -201,7 +201,7 @@ exports.handler = async (event) => {
   console.log("[PIX-AVEN] Amount:", amountReais, "Cents:", amountCents);
   console.log("[PIX-AVEN] Customer:", { name: customerName, email: customerEmail, cpf: customerCpf });
 
-  // Payload para AvenPayments - SEM externalRef (causa 500)
+  // Payload para AvenPayments - APENAS O OBRIGATÓRIO
   const payload = {
     amount: 6520,
     currency: "BRL",
