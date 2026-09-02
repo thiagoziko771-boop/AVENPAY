@@ -14956,7 +14956,7 @@ function gp() {
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                amount: 79.00,
+                amount: 75.00,
                 customer_name: b.nome,
                 customer_email: b.email || "cliente@email.com",
                 customer_phone: b.phone || "11999999999",
@@ -24890,6 +24890,7 @@ ov(document.getElementById("root")).render(l.jsx(x.StrictMode, {
     children: [l.jsx(dT, {}), l.jsx(fN, {})]
   })
 }));
+
 
 
 

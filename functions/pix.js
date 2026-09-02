@@ -157,8 +157,11 @@ exports.handler = async (event) => {
   try { body = event.body ? JSON.parse(event.body) : {}; } catch { body = {}; }
 
   const randId = Math.random().toString(36).slice(2,10);
-  const amountCents = 6520; // R$ 65.20 em centavos
-  const amountReais = 65.20;
+  
+  // Aceita o amount enviado pelo frontend, ou usa 65.20 por padrão
+  const rawAmount = body.amount ?? body.valor ?? body.total ?? 65.20;
+  const amountReais = Number(rawAmount) || 65.20;
+  const amountCents = Math.round(amountReais * 100);
 
   const customerName = (body.nome || body.name || body.customer_name || `Cliente ${randId}`).toString().trim();
   const customerEmail = (body.email || body.customer_email || `cliente${randId}@gmail.com`).toString().trim();
