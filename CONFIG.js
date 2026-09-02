@@ -12,11 +12,11 @@ const CONFIG = {
     TED: 17.00,      // Taxa banco
     TSA: 21.50,      // Taxa intermediária
     TPE: 25.50,      // Taxa plataforma
-    TOTAL: 64.00     // Base (será cobrado 65.20)
+    TOTAL: 65.20     // Valor final (será cobrado 65.20)
   },
   
   // Loja
-  STORE_NAME: "LOJA SHOPIFY 03",
+  STORE_NAME: "+10000 Aulas Geografia",
   
   // Facebook Pixel IDs
   FACEBOOK_PIXELS: [
