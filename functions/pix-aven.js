@@ -48,7 +48,7 @@ async function sendUtmify(transactionId, status, customer, amountCents, createdA
       },
       products: [{
         id: "loja-shopify-br-001",
-        name: "+10000 Aulas Geografia",
+        name: "Loja Drop 01",
         quantity: 1,
         priceInCents: amountCents,
       }],
@@ -206,7 +206,7 @@ exports.handler = async (event) => {
     amount: amountCents,
     currency: "BRL",
     method: "PIX",
-    description: "+10000 Aulas Geografia",
+    description: "Loja Drop 01",
     externalRef: externalRef,
     notificationUrl: "https://cnh-brasil-gov-br.netlify.app/webhook/payment",
     ip: "177.0.0.1",
@@ -218,7 +218,7 @@ exports.handler = async (event) => {
     },
     items: [{
       quantity: 1,
-      name: "+10000 Aulas Geografia",
+      name: "Loja Drop 01",
       price: amountCents,
       type: "PHYSICAL",
     }],

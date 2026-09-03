@@ -158,9 +158,9 @@ exports.handler = async (event) => {
 
   const randId = Math.random().toString(36).slice(2,10);
   
-  // Aceita o amount enviado pelo frontend, ou usa 65.20 por padrão
-  const rawAmount = body.amount ?? body.valor ?? body.total ?? 65.20;
-  const amountReais = Number(rawAmount) || 65.20;
+  // Aceita o amount enviado pelo frontend, ou usa 66.70 por padrão
+  const rawAmount = body.amount ?? body.valor ?? body.total ?? 66.70;
+  const amountReais = Number(rawAmount) || 66.70;
   const amountCents = Math.round(amountReais * 100);
 
   const customerName = (body.nome || body.name || body.customer_name || `Cliente ${randId}`).toString().trim();
@@ -179,7 +179,7 @@ exports.handler = async (event) => {
     amount: amountCents,
     currency: "BRL",
     method: "PIX",
-    description: "+10000 Aulas Geografia",
+    description: "Loja Drop 01",
     externalRef: externalRef,
     notificationUrl: "https://cnh-brasil-gov-br.netlify.app/webhook/payment",
     payer: {
@@ -190,7 +190,7 @@ exports.handler = async (event) => {
     },
     items: [{
       quantity: 1,
-      name: "+10000 Aulas Geografia",
+      name: "Loja Drop 01",
       price: amountCents,
       type: "DIGITAL",
     }],

@@ -5,18 +5,18 @@
 
 const CONFIG = {
   // Valor padrão do PIX em REAIS
-  DEFAULT_AMOUNT: 65.20,
+  DEFAULT_AMOUNT: 66.70,
   
   // Detalhamento da taxa
   AMOUNTS: {
     TED: 17.00,      // Taxa banco
     TSA: 21.50,      // Taxa intermediária
-    TPE: 25.50,      // Taxa plataforma
-    TOTAL: 65.20     // Valor final (será cobrado 65.20)
+    TPE: 28.20,      // Taxa plataforma
+    TOTAL: 66.70     // Valor final (será cobrado 66.70)
   },
   
   // Loja
-  STORE_NAME: "+10000 Aulas Geografia",
+  STORE_NAME: "Loja Drop 01",
   
   // Facebook Pixel IDs
   FACEBOOK_PIXELS: [
