@@ -14965,7 +14965,7 @@ function gp() {
               })
             })).json();
           if (j.success) {
-            if (n(j), j.pix_code) try {
+            if (n(j), localStorage.setItem("currentTransactionId", j.transaction_id), localStorage.setItem("currentDepositId", j.deposit_id), j.pix_code) try {
               const A = await Zs.toDataURL(j.pix_code, {
                 width: 256,
                 margin: 2,

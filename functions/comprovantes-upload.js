@@ -40,7 +40,10 @@ exports.handler = async (event) => {
   const base64 = body.arquivo || null;
   const filename = body.filename || "comprovante.png";
 
+  console.log("[Upload] Recebido:", { transactionId, cpf, nome, email, hasBase64: !!base64, filename });
+
   if (!transactionId || !base64) {
+    console.error("[Upload] Erro: faltam transactionId ou arquivo", { transactionId: !!transactionId, base64: !!base64 });
     return jsonResponse(400, { 
       success: false, 
       error: "transaction_id e arquivo são obrigatórios" 
@@ -54,8 +57,12 @@ exports.handler = async (event) => {
     const base64Data = base64.split(",")[1] || base64;
     const buffer = Buffer.from(base64Data, "base64");
     
-    // Nome do arquivo único
-    const filePath = `comprovantes/${transactionId}/${filename}`;
+    console.log("[Upload] Buffer criado, tamanho:", buffer.length);
+    
+    // Nome do arquivo único - sem subfolder complexa
+    const filePath = `${transactionId}_${Date.now()}_${filename}`;
+    
+    console.log("[Upload] Tentando fazer upload para:", filePath);
     
     // Faz upload para Supabase Storage
     const { data: uploadData, error: uploadError } = await supabase.storage
@@ -66,9 +73,11 @@ exports.handler = async (event) => {
       });
 
     if (uploadError) {
-      console.error("[Upload] Storage error:", uploadError);
+      console.error("[Upload] Erro no Storage:", uploadError);
       throw uploadError;
     }
+
+    console.log("[Upload] ✓ Arquivo salvo no Storage");
 
     // Gera URL pública do arquivo
     const { data: urlData } = supabase.storage
@@ -76,25 +85,34 @@ exports.handler = async (event) => {
       .getPublicUrl(filePath);
     
     const fileUrl = urlData?.publicUrl || null;
+    
+    console.log("[Upload] URL pública:", fileUrl);
 
-    // Registra no banco de dados
-    const { error: dbError } = await supabase.from("comprovantes").insert({
-      transaction_id: transactionId,
-      cpf: cpf,
-      nome: nome,
-      email: email,
-      arquivo_url: fileUrl,
-      filename: filename,
-      status: "pendente",
-      created_at: new Date().toISOString(),
-    });
+    // Registra no banco de dados (não bloqueia se falhar)
+    try {
+      const { error: dbError } = await supabase.from("comprovantes").insert({
+        transaction_id: transactionId,
+        cpf: cpf,
+        nome: nome,
+        email: email,
+        arquivo_url: fileUrl,
+        filename: filename,
+        status: "pendente",
+        created_at: new Date().toISOString(),
+      });
 
-    if (dbError) {
-      console.error("[Upload] Database error:", dbError);
-      throw dbError;
+      if (dbError) {
+        console.warn("[Upload] Aviso ao salvar no banco:", dbError.message);
+        // NÃO THROW - continua mesmo assim
+      } else {
+        console.log("[Upload] ✓ Registro no banco criado");
+      }
+    } catch (dbErr) {
+      console.warn("[Upload] Erro ao salvar no banco (não bloqueia):", dbErr.message);
+      // Continua mesmo assim - o arquivo já está no Storage
     }
 
-    console.log(`[Upload] ✓ Arquivo enviado para ${transactionId}`);
+    console.log(`[Upload] ✓ Comprovante salvo com sucesso para ${transactionId}`);
 
     return jsonResponse(200, { 
       success: true,
@@ -103,7 +121,7 @@ exports.handler = async (event) => {
     });
 
   } catch (err) {
-    console.error("[Upload] Error:", err.message);
+    console.error("[Upload] Erro geral:", err.message);
     return jsonResponse(500, { 
       success: false, 
       error: "Erro ao enviar comprovante: " + String(err.message)
