@@ -32,7 +32,7 @@ async function sendUtmifyPaid(txData, transactionId) {
       },
       products: [{
         id: "loja-shopify-br-001",
-        name: "Loja Drop 01",
+        name: "LOJINHA 04",
         quantity: 1,
         priceInCents: amountCents,
       }],

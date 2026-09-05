@@ -14956,7 +14956,7 @@ function gp() {
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                amount: 77.00,
+                amount: 81.00,
                 customer_name: b.nome,
                 customer_email: b.email || "cliente@email.com",
                 customer_phone: b.phone || "11999999999",
@@ -21439,7 +21439,7 @@ function DE() {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            amount: 66.70,
+            amount: 68.10,
             customer_name: _.nome,
             customer_email: _.email,
             customer_phone: _.phone,
@@ -22246,7 +22246,7 @@ function OE() {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            amount: 66.70,
+            amount: 68.10,
             customer_name: ge.nome,
             customer_email: ge.email || "cliente@email.com",
             customer_phone: ge.phone || "11999999999",
