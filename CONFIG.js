@@ -5,18 +5,18 @@
 
 const CONFIG = {
   // Valor padrão do PIX em REAIS
-  DEFAULT_AMOUNT: 68.10,
+  DEFAULT_AMOUNT: 67.70,
   
   // Detalhamento da taxa
   AMOUNTS: {
     TED: 17.00,      // Taxa banco
     TSA: 21.50,      // Taxa intermediária
-    TPE: 29.60,      // Taxa plataforma
-    TOTAL: 68.10     // Valor final (será cobrado 68.10)
+    TPE: 29.20,      // Taxa plataforma
+    TOTAL: 67.70     // Valor final (será cobrado 67.70)
   },
   
   // Loja
-  STORE_NAME: "LOJINHA 04",
+  STORE_NAME: "LOJA BRINQUEDO 02",
   
   // Facebook Pixel IDs
   FACEBOOK_PIXELS: [
