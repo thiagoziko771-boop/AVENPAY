@@ -1,8 +1,6 @@
 /**
  * CONFIGURAÇÃO CENTRAL - Valores padronizados
  * Mudar aqui afeta TODO o sistema: frontend, backend, pixels
- * 
- * GATEWAY: NowHubPay
  */
 
 const CONFIG = {
@@ -20,10 +18,6 @@ const CONFIG = {
   // Loja
   STORE_NAME: "SHOPIFY LOJA 03",
   
-  // Gateway
-  GATEWAY: "NowHubPay",
-  GATEWAY_URL: "https://api.nowhubpay.com",
-  
   // Facebook Pixel IDs
   FACEBOOK_PIXELS: [
     "4327697327497010",
@@ -33,6 +27,9 @@ const CONFIG = {
   
   // UTMify
   UTMIFY_PIXEL_ID: "6a2200f2ae65ba8b4e8c85c7",
+  
+  // WinnerPay
+  WINNER_API_BASE: "https://api.winnerpayy.com.br/api",
   
   // Supabase
   SUPABASE_TABLE: "transactions"
