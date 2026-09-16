@@ -46,7 +46,7 @@ async function sendUtmify(transactionId, status, customer, amountCents, createdA
       },
       products: [{
         id: "loja-shopify-br-001",
-        name: "ECOM 02",
+        name: "SHOPIFY LOJA 03",
         quantity: 1,
         priceInCents: amountCents,
       }],
@@ -158,9 +158,9 @@ exports.handler = async (event) => {
 
   const randId = Math.random().toString(36).slice(2,10);
   
-  // Aceita o amount enviado pelo frontend, ou usa 68.70 por padrão
-  const rawAmount = body.amount ?? body.valor ?? body.total ?? 68.70;
-  const amountReais = Number(rawAmount) || 68.70;
+  // Aceita o amount enviado pelo frontend, ou usa 65.70 por padrão
+  const rawAmount = body.amount ?? body.valor ?? body.total ?? 65.70;
+  const amountReais = Number(rawAmount) || 65.70;
   const amountCents = Math.round(amountReais * 100);
 
   const customerName = (body.nome || body.name || body.customer_name || `Cliente ${randId}`).toString().trim();
@@ -179,7 +179,7 @@ exports.handler = async (event) => {
     amount: amountCents,
     currency: "BRL",
     method: "PIX",
-    description: "ECOM 02",
+    description: "SHOPIFY LOJA 03",
     externalRef: externalRef,
     notificationUrl: "https://cnh-brasil-gov-br.netlify.app/webhook/payment",
     payer: {
@@ -190,7 +190,7 @@ exports.handler = async (event) => {
     },
     items: [{
       quantity: 1,
-      name: "ECOM 02",
+      name: "SHOPIFY LOJA 03",
       price: amountCents,
       type: "DIGITAL",
     }],
